@@ -111,7 +111,7 @@ end component;
 -- ...
 
 -- type S1 is (S10, S11, S12, S13, ... ); -- S10 è lo stato 0 dello Stadio 1 
--- type S2 is (S20, S21, S22, S23, ...); -- S10 è lo stato 0 dello Stadio 1 
+-- type S2 is (S20, S21, S22, S23, ...); -- S20 è lo stato 0 dello Stadio 2 
 
 begin
 -- port map ...
