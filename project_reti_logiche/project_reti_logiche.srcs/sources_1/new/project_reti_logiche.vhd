@@ -180,6 +180,7 @@ begin
     f2r1_load <= '0';
     done2 <= '0';
     f2r2_load <= '0';
+    start3 <= '0';
         case cur_state_S2 is 
             when F2S0 =>
             when F2S1 =>
