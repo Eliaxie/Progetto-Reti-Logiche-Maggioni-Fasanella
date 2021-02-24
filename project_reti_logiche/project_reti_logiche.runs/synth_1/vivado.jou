@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Mon Feb 22 16:06:48 2021
-# Process ID: 2396
+# Start of session at: Tue Feb 23 18:10:02 2021
+# Process ID: 2844
 # Current directory: C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1
 # Command line: vivado.exe -log project_reti_logiche.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source project_reti_logiche.tcl
 # Log file: C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1/project_reti_logiche.vds
