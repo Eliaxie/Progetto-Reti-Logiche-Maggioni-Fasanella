@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="999996fs"></ZoomStartTime>
-      <ZoomEndTime time="1000001fs"></ZoomEndTime>
-      <Cursor1Time time="1000000fs"></Cursor1Time>
+      <ZoomStartTime time="560450fs"></ZoomStartTime>
+      <ZoomEndTime time="664451fs"></ZoomEndTime>
+      <Cursor1Time time="678450fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="232"></NameColumnWidth>
-      <ValueColumnWidth column_width="111"></ValueColumnWidth>
+      <ValueColumnWidth column_width="76"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="20" />
+   <WVObjectSize size="28" />
    <wvobject fp_name="/project_tb/tb_done" type="logic">
       <obj_property name="ElementShortName">tb_done</obj_property>
       <obj_property name="ObjectShortName">tb_done</obj_property>
@@ -98,5 +98,40 @@
    <wvobject fp_name="/project_tb/UUT/maxaddress" type="array">
       <obj_property name="ElementShortName">maxaddress[7:0]</obj_property>
       <obj_property name="ObjectShortName">maxaddress[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/minV" type="array">
+      <obj_property name="ElementShortName">minV[7:0]</obj_property>
+      <obj_property name="ObjectShortName">minV[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_address" type="array">
+      <obj_property name="ElementShortName">o_address[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_address[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_we" type="logic">
+      <obj_property name="ElementShortName">o_we</obj_property>
+      <obj_property name="ObjectShortName">o_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_en" type="logic">
+      <obj_property name="ElementShortName">o_en</obj_property>
+      <obj_property name="ObjectShortName">o_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/enable_wire" type="logic">
+      <obj_property name="ElementShortName">enable_wire</obj_property>
+      <obj_property name="ObjectShortName">enable_wire</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/mem_we" type="logic">
+      <obj_property name="ElementShortName">mem_we</obj_property>
+      <obj_property name="ObjectShortName">mem_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_f3r6" type="array">
+      <obj_property name="ElementShortName">o_f3r6[7:0]</obj_property>
+      <obj_property name="ObjectShortName">o_f3r6[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_f3r7" type="array">
+      <obj_property name="ElementShortName">o_f3r7[7:0]</obj_property>
+      <obj_property name="ObjectShortName">o_f3r7[7:0]</obj_property>
    </wvobject>
 </wave_config>
