@@ -267,18 +267,18 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     
     
     -- Operazioni
-     process(current_state_s1)
+     process(current_state_s1,cur_state_S2,cur_state_S3)
     begin
-       MinPixel<="11111111";
-       MaxPixel<="00000000";
-       REGAddr<= "0000000000000000";     
-       M<="00000000";
-       minV<=MINPixel;
   
     case current_state_s1 is
     
        --Stato 0
     when F1S0 =>
+--    MinPixel<="11111111";
+--       MaxPixel<="00000000";
+--       REGAddr<= "0000000000000000";     
+       M<="00000000";
+       minV<=MINPixel;
         
        REGAddr<= "0000000000000000";     
        o_en<='1';
@@ -289,12 +289,22 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
        
       --Stato 1  
         when F1S1 =>
+         MinPixel<="11111111";
+--        MaxPixel<="00000000";
+--        REGAddr<= "0000000000000000";     
+--        M<="00000000";
+        minV<=MINPixel;
          REGAddr<= REGAddr;
          o_address <= REGAddr;
          Pixel<=i_data;
         
      --Stato 2
         when F1S2 =>
+--        MinPixel<="11111111";
+--       MaxPixel<="00000000";
+--       REGAddr<= "0000000000000000";     
+--       M<="00000000";
+       minV<=MINPixel;
         REGAddr<= Sum;
        o_address <= Sum;
        Pixel<=i_data;
@@ -306,6 +316,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
        
        --Stato 3 
         when F1S3 =>
+         minV<=MINPixel;
       REGAddr<= REGAddr;
        o_address <= REGAddr;
        Pixel<=i_data;
@@ -314,6 +325,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
        
        --Stato 4
         when F1S4 =>
+         minV<=MINPixel;
         M<=M;
         REGAddr<= REGAddr;
         o_address <= REGAddr;
@@ -323,6 +335,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
       
        --Stato 5
     when F1S5 => 
+     minV<=MINPixel;
     M<=M;
     MINPixel<= MINPixel;
     MAXPixel<=MAXPixel;
@@ -353,6 +366,95 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     start2<='0';
         
         end case;
+        
+        
+        f2r1_load <= '0';
+    done2 <= '0';
+    f2r2_load <= '0';
+    start3 <= '0';
+        case cur_state_S2 is 
+            when F2S0 =>
+            when F2S1 =>
+                f2r1_load <= '1';
+            when F2S2 =>
+            when F2S3 =>
+            when F2S4 =>
+                f2r2_load <= '1';
+            when F2S5 =>
+                start3 <= '1';
+            when F2S6 =>
+            when F2S7 =>
+                done2 <= '1';
+        end case;
+        
+        
+        f3r1_load <= '0';
+    f3r2_load <= '0';
+    f3r3_load <= '0';
+    f3r4_load <= '0';
+    f3r5_load <= '0';
+    f3r6_load <= '0';
+    f3r7_load <= '0';
+    done3 <= '0';
+        case cur_state_S3 is 
+            when F3S0 =>
+--                o_f3r7 <= "00000010";
+            when F3S1 =>
+                f3r1_load <= '1';
+                f3r2_load <= '1';
+                f3r3_load <= '1';
+                f3r4_load <= '1';
+                o_address <= "00000000" & o_f3r7;
+            when F3S2 =>
+            when F3S3 =>
+                f3r5_load <= '1';
+            when F3S4 =>
+            when F3S5 =>
+            when F3S6 =>
+                f3r6_load <= '1';
+            when F3S7 =>
+                o_we <= '1';
+                o_data <= o_f3r6;
+            when F3S7b =>
+                f3r7_load <= '1';
+                o_we <= '0';
+            when F3S8 =>
+            when F3S9 =>
+                done3<='1';
+        end case;
+       end process;
+    
+    process(cur_state_S2)
+    begin
+    f2r1_load <= '0';
+    done2 <= '0';
+    f2r2_load <= '0';
+    start3 <= '0';
+        case cur_state_S2 is 
+            when F2S0 =>
+            when F2S1 =>
+                f2r1_load <= '1';
+            when F2S2 =>
+            when F2S3 =>
+            when F2S4 =>
+                f2r2_load <= '1';
+            when F2S5 =>
+                start3 <= '1';
+            when F2S6 =>
+            when F2S7 =>
+                done2 <= '1';
+        end case;
+    end process;
+     
+    process (i_clk, i_rst)
+    begin
+        if (i_rst = '1') then
+            o_f2r1 <= "00000000";
+        elsif i_clk' event and i_clk = '1' then
+            if (f2r1_load = '1') then
+                o_f2r1 <= delta;
+            end if;
+        end if;
     end process;
     
   --##FASE 2
@@ -394,27 +496,27 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
         end case;
     end process;
     
-    process(cur_state_S2)
-    begin
-    f2r1_load <= '0';
-    done2 <= '0';
-    f2r2_load <= '0';
-    start3 <= '0';
-        case cur_state_S2 is 
-            when F2S0 =>
-            when F2S1 =>
-                f2r1_load <= '1';
-            when F2S2 =>
-            when F2S3 =>
-            when F2S4 =>
-                f2r2_load <= '1';
-            when F2S5 =>
-                start3 <= '1';
-            when F2S6 =>
-            when F2S7 =>
-                done2 <= '1';
-        end case;
-    end process;
+--    process(cur_state_S2)
+--    begin
+--    f2r1_load <= '0';
+--    done2 <= '0';
+--    f2r2_load <= '0';
+--    start3 <= '0';
+--        case cur_state_S2 is 
+--            when F2S0 =>
+--            when F2S1 =>
+--                f2r1_load <= '1';
+--            when F2S2 =>
+--            when F2S3 =>
+--            when F2S4 =>
+--                f2r2_load <= '1';
+--            when F2S5 =>
+--                start3 <= '1';
+--            when F2S6 =>
+--            when F2S7 =>
+--                done2 <= '1';
+--        end case;
+--    end process;
      
     process (i_clk, i_rst)
     begin
@@ -999,43 +1101,43 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
         end case;
     end process;
     
-    process(cur_state_S3)
-    begin
-    f3r1_load <= '0';
-    f3r2_load <= '0';
-    f3r3_load <= '0';
-    f3r4_load <= '0';
-    f3r5_load <= '0';
-    f3r6_load <= '0';
-    f3r7_load <= '0';
-    done3 <= '0';
-        case cur_state_S3 is 
-            when F3S0 =>
---                o_f3r7 <= "00000010";
-            when F3S1 =>
-                f3r1_load <= '1';
-                f3r2_load <= '1';
-                f3r3_load <= '1';
-                f3r4_load <= '1';
-                o_address <= "00000000" & o_f3r7;
-            when F3S2 =>
-            when F3S3 =>
-                f3r5_load <= '1';
-            when F3S4 =>
-            when F3S5 =>
-            when F3S6 =>
-                f3r6_load <= '1';
-            when F3S7 =>
-                o_we <= '1';
-                o_data <= o_f3r6;
-            when F3S7b =>
-                f3r7_load <= '1';
-                o_we <= '0';
-            when F3S8 =>
-            when F3S9 =>
-                done3<='1';
-        end case;
-    end process;
+--    process(cur_state_S3)
+--    begin
+--    f3r1_load <= '0';
+--    f3r2_load <= '0';
+--    f3r3_load <= '0';
+--    f3r4_load <= '0';
+--    f3r5_load <= '0';
+--    f3r6_load <= '0';
+--    f3r7_load <= '0';
+--    done3 <= '0';
+--        case cur_state_S3 is 
+--            when F3S0 =>
+----                o_f3r7 <= "00000010";
+--            when F3S1 =>
+--                f3r1_load <= '1';
+--                f3r2_load <= '1';
+--                f3r3_load <= '1';
+--                f3r4_load <= '1';
+--                o_address <= "00000000" & o_f3r7;
+--            when F3S2 =>
+--            when F3S3 =>
+--                f3r5_load <= '1';
+--            when F3S4 =>
+--            when F3S5 =>
+--            when F3S6 =>
+--                f3r6_load <= '1';
+--            when F3S7 =>
+--                o_we <= '1';
+--                o_data <= o_f3r6;
+--            when F3S7b =>
+--                f3r7_load <= '1';
+--                o_we <= '0';
+--            when F3S8 =>
+--            when F3S9 =>
+--                done3<='1';
+--        end case;
+--    end process;
     
     -- /* PARTE COMPUTAZIONALE */
     process (i_clk, i_rst)
@@ -1100,6 +1202,5 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     end process;
         
 end Behavioral;
-
 
 
