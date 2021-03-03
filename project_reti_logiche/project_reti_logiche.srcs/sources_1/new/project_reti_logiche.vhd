@@ -77,7 +77,7 @@ component stadio1DataPath is
         o_en      : out std_logic;
         minV      : out std_logic_vector(7 downto 0); --as output
         delta     : out std_logic_vector(7 downto 0); --as output
-        maxaddress : out std_logic_vector(7 downto 0) --as output
+        maxaddress : out std_logic_vector(15 downto 0) --as output
     );
 end component;
 component stadio2DataPath is 
@@ -106,7 +106,7 @@ component stadio3DataPath is
         shift_level: in std_logic_vector(7 downto 0); -- as input
         start3    : in std_logic; --as input
         done3     : out std_logic; -- as output       
-        maxaddress : in std_logic_vector(7 downto 0) -- as input
+        maxaddress : in std_logic_vector(15 downto 0) -- as input
     );
     
     -- probabilmente servirà un altro componente per determinare la fine di o_address
@@ -125,9 +125,9 @@ signal f1  : std_logic;
 signal Sum: std_logic_vector(15 downto 0);
 signal OP1: std_logic_vector(7 downto 0);
 signal OP2: std_logic_vector(7 downto 0);
-signal M: std_logic_vector(7 downto 0);
+signal M: std_logic_vector(15 downto 0);
 signal minV: std_logic_vector(7 downto 0);
-signal maxaddress: std_logic_vector(7 downto 0);
+signal maxaddress: std_logic_vector(15 downto 0);
 
 
 --##SEGNALI FASE 2
@@ -155,25 +155,26 @@ signal f3r7_load : std_logic;
 signal o_f3r1 : std_logic_vector(7 downto 0);
 signal o_f3r2 : std_logic_vector(7 downto 0);
 signal o_f3r3 : std_logic_vector(7 downto 0);
-signal o_f3r4 : std_logic_vector(7 downto 0);
+signal o_f3r4 : std_logic_vector(15 downto 0);
 signal o_f3r5 : std_logic_vector(7 downto 0);
 signal o_f3r6 : std_logic_vector(7 downto 0);
-signal o_f3r7 : std_logic_vector(7 downto 0);
+signal o_f3r7 : std_logic_vector(15 downto 0);
 signal o_f3s1 : std_logic;
 signal o_f3sub : std_logic_vector(7 downto 0);
 signal o_f3shift : std_logic_vector(7 downto 0);
 signal o_f3mutex : std_logic_vector(7 downto 0);
-
+signal o_wAddress : std_logic_vector(15 downto 0);
+signal o_rAddress : std_logic_vector(15 downto 0);
 
 -- type S1 is (S10, S11, S12, S13, ... ); -- S10 è lo stato 0 dello  1 
-type State is (F1S0,F1S1,F1S2,F1S3,F1S4,F1S5,F1S6,F1S7);
+type State is (F1S0,F1S1,F1S2,F1S3,F1S4,F1S5,F1S6,F1S7,F1S8);
 signal current_state_s1: State; 
 signal next_state_s1: State; 
 
 type S2 is (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 è lo stato 0 della fase 2 
 signal cur_state_S2, next_state_S2 : S2;
 
-type S3 is (F3S0, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S7, F3S7b, F3S8, F3S9); -- F2S0 è lo stato 0 della fase 2 
+type S3 is (F3S0,F3S0b, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 è lo stato 0 della fase 2 
 signal cur_state_S3, next_state_S3 : S3;
 
 -- type F is (F0, F1, F2, F3);
@@ -257,11 +258,12 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
             next_state_s1<=F1S7;
         when F1S7 => 
             if(done2='1') then
-                next_state_s1<=F1S0;
-                o_done<='1';
+                next_state_s1<=F1S8;
             else 
                 next_state_s1<=F1S7;
-            end if;  
+            end if; 
+        when F1S8 =>
+            next_state_s1<=F1S0;
     end case;
   end process;
     
@@ -269,7 +271,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     -- Operazioni
      process(current_state_s1,cur_state_S2,cur_state_S3)
     begin
-  
+    o_done <= '0';
     case current_state_s1 is
     
        --Stato 0
@@ -277,14 +279,14 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
 --    MinPixel<="11111111";
 --       MaxPixel<="00000000";
 --       REGAddr<= "0000000000000000";     
-       M<="00000000";
+       M<="0000000000000000";
        minV<=MINPixel;
         
        REGAddr<= "0000000000000000";     
        o_en<='1';
        MinPixel<="11111111";
        MaxPixel<="00000000";        
-       maxaddress<="00000000"; 
+       maxaddress<="0000000000000000"; 
       
        
       --Stato 1  
@@ -365,24 +367,34 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
    when F1S7 =>
     start2<='0';
         
+        when F1S8 =>
+        o_done <= '1';
+        
         end case;
         
         
-        f2r1_load <= '0';
-    done2 <= '0';
+    f2r1_load <= '0';
     f2r2_load <= '0';
     start3 <= '0';
         case cur_state_S2 is 
             when F2S0 =>
+                done2 <= '0';
             when F2S1 =>
+                done2 <= '0';
                 f2r1_load <= '1';
             when F2S2 =>
+                done2 <= '0';
             when F2S3 =>
+                done2 <= '0';
             when F2S4 =>
+                done2 <= '0';
                 f2r2_load <= '1';
             when F2S5 =>
+                done2 <= '0';
                 start3 <= '1';
             when F2S6 =>
+                done2 <= '0';
+
             when F2S7 =>
                 done2 <= '1';
         end case;
@@ -398,13 +410,13 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     done3 <= '0';
         case cur_state_S3 is 
             when F3S0 =>
---                o_f3r7 <= "00000010";
+            when F3S0b =>
+                o_address <= o_f3r7+2;
             when F3S1 =>
                 f3r1_load <= '1';
                 f3r2_load <= '1';
                 f3r3_load <= '1';
                 f3r4_load <= '1';
-                o_address <= "00000000" & o_f3r7;
             when F3S2 =>
             when F3S3 =>
                 f3r5_load <= '1';
@@ -412,6 +424,8 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
             when F3S5 =>
             when F3S6 =>
                 f3r6_load <= '1';
+            when F3S6b =>
+                o_address <= o_f3r4 + o_f3r7;
             when F3S7 =>
                 o_we <= '1';
                 o_data <= o_f3r6;
@@ -427,7 +441,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     process(cur_state_S2)
     begin
     f2r1_load <= '0';
-    done2 <= '0';
+    -- done2 <= '0';
     f2r2_load <= '0';
     start3 <= '0';
         case cur_state_S2 is 
@@ -442,7 +456,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
                 start3 <= '1';
             when F2S6 =>
             when F2S7 =>
-                done2 <= '1';
+        --        done2 <= '1';
         end case;
     end process;
      
@@ -1072,8 +1086,10 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
         case cur_state_S3 is 
             when F3S0 =>
                 if start3='1' then
-                    next_state_S3 <= F3S1;
+                    next_state_S3 <= F3S0b;
                 end if;
+            when F3S0b =>
+                    next_state_S3 <= F3S1;
             when F3S1 =>
                     next_state_S3 <= F3S2;
             when F3S2 =>
@@ -1085,14 +1101,16 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
             when F3S5 =>
                     next_state_S3 <= F3S6;
             when F3S6 =>
+                    next_state_S3 <= F3S6b;            
+            when F3S6b =>
                     next_state_S3 <= F3S7;
             when F3S7 =>
                     next_state_S3 <= F3S7b;
             when F3S7b =>
                     next_state_S3 <= F3S8;
             when F3S8 =>
-                    if(o_f3r7 <= maxaddress) then
-                        next_state_S3 <= F3S1;
+                    if((o_f3r7 + 2) <= o_f3r4) then
+                        next_state_S3 <= F3S0b;
                     else
                         next_state_S3 <= F3S9;
                     end if;
@@ -1146,10 +1164,10 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
             o_f3r1 <= "00000000";
             o_f3r2 <= "00000000";
             o_f3r3 <= "00000000";
-            o_f3r4 <= "00000000";
+            o_f3r4 <= "0000000000000000";
             o_f3r5 <= "00000000";
             o_f3r6 <= "00000000";
-            o_f3r7 <= "00000010";
+            o_f3r7 <= "0000000000000000";
             cur_state_S3 <= F3S0;
         elsif i_clk' event and i_clk = '1' then
             cur_state_S3 <= next_state_S3;
@@ -1157,13 +1175,13 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
                 o_f3r1 <= shift_level;
             end if;
             if (f3r3_load = '1') then
-                o_f3r2 <= i_data;
+                o_f3r3 <= i_data;
             end if;
             if (f3r2_load = '1') then
-                o_f3r3 <= minV;
+                o_f3r2 <= minV;
             end if;
             if (f3r4_load = '1') then
-                o_f3r4 <= maxaddress +1;
+                o_f3r4 <= maxaddress +2;
             end if;
             if (f3r5_load = '1') then
                 o_f3r5 <= o_f3sub;
@@ -1189,7 +1207,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
     
     process(i_clk, o_f3shift) -- MUTEX
     begin
-        if ( o_f3shift > o_f3r5) then
+        if ( o_f3shift > o_f3r5 or o_f3shift = o_f3r5) then
             o_f3s1 <= '1';
         else
             o_f3s1 <= '0';
