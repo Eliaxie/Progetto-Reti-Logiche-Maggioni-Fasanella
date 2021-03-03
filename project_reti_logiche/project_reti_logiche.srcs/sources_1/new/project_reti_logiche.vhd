@@ -49,15 +49,15 @@ end project_reti_logiche;
 
 
 -- il nome del modulo deve essere project_reti_logiche
--- ?i_clk Ë il segnale di CLOCK in ingresso generato dal TestBench;
--- ?i_rst Ë il segnale di RESET che inizializza la macchina pronta per ricevere il primosegnale di START;
--- ?i_start Ë il segnale di START generato dal Test Bench;
--- ?i_data Ë il segnale (vettore) che arriva dalla memoria in seguito ad una richiesta dilettura;
--- ?o_address Ë il segnale (vettore) di uscita che manda l'indirizzo alla memoria;
--- ?o_done Ë il segnale di uscita che comunica la fine dell'elaborazione e il dato di uscitascritto in memoria;
--- ?o_en Ë il segnale di ENABLE da dover mandare alla memoria per poter comunicare(sia in lettura che in scrittura);
--- ?o_we Ë il segnale di WRITE ENABLE da dover mandare alla memoria (=1) per poterscriverci. Per leggere da memoria esso deve essere 0;
--- ?o_data Ë il segnale (vettore) di uscita dal componente verso la memoria. 
+-- ?i_clk √® il segnale di CLOCK in ingresso generato dal TestBench;
+-- ?i_rst √® il segnale di RESET che inizializza la macchina pronta per ricevere il primosegnale di START;
+-- ?i_start √® il segnale di START generato dal Test Bench;
+-- ?i_data √® il segnale (vettore) che arriva dalla memoria in seguito ad una richiesta dilettura;
+-- ?o_address √® il segnale (vettore) di uscita che manda l'indirizzo alla memoria;
+-- ?o_done √® il segnale di uscita che comunica la fine dell'elaborazione e il dato di uscitascritto in memoria;
+-- ?o_en √® il segnale di ENABLE da dover mandare alla memoria per poter comunicare(sia in lettura che in scrittura);
+-- ?o_we √® il segnale di WRITE ENABLE da dover mandare alla memoria (=1) per poterscriverci. Per leggere da memoria esso deve essere 0;
+-- ?o_data √® il segnale (vettore) di uscita dal componente verso la memoria. 
 
 -- Progetto di Elia Maggioni e Marco Fasanella
 
@@ -109,7 +109,7 @@ component stadio3DataPath is
         maxaddress : in std_logic_vector(15 downto 0) -- as input
     );
     
-    -- probabilmente servir‡ un altro componente per determinare la fine di o_address
+    -- probabilmente servir√† un altro componente per determinare la fine di o_address
 end component;
 -- signal f1r1_load : STD_LOGIC; f1 prefisso sta per fase 1
 -- ...
@@ -166,15 +166,15 @@ signal o_f3mutex : std_logic_vector(7 downto 0);
 signal o_wAddress : std_logic_vector(15 downto 0);
 signal o_rAddress : std_logic_vector(15 downto 0);
 
--- type S1 is (S10, S11, S12, S13, ... ); -- S10 Ë lo stato 0 dello  1 
+-- type S1 is (S10, S11, S12, S13, ... ); -- S10 √® lo stato 0 dello  1 
 type State is (F1S0,F1S1,F1S2,F1S3,F1S4,F1S5,F1S6,F1S7,F1S8);
 signal current_state_s1: State; 
 signal next_state_s1: State; 
 
-type S2 is (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 Ë lo stato 0 della fase 2 
+type S2 is (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 √® lo stato 0 della fase 2 
 signal cur_state_S2, next_state_S2 : S2;
 
-type S3 is (F3S0,F3S0b, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 Ë lo stato 0 della fase 2 
+type S3 is (F3S0,F3S0b, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 √® lo stato 0 della fase 2 
 signal cur_state_S3, next_state_S3 : S3;
 
 -- type F is (F0, F1, F2, F3);
@@ -210,8 +210,8 @@ Sum<=REGAddr+"0000000000000001"; -- Somma al Contatore
 f<='1' when REGAddr>="0000000000000001" else '0';    -- segnale f: indica che termina lettura di num righe e num colonne
 f1<='1' when REGAddr>=M+"00000010" else '0';    -- segnale f1: indica se sono stati passati tutti gli indirizzi
 
-flagMIN <= '1' when Pixel < MINPixel  else '0' ; -- =1 se il valore letto Ë minimo
-flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto Ë massimo
+flagMIN <= '1' when Pixel < MINPixel  else '0' ; -- =1 se il valore letto √® minimo
+flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto √® massimo
 
 --Ogni clock controlla se reset=1 (inizio)
  process(i_clk,i_rst)
@@ -226,7 +226,7 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto Ë massi
         
 --FSM
 
- process(current_state_s1,i_start)
+ process(current_state_s1,i_start,done2)
     begin   
     next_state_s1<=current_state_s1;    
     case current_state_s1 is
@@ -271,11 +271,11 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto Ë massi
     -- Operazioni
      process(current_state_s1,cur_state_S2,cur_state_S3)
     begin
-    o_done <= '0';
     case current_state_s1 is
     
        --Stato 0
     when F1S0 =>
+    o_done<='0';
 --    MinPixel<="11111111";
 --       MaxPixel<="00000000";
 --       REGAddr<= "0000000000000000";     
@@ -438,27 +438,27 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto Ë massi
         end case;
        end process;
     
-    process(cur_state_S2)
-    begin
-    f2r1_load <= '0';
-    -- done2 <= '0';
-    f2r2_load <= '0';
-    start3 <= '0';
-        case cur_state_S2 is 
-            when F2S0 =>
-            when F2S1 =>
-                f2r1_load <= '1';
-            when F2S2 =>
-            when F2S3 =>
-            when F2S4 =>
-                f2r2_load <= '1';
-            when F2S5 =>
-                start3 <= '1';
-            when F2S6 =>
-            when F2S7 =>
-        --        done2 <= '1';
-        end case;
-    end process;
+--    process(cur_state_S2)
+--    begin
+--    f2r1_load <= '0';
+--    -- done2 <= '0';
+--    f2r2_load <= '0';
+--    start3 <= '0';
+--        case cur_state_S2 is 
+--            when F2S0 =>
+--            when F2S1 =>
+--                f2r1_load <= '1';
+--            when F2S2 =>
+--            when F2S3 =>
+--            when F2S4 =>
+--                f2r2_load <= '1';
+--            when F2S5 =>
+--                start3 <= '1';
+--            when F2S6 =>
+--            when F2S7 =>
+--               done2 <= '1';
+--        end case;
+--    end process;
      
     process (i_clk, i_rst)
     begin
@@ -1223,4 +1223,4 @@ end Behavioral;
 
 
 
----Versione 2 
+---Versione 2.1
