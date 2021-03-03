@@ -1204,3 +1204,5 @@ flagMAX <= '1' when Pixel > MAXPixel else '0' ; -- =1 se il valore letto è massi
 end Behavioral;
 
 
+
+---Versione 2 
