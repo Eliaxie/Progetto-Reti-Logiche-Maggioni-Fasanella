@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1470000fs"></ZoomStartTime>
-      <ZoomEndTime time="1562201fs"></ZoomEndTime>
-      <Cursor1Time time="1532500fs"></Cursor1Time>
+      <ZoomStartTime time="600000fs"></ZoomStartTime>
+      <ZoomEndTime time="714001fs"></ZoomEndTime>
+      <Cursor1Time time="712600fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="191"></NameColumnWidth>
+      <NameColumnWidth column_width="186"></NameColumnWidth>
       <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="34" />
+   <WVObjectSize size="36" />
    <wvobject fp_name="/project_tb/tb_done" type="logic">
       <obj_property name="ElementShortName">tb_done</obj_property>
       <obj_property name="ObjectShortName">tb_done</obj_property>
@@ -86,6 +86,14 @@
    <wvobject fp_name="/project_tb/UUT/minV" type="array">
       <obj_property name="ElementShortName">minV[7:0]</obj_property>
       <obj_property name="ObjectShortName">minV[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_f3addr" type="logic">
+      <obj_property name="ElementShortName">o_f3addr</obj_property>
+      <obj_property name="ObjectShortName">o_f3addr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_f3addr1" type="logic">
+      <obj_property name="ElementShortName">o_f3addr1</obj_property>
+      <obj_property name="ObjectShortName">o_f3addr1</obj_property>
    </wvobject>
    <wvobject fp_name="/project_tb/UUT/o_address" type="array">
       <obj_property name="ElementShortName">o_address[15:0]</obj_property>
