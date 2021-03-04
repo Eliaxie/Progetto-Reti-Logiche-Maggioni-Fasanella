@@ -115,9 +115,11 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL f : STD_LOGIC;
 	SIGNAL f1 : STD_LOGIC;
 	SIGNAL Sum : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL OP1 : STD_LOGIC_VECTOR(7 DOWNTO 0);
-	SIGNAL OP2 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+--	 signal M: std_logic_vector(15 downto 0);
+	SIGNAL OP1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL OP2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL M : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL ONE : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL minV : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL maxaddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f1s3 : STD_LOGIC;
@@ -129,6 +131,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_f1s5 : STD_LOGIC;
 	SIGNAL o_f3addr : STD_LOGIC;
 	SIGNAL o_f3addr1 : STD_LOGIC;
+	signal o_m : std_logic;
 	--##SEGNALI FASE 2
 	SIGNAL f2r1_load : STD_LOGIC;
 	SIGNAL f2r2_load : STD_LOGIC;
@@ -166,7 +169,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_rAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
 	-- type S1 is (S10, S11, S12, S13, ... ); -- S10 è lo stato 0 dello  1 
-	TYPE State IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3, F1S4, F1S5, F1S6, F1S7, F1S8);
+	TYPE State IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3,F1S3b, F1S4, F1S5, F1S6, F1S7, F1S8);
 	SIGNAL current_state_s1 : State;
 	SIGNAL next_state_s1 : State;
 
@@ -209,9 +212,10 @@ BEGIN
 	minV <= MINPixel;
 	maxaddress <= M;
 	f <= '1' WHEN REGAddr >= "0000000000000001" ELSE '0'; -- segnale f: indica che termina lettura di num righe e num colonne
-	f1 <= '1' WHEN REGAddr > M + "00000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
+	f1 <= '1' WHEN REGAddr > M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
 	delta <= MAXPixel - MINPixel;
-	--o_op1<='1' when REGAddr<="0000000000000000" else '0'; 
+--	o_m <= '1' WHEN OP2 = "0000000000000000" ELSE '0'; 
+--	o_op1<='1' when REGAddr ="0000000000000000" else '0'; 
 	--o_op2<='1' when REGAddr<="0000000000000001" else '0'; 
 	flagMIN <= '1' WHEN Pixel < MINPixel ELSE '0'; -- =1 se il valore letto è minimo
 	flagMAX <= '1' WHEN Pixel > MAXPixel ELSE '0'; -- =1 se il valore letto è massimo
@@ -255,8 +259,13 @@ BEGIN
 			WHEN F1S1b => next_state_s1 <= F1S2b;
 			WHEN F1S2b => next_state_s1 <= F1S3;
 			WHEN F1S3 =>
-
+                if(o_m='1') then
 				next_state_s1 <= F1S4;
+				else 
+				next_state_s1 <= F1S3b;
+				end if;
+				WHEN F1S3b =>
+				next_state_s1 <= F1S3;
 			WHEN F1S4 =>
 				next_state_s1 <= F1S5;
 			WHEN F1S5 =>
@@ -277,14 +286,32 @@ BEGIN
 				next_state_s1 <= F1S0;
 		END CASE;
 	END PROCESS;
-	mult : PROCESS (o_f1s3)
+	mult : PROCESS (o_f1s3,o_m)
 	BEGIN
+	M <= "0000000000000000";
+	ONE<= "0000000000000001";
 		IF (o_f1s3 = '1') THEN
-			M <= STD_LOGIC_VECTOR(RESIZE(unsigned(OP1 * OP2), M'LENGTH));
+--			M <= "0000000000000000";
+			M <= M+OP1;
+			if(o_m='0') then
+--			OP2<=(OP2-1);
+			end if;
+--			M<=M+m;
+--			OP2<= OP2-ONE;
+--op2 <= std_logic_vector(unsigned(op2),(15 downto 0)) - unsigned(one(15 downto 0));
+--			case op2 is
+--			when "0000000000000000" =>
+--			o_m<='1';
+--			end case;
+		
+			
+--			if(OP2 = "0000000000000000") then
+--			o_m<='1';
+--			end if;
 		END IF;
 	END PROCESS;
 
-	aaa : PROCESS (i_clk, i_rst, o_f3addr)
+	Counter : PROCESS (i_clk, i_rst, o_f3addr)
 	BEGIN
 		IF (i_rst = '1') THEN
 			REGAddr <= "0000000000000000";
@@ -349,6 +376,7 @@ BEGIN
 		start2 <= '0';
 		o_op1 <= '0';
 		o_op2 <= '0';
+		o_m<='0';
 
 		CASE current_state_s1 IS
 				--Stato 0
@@ -443,12 +471,18 @@ BEGIN
 				o_f1s4 <= '0';
 				o_f1s2 <= '0';
 				o_f1s3 <= '1';
+				o_m<='1';
+				
 				--         minV<=MINPixel;
 				--      REGAddr<= REGAddr;
 				--       o_address <= REGAddr;
 				--       Pixel<=i_data;
 				--       M<=std_logic_vector(RESIZE(unsigned(OP1*OP2), M'LENGTH));
 				--Stato 4
+				WHEN F1S3b =>
+				o_f1s4 <= '0';
+				o_f1s2 <= '0';
+				o_f1s3 <= '1';
 			WHEN F1S4 =>
 				o_f1s4 <= '1';
 				o_f1s3 <= '0';
@@ -1350,4 +1384,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 3.0
+---Versione 3.5
