@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="600000fs"></ZoomStartTime>
-      <ZoomEndTime time="714001fs"></ZoomEndTime>
-      <Cursor1Time time="712600fs"></Cursor1Time>
+      <ZoomStartTime time="325413fs"></ZoomStartTime>
+      <ZoomEndTime time="325583fs"></ZoomEndTime>
+      <Cursor1Time time="712fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="186"></NameColumnWidth>
+      <NameColumnWidth column_width="181"></NameColumnWidth>
       <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="36" />
+   <WVObjectSize size="40" />
    <wvobject fp_name="/project_tb/tb_done" type="logic">
       <obj_property name="ElementShortName">tb_done</obj_property>
       <obj_property name="ObjectShortName">tb_done</obj_property>
@@ -74,6 +74,22 @@
    <wvobject fp_name="/project_tb/UUT/done3" type="logic">
       <obj_property name="ElementShortName">done3</obj_property>
       <obj_property name="ObjectShortName">done3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_m" type="logic">
+      <obj_property name="ElementShortName">o_m</obj_property>
+      <obj_property name="ObjectShortName">o_m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/M" type="array">
+      <obj_property name="ElementShortName">M[15:0]</obj_property>
+      <obj_property name="ObjectShortName">M[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/OP1" type="array">
+      <obj_property name="ElementShortName">OP1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">OP1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/OP2" type="array">
+      <obj_property name="ElementShortName">OP2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">OP2[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/project_tb/UUT/Pixel" type="array">
       <obj_property name="ElementShortName">Pixel[7:0]</obj_property>

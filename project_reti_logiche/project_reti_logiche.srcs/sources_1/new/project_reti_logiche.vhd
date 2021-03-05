@@ -224,7 +224,6 @@ BEGIN
 	PROCESS (i_clk, i_rst)
 	BEGIN
 		IF (i_rst = '1') THEN
-
 			current_state_s1 <= F1S0;
 			-- MANCA RESETTARE I REGISTRI
 		ELSIF (rising_edge (i_clk)) THEN
@@ -237,7 +236,7 @@ BEGIN
 
 	--FSM
 
-	PROCESS (current_state_s1, i_start, done2)
+	PROCESS (current_state_s1, i_start, done2, OP2)
 	BEGIN
 		next_state_s1 <= current_state_s1;
 		CASE current_state_s1 IS
@@ -259,13 +258,13 @@ BEGIN
 			WHEN F1S1b => next_state_s1 <= F1S2b;
 			WHEN F1S2b => next_state_s1 <= F1S3;
 			WHEN F1S3 =>
-                if(o_m='1') then
-				next_state_s1 <= F1S4;
-				else 
 				next_state_s1 <= F1S3b;
-				end if;
-				WHEN F1S3b =>
-				next_state_s1 <= F1S3;
+		    WHEN F1S3b =>
+				IF (OP2 > 0) THEN
+				    next_state_s1 <= F1S3b;
+				ELSE
+				    next_state_s1 <= F1S4;
+				END IF;
 			WHEN F1S4 =>
 				next_state_s1 <= F1S5;
 			WHEN F1S5 =>
@@ -286,31 +285,29 @@ BEGIN
 				next_state_s1 <= F1S0;
 		END CASE;
 	END PROCESS;
-	mult : PROCESS (o_f1s3,o_m)
+	
+	mult : PROCESS (o_m, i_clk, i_rst, o_op1, o_op2, o_f1s2)
 	BEGIN
-	M <= "0000000000000000";
-	ONE<= "0000000000000001";
-		IF (o_f1s3 = '1') THEN
---			M <= "0000000000000000";
-			M <= M+OP1;
-			if(o_m='0') then
---			OP2<=(OP2-1);
-			end if;
---			M<=M+m;
---			OP2<= OP2-ONE;
---op2 <= std_logic_vector(unsigned(op2),(15 downto 0)) - unsigned(one(15 downto 0));
---			case op2 is
---			when "0000000000000000" =>
---			o_m<='1';
---			end case;
-		
-			
---			if(OP2 = "0000000000000000") then
---			o_m<='1';
---			end if;
+	IF (o_f1s2 = '1') THEN
+			--if rising_edge(o_op1) then  
+			IF o_op1 = '1' THEN
+				OP1 <= STD_LOGIC_VECTOR(RESIZE(unsigned(i_data), OP1'LENGTH));
+			END IF;
+			--if rising_edge(o_op2) then 
+			IF o_op2 = '1' THEN
+				OP2 <= STD_LOGIC_VECTOR(RESIZE(unsigned(i_data), OP2'LENGTH));
+			END IF;
 		END IF;
+	IF (i_rst = '1') THEN
+			M <= "0000000000000000";
+    ELSIF (rising_edge (i_clk)) THEN
+		IF (o_m = '1' and OP2 > 0) THEN
+		    M <= M + OP1;
+		    OP2 <= OP2 - 1;      			
+		END IF;
+	END IF;
 	END PROCESS;
-
+    
 	Counter : PROCESS (i_clk, i_rst, o_f3addr)
 	BEGIN
 		IF (i_rst = '1') THEN
@@ -346,19 +343,6 @@ BEGIN
 
 			IF (flagMAX = '1') THEN
 				MAXPixel <= Pixel;
-			END IF;
-		END IF;
-	END PROCESS;
-	operandi : PROCESS (o_op1, o_op2, o_f1s2, i_rst)
-	BEGIN
-		IF (o_f1s2 = '1') THEN
-			--if rising_edge(o_op1) then  
-			IF o_op1 = '1' THEN
-				OP1 <= STD_LOGIC_VECTOR(RESIZE(unsigned(i_data), OP1'LENGTH));
-			END IF;
-			--if rising_edge(o_op2) then 
-			IF o_op2 = '1' THEN
-				OP2 <= STD_LOGIC_VECTOR(RESIZE(unsigned(i_data), OP2'LENGTH));
 			END IF;
 		END IF;
 	END PROCESS;
@@ -471,7 +455,6 @@ BEGIN
 				o_f1s4 <= '0';
 				o_f1s2 <= '0';
 				o_f1s3 <= '1';
-				o_m<='1';
 				
 				--         minV<=MINPixel;
 				--      REGAddr<= REGAddr;
@@ -480,6 +463,7 @@ BEGIN
 				--       M<=std_logic_vector(RESIZE(unsigned(OP1*OP2), M'LENGTH));
 				--Stato 4
 				WHEN F1S3b =>
+				o_m<='1';
 				o_f1s4 <= '0';
 				o_f1s2 <= '0';
 				o_f1s3 <= '1';
