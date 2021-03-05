@@ -288,16 +288,17 @@ BEGIN
 	
 	mult : PROCESS (o_m, i_clk, i_rst, o_op1, o_op2, o_f1s2)
 	BEGIN
-	IF (o_f1s2 = '1') THEN
+--	IF (o_f1s2 = '1') THEN
 			--if rising_edge(o_op1) then  
-			IF o_op1 = '1' THEN
+			IF rising_edge(o_op1) THEN
+--			IF o_op1='1' THEN
 				OP1 <= "00000000" & i_data;
 			END IF;
-			--if rising_edge(o_op2) then 
-			IF o_op2 = '1' THEN
+			if rising_edge(o_op2) then 
+--			IF o_op2 = '1' THEN
 				OP2 <= "00000000" & i_data;
 			END IF;
-		END IF;
+--		END IF;
 	IF (i_rst = '1') THEN
 			M <= "0000000000000000";
     ELSIF (rising_edge (i_clk)) THEN
@@ -604,8 +605,8 @@ BEGIN
 	--               done2 <= '1';
 	--        end case;
 	--    end process;
-
---	PROCESS (i_clk, i_rst)  CODICE DUPLICATO?
+-- CODICE DUPLICATO?
+--	PROCESS (i_clk, i_rst) 
 --	BEGIN
 --		IF (i_rst = '1') THEN
 --			o_f2r1 <= "00000000";
@@ -1368,4 +1369,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 4.0
+---Versione 4.5
