@@ -291,15 +291,17 @@ BEGIN
 	IF (o_f1s2 = '1') THEN
 			--if rising_edge(o_op1) then  
 			IF o_op1 = '1' THEN
-				OP1 <= STD_LOGIC_VECTOR(RESIZE(unsigned(i_data), OP1'LENGTH));
+				OP1 <= "00000000" & i_data;
 			END IF;
 			--if rising_edge(o_op2) then 
 			IF o_op2 = '1' THEN
-				OP2 <= STD_LOGIC_VECTOR(RESIZE(unsigned(i_data), OP2'LENGTH));
+				OP2 <= "00000000" & i_data;
 			END IF;
 		END IF;
 	IF (i_rst = '1') THEN
 			M <= "0000000000000000";
+			OP1 <= "0000000000000000";
+			OP2 <= "0000000000000000";
     ELSIF (rising_edge (i_clk)) THEN
 		IF (o_m = '1' and OP2 > 0) THEN
 		    M <= M + OP1;
@@ -605,16 +607,16 @@ BEGIN
 	--        end case;
 	--    end process;
 
-	PROCESS (i_clk, i_rst)
-	BEGIN
-		IF (i_rst = '1') THEN
-			o_f2r1 <= "00000000";
-		ELSIF i_clk' event AND i_clk = '1' THEN
-			IF (f2r1_load = '1') THEN
-				o_f2r1 <= delta;
-			END IF;
-		END IF;
-	END PROCESS;
+--	PROCESS (i_clk, i_rst)
+--	BEGIN
+--		IF (i_rst = '1') THEN
+--			o_f2r1 <= "00000000";
+--		ELSIF i_clk' event AND i_clk = '1' THEN
+--			IF (f2r1_load = '1') THEN
+--				o_f2r1 <= delta;
+--			END IF;
+--		END IF;
+--	END PROCESS;
 
 	--##FASE 2
 	PROCESS (i_clk, i_rst)

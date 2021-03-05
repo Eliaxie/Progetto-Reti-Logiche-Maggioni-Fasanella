@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Thu Mar  4 20:28:19 2021
-# Process ID: 17424
+# Start of session at: Fri Mar  5 09:49:39 2021
+# Process ID: 14012
 # Current directory: C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1
 # Command line: vivado.exe -log project_reti_logiche.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source project_reti_logiche.tcl
 # Log file: C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1/project_reti_logiche.vds
@@ -17,37 +17,35 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a200
 INFO: [Device 21-403] Loading part xc7a200tfbg484-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 17432
+INFO: [Synth 8-7075] Helper process launched with PID 15440
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1015.188 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1015.137 ; gain = 0.000
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'project_reti_logiche' [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:57]
-WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:236]
-WARNING: [Synth 8-614] signal 'OP1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:280]
-WARNING: [Synth 8-614] signal 'OP2' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:280]
-WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:309]
-WARNING: [Synth 8-614] signal 'i_data' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:325]
-WARNING: [Synth 8-614] signal 'o_f3r6' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:340]
-INFO: [Synth 8-226] default block is never used [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:676]
-WARNING: [Synth 8-614] signal 'o_f3r7' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1210]
-WARNING: [Synth 8-614] signal 'o_f3r4' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1210]
-WARNING: [Synth 8-614] signal 'shift_level' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1327]
-WARNING: [Synth 8-614] signal 'o_f3r5' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1337]
-WARNING: [Synth 8-614] signal 'o_f3s1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1337]
+WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:239]
+WARNING: [Synth 8-614] signal 'i_data' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:289]
+WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:335]
+WARNING: [Synth 8-614] signal 'o_f3r6' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:353]
+INFO: [Synth 8-226] default block is never used [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:696]
+WARNING: [Synth 8-614] signal 'o_f3r7' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1230]
+WARNING: [Synth 8-614] signal 'o_f3r4' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1230]
+WARNING: [Synth 8-614] signal 'shift_level' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1347]
+WARNING: [Synth 8-614] signal 'o_f3r5' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1357]
+WARNING: [Synth 8-614] signal 'o_f3s1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1357]
 INFO: [Synth 8-256] done synthesizing module 'project_reti_logiche' (1#1) [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:57]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1015.188 ; gain = 0.000
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1015.137 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1015.188 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 1015.137 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1015.188 ; gain = 0.000
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 1015.137 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1015.188 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1015.137 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -56,32 +54,82 @@ Parsing XDC File [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti
 Finished Parsing XDC File [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/constrs_1/new/clock.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1124.281 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1098.836 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1124.281 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1098.836 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1098.836 ; gain = 83.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a200tfbg484-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1098.836 ; gain = 83.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1098.836 ; gain = 83.699
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-327] inferring latch for variable 'M_reg' [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:283]
-WARNING: [Synth 8-327] inferring latch for variable 'OP1_reg' [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:330]
-WARNING: [Synth 8-327] inferring latch for variable 'OP2_reg' [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:334]
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_s1_reg' in module 'project_reti_logiche'
+INFO: [Synth 8-802] inferred FSM for state register 'cur_state_S2_reg' in module 'project_reti_logiche'
+INFO: [Synth 8-802] inferred FSM for state register 'cur_state_S3_reg' in module 'project_reti_logiche'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    f1s0 |                     000000000001 |                             0000
+                    f1s1 |                     000000000010 |                             0001
+                    f1s2 |                     000000000100 |                             0010
+                   f1s1b |                     000000001000 |                             0011
+                   f1s2b |                     000000010000 |                             0100
+                    f1s3 |                     000000100000 |                             0101
+                   f1s3b |                     000001000000 |                             0110
+                    f1s4 |                     000010000000 |                             0111
+                    f1s5 |                     000100000000 |                             1000
+                    f1s6 |                     001000000000 |                             1001
+                    f1s7 |                     010000000000 |                             1010
+                    f1s8 |                     100000000000 |                             1011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_s1_reg' using encoding 'one-hot' in module 'project_reti_logiche'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    f2s0 |                              000 |                              000
+                    f2s1 |                              001 |                              001
+                    f2s2 |                              010 |                              010
+                    f2s3 |                              011 |                              011
+                    f2s4 |                              100 |                              100
+                    f2s5 |                              101 |                              101
+                    f2s6 |                              110 |                              110
+                    f2s7 |                              111 |                              111
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'cur_state_S2_reg' using encoding 'sequential' in module 'project_reti_logiche'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    f3s0 |                   00000000000001 |                             0000
+                   f3s0b |                   00000000000010 |                             0001
+                   f3s0c |                   00000000000100 |                             0010
+                    f3s1 |                   00000000001000 |                             0011
+                    f3s2 |                   00000000010000 |                             0100
+                    f3s3 |                   00000000100000 |                             0101
+                    f3s4 |                   00000001000000 |                             0110
+                    f3s5 |                   00000010000000 |                             0111
+                    f3s6 |                   00000100000000 |                             1000
+                   f3s6b |                   00001000000000 |                             1001
+                    f3s7 |                   00010000000000 |                             1010
+                   f3s7b |                   00100000000000 |                             1011
+                    f3s8 |                   01000000000000 |                             1100
+                    f3s9 |                   10000000000000 |                             1101
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'cur_state_S3_reg' using encoding 'one-hot' in module 'project_reti_logiche'
+WARNING: [Synth 8-327] inferring latch for variable 'OP1_reg' [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:294]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1098.836 ; gain = 83.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -89,29 +137,29 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   3 Input   17 Bit       Adders := 1     
-	   2 Input   16 Bit       Adders := 4     
+	   2 Input   16 Bit       Adders := 3     
 	   3 Input    8 Bit       Adders := 2     
 	   2 Input    4 Bit       Adders := 1     
 +---Registers : 
 	               16 Bit    Registers := 2     
-	                8 Bit    Registers := 7     
-	                4 Bit    Registers := 4     
-	                3 Bit    Registers := 1     
+	                8 Bit    Registers := 8     
+	                4 Bit    Registers := 2     
 	                1 Bit    Registers := 1     
 +---Muxes : 
-	   2 Input   16 Bit        Muxes := 2     
-	   2 Input    8 Bit        Muxes := 3     
-	  15 Input    8 Bit        Muxes := 1     
-	   2 Input    4 Bit        Muxes := 2     
-	  16 Input    4 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 1     
+	  14 Input   14 Bit        Muxes := 1     
+	   2 Input   14 Bit        Muxes := 1     
+	  12 Input   12 Bit        Muxes := 1     
+	   2 Input   12 Bit        Muxes := 4     
+	   2 Input    8 Bit        Muxes := 1     
+	  14 Input    8 Bit        Muxes := 1     
 	 256 Input    4 Bit        Muxes := 1     
-	   9 Input    3 Bit        Muxes := 1     
-	  12 Input    1 Bit        Muxes := 8     
-	   8 Input    1 Bit        Muxes := 3     
-	  19 Input    1 Bit        Muxes := 1     
-	  15 Input    1 Bit        Muxes := 10    
-	  22 Input    1 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 2     
+	   8 Input    3 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 3     
+	  12 Input    1 Bit        Muxes := 4     
+	   8 Input    1 Bit        Muxes := 5     
+	  14 Input    1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -128,33 +176,25 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1098.836 ; gain = 83.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1098.836 ; gain = 83.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1102.824 ; gain = 87.688
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[7]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[7] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[6]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[6] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[5]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[5] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[4]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[4] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[3]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[3] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[2]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[2] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[1]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[1] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
-INFO: [Synth 8-4765] Removing register instance (\o_f2r1_reg[0]__0 ) from module (project_reti_logiche) as it is equivalent to (\o_f2r1_reg[0] ) and driving same net [C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:593]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Technology Mapping : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -172,37 +212,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished IO Insertion : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -220,40 +260,40 @@ Report Cell Usage:
 +------+-------+------+
 |1     |BUFG   |     1|
 |2     |CARRY4 |    47|
-|3     |LUT1   |     7|
-|4     |LUT2   |    65|
-|5     |LUT3   |    12|
-|6     |LUT4   |    88|
-|7     |LUT5   |    28|
-|8     |LUT6   |    77|
-|9     |FDCE   |   127|
-|10    |FDPE   |     8|
+|3     |LUT1   |     6|
+|4     |LUT2   |    88|
+|5     |LUT3   |    25|
+|6     |LUT4   |    67|
+|7     |LUT5   |     9|
+|8     |LUT6   |    37|
+|9     |FDCE   |   175|
+|10    |FDPE   |    10|
 |11    |FDRE   |    12|
-|12    |LD     |    32|
+|12    |LDC    |     8|
 |13    |IBUF   |    11|
 |14    |OBUF   |    27|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1112.410 ; gain = 97.273
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:24 . Memory (MB): peak = 1124.281 ; gain = 0.000
-Synthesis Optimization Complete : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1124.281 ; gain = 109.094
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:24 . Memory (MB): peak = 1112.410 ; gain = 13.574
+Synthesis Optimization Complete : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1112.410 ; gain = 97.273
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1124.348 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 79 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1120.766 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 55 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1124.348 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1129.926 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 32 instances were transformed.
-  LD => LDCE: 32 instances
+  A total of 8 instances were transformed.
+  LDC => LDCE: 8 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-25 Infos, 14 Warnings, 0 Critical Warnings and 0 Errors encountered.
+23 Infos, 10 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1124.348 ; gain = 109.160
+synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1129.926 ; gain = 114.789
 INFO: [Common 17-1381] The checkpoint 'C:/Repos/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1/project_reti_logiche.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file project_reti_logiche_utilization_synth.rpt -pb project_reti_logiche_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Mar  4 20:28:58 2021...
+INFO: [Common 17-206] Exiting Vivado at Fri Mar  5 09:50:17 2021...
