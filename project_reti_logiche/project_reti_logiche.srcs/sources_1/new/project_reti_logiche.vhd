@@ -214,6 +214,7 @@ BEGIN
 	f <= '1' WHEN REGAddr >= "0000000000000001" ELSE '0'; -- segnale f: indica che termina lettura di num righe e num colonne
 	f1 <= '1' WHEN REGAddr > M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
 	delta <= MAXPixel - MINPixel;
+--	Pixel<=i_data;
 --	o_m <= '1' WHEN OP2 = "0000000000000000" ELSE '0'; 
 --	o_op1<='1' when REGAddr ="0000000000000000" else '0'; 
 	--o_op2<='1' when REGAddr<="0000000000000001" else '0'; 
@@ -270,7 +271,7 @@ BEGIN
 --				    next_state_s1 <= F1S4;
 --				END IF;
 			WHEN F1S4 =>
-				next_state_s1 <= F1S5;
+				next_state_s1 <= F1S4a;
 				WHEN F1S4a =>next_state_s1 <= F1S5;
 			WHEN F1S5 =>
 				IF (f1 = '1') THEN
@@ -337,21 +338,24 @@ BEGIN
 			END IF;
 		END IF;
 	END PROCESS;
-	calcolaMINeMAX : PROCESS (o_f1s5, flagMAX, flagMIN, i_rst)
+	calcolaMINeMAX : PROCESS (i_clk,o_f1s5, flagMAX, flagMIN, i_rst,f1)
 	BEGIN
+	
+--	 if(pixel> MAXPixel) then flagMAX<='1'; else flagMAX<='0'; end if;
+--	 if(pixel< MAXPixel) then flagMIN<='1'; else flagMIN<='0'; end if;
 		IF (i_rst = '1') THEN
 			MaxPixel <= "00000000";
 			MinPixel <= "11111111";
-
-		ELSIF (rising_edge(o_f1s5) AND f1 = '0') THEN
-			IF (flagMIN = '1') THEN
+       elsif rising_edge(i_clk) and o_f1s5='1' and f1 = '0' then
+		  
+		  IF ( flagMIN='1') THEn
 				MINPixel <= Pixel;
 			END IF;
 
-			IF (flagMAX = '1') THEN
+			IF (flagMAX='1') THEN
 				MAXPixel <= Pixel;
 			END IF;
-		END IF;
+	end if;
 	END PROCESS;
 
 	-- Operazioni
@@ -475,6 +479,7 @@ BEGIN
 				o_f1s2 <= '0';
 				o_f1s3 <= '1';
 			WHEN F1S4 =>
+--			if(pixel> MAXPixel) then flagMAX<='1'; else flagMAX<='0'; end if;
 			    o_m<='0';
 				o_f1s4 <= '1';
 				o_f1s3 <= '0';
@@ -491,7 +496,7 @@ BEGIN
 				WHEN F1S4a =>
 				o_f1s4 <= '0';
 				o_f1s3 <= '0';
-				o_f1s5 <= '1';
+				o_f1s5 <= '0';
 			WHEN F1S5 =>
 				o_f1s4 <= '0';
 				o_f1s3 <= '0';
@@ -1380,4 +1385,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 4.6
+---Versione 5.0
