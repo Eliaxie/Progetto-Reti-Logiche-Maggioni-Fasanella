@@ -43,15 +43,15 @@ ENTITY project_reti_logiche IS
 	);
 END project_reti_logiche;
 -- il nome del modulo deve essere project_reti_logiche
--- ?i_clk Ë il segnale di CLOCK in ingresso generato dal TestBench;
--- ?i_rst Ë il segnale di RESET che inizializza la macchina pronta per ricevere il primosegnale di START;
--- ?i_start Ë il segnale di START generato dal Test Bench;
--- ?i_data Ë il segnale (vettore) che arriva dalla memoria in seguito ad una richiesta dilettura;
--- ?o_address Ë il segnale (vettore) di uscita che manda l'indirizzo alla memoria;
--- ?o_done Ë il segnale di uscita che comunica la fine dell'elaborazione e il dato di uscitascritto in memoria;
--- ?o_en Ë il segnale di ENABLE da dover mandare alla memoria per poter comunicare(sia in lettura che in scrittura);
--- ?o_we Ë il segnale di WRITE ENABLE da dover mandare alla memoria (=1) per poterscriverci. Per leggere da memoria esso deve essere 0;
--- ?o_data Ë il segnale (vettore) di uscita dal componente verso la memoria. 
+-- ?i_clk √® il segnale di CLOCK in ingresso generato dal TestBench;
+-- ?i_rst √® il segnale di RESET che inizializza la macchina pronta per ricevere il primosegnale di START;
+-- ?i_start √® il segnale di START generato dal Test Bench;
+-- ?i_data √® il segnale (vettore) che arriva dalla memoria in seguito ad una richiesta dilettura;
+-- ?o_address √® il segnale (vettore) di uscita che manda l'indirizzo alla memoria;
+-- ?o_done √® il segnale di uscita che comunica la fine dell'elaborazione e il dato di uscitascritto in memoria;
+-- ?o_en √® il segnale di ENABLE da dover mandare alla memoria per poter comunicare(sia in lettura che in scrittura);
+-- ?o_we √® il segnale di WRITE ENABLE da dover mandare alla memoria (=1) per poterscriverci. Per leggere da memoria esso deve essere 0;
+-- ?o_data √® il segnale (vettore) di uscita dal componente verso la memoria. 
 
 -- Progetto di Elia Maggioni e Marco Fasanella
 ARCHITECTURE Behavioral OF project_reti_logiche IS
@@ -101,7 +101,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 			maxaddress : IN STD_LOGIC_VECTOR(15 DOWNTO 0) -- as input
 		);
 
-		-- probabilmente servir‡ un altro componente per determinare la fine di o_address
+		-- probabilmente servir√† un altro componente per determinare la fine di o_address
 	END COMPONENT;
 	-- signal f1r1_load : STD_LOGIC; f1 prefisso sta per fase 1
 	-- ...
@@ -168,15 +168,15 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_wAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_rAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
-	-- type S1 is (S10, S11, S12, S13, ... ); -- S10 Ë lo stato 0 dello  1 
-	TYPE State IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3,F1S3b, F1S4, F1S5, F1S6, F1S7, F1S8);
+	-- type S1 is (S10, S11, S12, S13, ... ); -- S10 √® lo stato 0 dello  1 
+	TYPE State IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3,F1S3b, F1S4,F1S4a, F1S5, F1S6, F1S7, F1S8);
 	SIGNAL current_state_s1 : State;
 	SIGNAL next_state_s1 : State;
 
-	TYPE S2 IS (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 Ë lo stato 0 della fase 2 
+	TYPE S2 IS (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 √® lo stato 0 della fase 2 
 	SIGNAL cur_state_S2, next_state_S2 : S2;
 
-	TYPE S3 IS (F3S0, F3S0b, F3S0c, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 Ë lo stato 0 della fase 2 
+	TYPE S3 IS (F3S0, F3S0b, F3S0c, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 √® lo stato 0 della fase 2 
 	SIGNAL cur_state_S3, next_state_S3 : S3;
 
 	-- type F is (F0, F1, F2, F3);
@@ -217,8 +217,8 @@ BEGIN
 --	o_m <= '1' WHEN OP2 = "0000000000000000" ELSE '0'; 
 --	o_op1<='1' when REGAddr ="0000000000000000" else '0'; 
 	--o_op2<='1' when REGAddr<="0000000000000001" else '0'; 
-	flagMIN <= '1' WHEN Pixel < MINPixel ELSE '0'; -- =1 se il valore letto Ë minimo
-	flagMAX <= '1' WHEN Pixel > MAXPixel ELSE '0'; -- =1 se il valore letto Ë massimo
+	flagMIN <= '1' WHEN pixel< MINPixel ELSE '0'; -- =1 se il valore letto √® minimo
+	flagMAX <= '1' WHEN pixel> MAXPixel ELSE '0'; -- =1 se il valore letto √® massimo
 
 	--Ogni clock controlla se reset=1 (inizio)
 	PROCESS (i_clk, i_rst)
@@ -258,15 +258,20 @@ BEGIN
 			WHEN F1S1b => next_state_s1 <= F1S2b;
 			WHEN F1S2b => next_state_s1 <= F1S3;
 			WHEN F1S3 =>
+			IF (OP2 > 0) THEN
 				next_state_s1 <= F1S3b;
-		    WHEN F1S3b =>
-				IF (OP2 > 0) THEN
-				    next_state_s1 <= F1S3b;
 				ELSE
 				    next_state_s1 <= F1S4;
 				END IF;
+		    WHEN F1S3b =>
+--				IF (OP2 > 0) THEN
+				    next_state_s1 <= F1S3;
+--				ELSE
+--				    next_state_s1 <= F1S4;
+--				END IF;
 			WHEN F1S4 =>
 				next_state_s1 <= F1S5;
+				WHEN F1S4a =>next_state_s1 <= F1S5;
 			WHEN F1S5 =>
 				IF (f1 = '1') THEN
 					next_state_s1 <= F1S6;
@@ -290,23 +295,22 @@ BEGIN
 	BEGIN
 --	IF (o_f1s2 = '1') THEN
 			--if rising_edge(o_op1) then  
+			
 --		END IF;
 	IF (i_rst = '1') THEN
 			M <= "0000000000000000";
-			OP2 <= "0000000000000000";
-			OP1 <= "0000000000000000";
+			
     ELSIF (rising_edge (i_clk)) THEN
-		IF (o_m = '1' and OP2 > 0) THEN
+    IF o_op1='1' THEN
+--			IF o_op1='1' THEN
+				OP1 <= std_logic_vector( resize(unsigned(i_data), OP1'length));
+			elsif o_op2='1' then 
+--			IF o_op2 = '1' THEN
+				OP2 <= std_logic_vector( resize(unsigned(i_data), OP2'length));
+			
+		elsIF (o_m = '1') THEN
 		    M <= M + OP1;
 		    OP2 <= OP2 - 1;      			
-		END IF;   
-	    IF (o_op1='1') THEN
---			IF o_op1='1' THEN
-			OP1 <= OP1 + i_data;
-	   	END IF;
-	    IF (o_op2 = '1') THEN
---			IF o_op2 = '1' THEN
-			OP2 <= "0000000000000000" + i_data;
 		END IF;
 	END IF;
 	END PROCESS;
@@ -458,7 +462,7 @@ BEGIN
 				o_f1s4 <= '0';
 				o_f1s2 <= '0';
 				o_f1s3 <= '1';
-				
+				o_m<='0';
 				--         minV<=MINPixel;
 				--      REGAddr<= REGAddr;
 				--       o_address <= REGAddr;
@@ -471,6 +475,7 @@ BEGIN
 				o_f1s2 <= '0';
 				o_f1s3 <= '1';
 			WHEN F1S4 =>
+			    o_m<='0';
 				o_f1s4 <= '1';
 				o_f1s3 <= '0';
 				o_f1s5 <= '0';
@@ -483,6 +488,10 @@ BEGIN
 				--         MAXPixel<=MAXPixel;
 
 				--Stato 5
+				WHEN F1S4a =>
+				o_f1s4 <= '0';
+				o_f1s3 <= '0';
+				o_f1s5 <= '1';
 			WHEN F1S5 =>
 				o_f1s4 <= '0';
 				o_f1s3 <= '0';
@@ -1371,4 +1380,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 4.5
+---Versione 4.6
