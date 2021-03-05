@@ -300,8 +300,6 @@ BEGIN
 		END IF;
 	IF (i_rst = '1') THEN
 			M <= "0000000000000000";
-			OP1 <= "0000000000000000";
-			OP2 <= "0000000000000000";
     ELSIF (rising_edge (i_clk)) THEN
 		IF (o_m = '1' and OP2 > 0) THEN
 		    M <= M + OP1;
@@ -607,7 +605,7 @@ BEGIN
 	--        end case;
 	--    end process;
 
---	PROCESS (i_clk, i_rst)
+--	PROCESS (i_clk, i_rst)  CODICE DUPLICATO?
 --	BEGIN
 --		IF (i_rst = '1') THEN
 --			o_f2r1 <= "00000000";
@@ -1370,4 +1368,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 3.5
+---Versione 4.0
