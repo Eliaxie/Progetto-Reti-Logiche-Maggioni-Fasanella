@@ -11,9 +11,9 @@ echo "Please update the PATH and LD_LIBRARY_PATH variables below, before executi
 exit
 
 if [ -z "$PATH" ]; then
-  PATH=C:/Xilinxx/Vivado/2020.2/ids_lite/ISE/bin/nt64;C:/Xilinxx/Vivado/2020.2/ids_lite/ISE/lib/nt64:C:/Xilinxx/Vivado/2020.2/bin
+  PATH=C:/xilinx/Vivado/2020.2/ids_lite/ISE/bin/nt64;C:/xilinx/Vivado/2020.2/ids_lite/ISE/lib/nt64:C:/xilinx/Vivado/2020.2/bin
 else
-  PATH=C:/Xilinxx/Vivado/2020.2/ids_lite/ISE/bin/nt64;C:/Xilinxx/Vivado/2020.2/ids_lite/ISE/lib/nt64:C:/Xilinxx/Vivado/2020.2/bin:$PATH
+  PATH=C:/xilinx/Vivado/2020.2/ids_lite/ISE/bin/nt64;C:/xilinx/Vivado/2020.2/ids_lite/ISE/lib/nt64:C:/xilinx/Vivado/2020.2/bin:$PATH
 fi
 export PATH
 
@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1'
+HD_PWD='C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

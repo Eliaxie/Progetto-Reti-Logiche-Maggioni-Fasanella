@@ -17,62 +17,62 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a200
 INFO: [Device 21-403] Loading part xc7a200tfbg484-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 8916
+INFO: [Synth 8-7075] Helper process launched with PID 14316
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1013.871 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1017.172 ; gain = 0.000
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'project_reti_logiche' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:57]
-WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:239]
-WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:334]
-WARNING: [Synth 8-614] signal 'o_f3r6' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:352]
-INFO: [Synth 8-226] default block is never used [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:695]
-WARNING: [Synth 8-614] signal 'o_f3r7' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1229]
-WARNING: [Synth 8-614] signal 'o_f3r4' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1229]
-WARNING: [Synth 8-614] signal 'shift_level' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1346]
-WARNING: [Synth 8-614] signal 'o_f3r5' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1356]
-WARNING: [Synth 8-614] signal 'o_f3s1' is read in the process but is not in the sensitivity list [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1356]
-INFO: [Synth 8-256] done synthesizing module 'project_reti_logiche' (1#1) [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:57]
+INFO: [Synth 8-638] synthesizing module 'project_reti_logiche' [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:57]
+WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:239]
+WARNING: [Synth 8-614] signal 'f1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:336]
+WARNING: [Synth 8-614] signal 'o_f3r6' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:354]
+INFO: [Synth 8-226] default block is never used [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:697]
+WARNING: [Synth 8-614] signal 'o_f3r7' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1231]
+WARNING: [Synth 8-614] signal 'o_f3r4' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1231]
+WARNING: [Synth 8-614] signal 'shift_level' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1348]
+WARNING: [Synth 8-614] signal 'o_f3r5' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1358]
+WARNING: [Synth 8-614] signal 'o_f3s1' is read in the process but is not in the sensitivity list [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:1358]
+INFO: [Synth 8-256] done synthesizing module 'project_reti_logiche' (1#1) [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:57]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1013.871 ; gain = 0.000
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1017.172 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1013.871 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1017.172 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1013.871 ; gain = 0.000
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1017.172 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1013.871 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1017.172 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/constrs_1/new/clock.xdc]
-Finished Parsing XDC File [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/constrs_1/new/clock.xdc]
+Parsing XDC File [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/constrs_1/new/clock.xdc]
+Finished Parsing XDC File [C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/constrs_1/new/clock.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1055.813 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1100.492 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1055.813 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 1100.492 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1055.813 ; gain = 41.941
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1100.492 ; gain = 83.320
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a200tfbg484-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1055.813 ; gain = 41.941
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1100.492 ; gain = 83.320
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1055.813 ; gain = 41.941
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1100.492 ; gain = 83.320
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'current_state_s1_reg' in module 'project_reti_logiche'
 INFO: [Synth 8-802] inferred FSM for state register 'cur_state_S2_reg' in module 'project_reti_logiche'
@@ -127,7 +127,7 @@ INFO: [Synth 8-3354] encoded FSM with state register 'cur_state_S2_reg' using en
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'cur_state_S3_reg' using encoding 'one-hot' in module 'project_reti_logiche'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1055.813 ; gain = 41.941
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1100.492 ; gain = 83.320
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -135,12 +135,12 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   3 Input   17 Bit       Adders := 1     
-	   2 Input   16 Bit       Adders := 4     
+	   2 Input   16 Bit       Adders := 3     
 	   3 Input    8 Bit       Adders := 2     
 	   2 Input    4 Bit       Adders := 1     
 +---Registers : 
 	               16 Bit    Registers := 2     
-	                8 Bit    Registers := 9     
+	                8 Bit    Registers := 8     
 	                4 Bit    Registers := 2     
 	                1 Bit    Registers := 1     
 +---Muxes : 
@@ -154,10 +154,10 @@ Detailed RTL Component Info :
 	 256 Input    4 Bit        Muxes := 1     
 	   8 Input    3 Bit        Muxes := 1     
 	   2 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 3     
 	  12 Input    1 Bit        Muxes := 3     
 	   8 Input    1 Bit        Muxes := 5     
 	  14 Input    1 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -173,50 +173,26 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[15]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[14]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[13]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[12]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[11]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[10]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[9]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'OP2_reg[8]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1055.813 ; gain = 41.941
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1100.492 ; gain = 83.320
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 1055.813 ; gain = 41.941
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1100.492 ; gain = 83.320
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 1061.527 ; gain = 47.656
+Finished Timing Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1106.809 ; gain = 89.637
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:33 ; elapsed = 00:00:33 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Technology Mapping : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -234,60 +210,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished IO Insertion : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[7] with 1st driver pin 'OP2_reg[7]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[7] with 2nd driver pin 'OP2_reg[7]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[6] with 1st driver pin 'OP2_reg[6]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[6] with 2nd driver pin 'OP2_reg[6]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[5] with 1st driver pin 'OP2_reg[5]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[5] with 2nd driver pin 'OP2_reg[5]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[4] with 1st driver pin 'OP2_reg[4]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[4] with 2nd driver pin 'OP2_reg[4]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[3] with 1st driver pin 'OP2_reg[3]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[3] with 2nd driver pin 'OP2_reg[3]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[2] with 1st driver pin 'OP2_reg[2]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[2] with 2nd driver pin 'OP2_reg[2]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[1] with 1st driver pin 'OP2_reg[1]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[1] with 2nd driver pin 'OP2_reg[1]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[0] with 1st driver pin 'OP2_reg[0]__0/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin OP2[0] with 2nd driver pin 'OP2_reg[0]/Q' [C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sources_1/new/project_reti_logiche.vhd:299]
-
-Report Check Netlist: 
-+------+------------------+-------+---------+-------+------------------+
-|      |Item              |Errors |Warnings |Status |Description       |
-+------+------------------+-------+---------+-------+------------------+
-|1     |multi_driven_nets |      0|        8|Failed |Multi driven nets |
-+------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -304,40 +257,39 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |CARRY4 |    41|
-|3     |LUT1   |     7|
-|4     |LUT2   |    74|
-|5     |LUT3   |    11|
-|6     |LUT4   |    52|
-|7     |LUT5   |    12|
-|8     |LUT6   |    39|
-|9     |FDCE   |   159|
+|2     |CARRY4 |    51|
+|3     |LUT1   |     6|
+|4     |LUT2   |   105|
+|5     |LUT3   |    24|
+|6     |LUT4   |    68|
+|7     |LUT5   |     8|
+|8     |LUT6   |    37|
+|9     |FDCE   |   191|
 |10    |FDPE   |    10|
-|11    |FDRE   |    36|
+|11    |FDRE   |    12|
 |12    |IBUF   |    11|
 |13    |OBUF   |    27|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 40 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:35 . Memory (MB): peak = 1071.066 ; gain = 15.254
-Synthesis Optimization Complete : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1071.066 ; gain = 57.195
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:24 . Memory (MB): peak = 1116.379 ; gain = 15.887
+Synthesis Optimization Complete : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1116.379 ; gain = 99.207
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1079.309 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 41 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1126.262 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 51 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1082.973 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1129.172 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-23 Infos, 8 Warnings, 40 Critical Warnings and 0 Errors encountered.
+23 Infos, 8 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:47 ; elapsed = 00:00:50 . Memory (MB): peak = 1082.973 ; gain = 69.102
-INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-INFO: [Common 17-1381] The checkpoint 'C:/Users/marco/Desktop/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1/project_reti_logiche.dcp' has been generated.
+synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:34 . Memory (MB): peak = 1129.172 ; gain = 112.000
+INFO: [Common 17-1381] The checkpoint 'C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.runs/synth_1/project_reti_logiche.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file project_reti_logiche_utilization_synth.rpt -pb project_reti_logiche_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Mar  5 17:19:46 2021...
+INFO: [Common 17-206] Exiting Vivado at Fri Mar  5 18:01:55 2021...

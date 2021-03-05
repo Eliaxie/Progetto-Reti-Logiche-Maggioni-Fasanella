@@ -290,21 +290,23 @@ BEGIN
 	BEGIN
 --	IF (o_f1s2 = '1') THEN
 			--if rising_edge(o_op1) then  
-			IF rising_edge(o_op1) THEN
---			IF o_op1='1' THEN
-				OP1 <= "00000000" & i_data;
-			END IF;
-			if rising_edge(o_op2) then 
---			IF o_op2 = '1' THEN
-				OP2 <= "00000000" & i_data;
-			END IF;
 --		END IF;
 	IF (i_rst = '1') THEN
 			M <= "0000000000000000";
+			OP2 <= "0000000000000000";
+			OP1 <= "0000000000000000";
     ELSIF (rising_edge (i_clk)) THEN
 		IF (o_m = '1' and OP2 > 0) THEN
 		    M <= M + OP1;
 		    OP2 <= OP2 - 1;      			
+		END IF;   
+	    IF (o_op1='1') THEN
+--			IF o_op1='1' THEN
+			OP1 <= OP1 + i_data;
+	   	END IF;
+	    IF (o_op2 = '1') THEN
+--			IF o_op2 = '1' THEN
+			OP2 <= "0000000000000000" + i_data;
 		END IF;
 	END IF;
 	END PROCESS;
