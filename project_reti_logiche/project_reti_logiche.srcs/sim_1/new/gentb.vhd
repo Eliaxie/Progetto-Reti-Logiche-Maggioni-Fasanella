@@ -20,6 +20,7 @@ architecture projecttb of project_tb is
   signal mem_o_data, mem_i_data : std_logic_vector (7 downto 0);
   signal enable_wire            : std_logic;
   signal mem_we                 : std_logic;
+  SIGNAL NumeroTest : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
   type ram_type is array (65535 downto 0) of std_logic_vector(7 downto 0);
 
@@ -68,6 +69,7 @@ begin
     variable handler   : integer;
 
   begin
+        numerotest <= "00000000";
     if tb_clk'event and tb_clk = '1' then
       if s_read then
         readline(read_file, read_line);
@@ -128,8 +130,8 @@ begin
       tb_start <= '0';
       wait until tb_done = '0';
       wait for c_CLOCK_PERIOD;
-
       for i in 2 + pix_num to 2 * pix_num + 1 loop
+        numerotest <= numerotest + 1;
         if (RAM(i) /= RAM(i + pix_num)) then
           passed := false;
           exit;

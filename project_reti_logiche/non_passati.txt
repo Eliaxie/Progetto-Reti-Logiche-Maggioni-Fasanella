@@ -1,2 +1,1 @@
-1) NON PASSATO
-2) NON PASSATO
+Tutti i test sono stati passati
