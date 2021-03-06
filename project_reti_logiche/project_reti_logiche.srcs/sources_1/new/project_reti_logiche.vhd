@@ -119,7 +119,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL OP1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL OP2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL M : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL ONE : STD_LOGIC_VECTOR(15 DOWNTO 0);
+--	SIGNAL ONE : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL minV : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL maxaddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f1s3 : STD_LOGIC;
@@ -163,8 +163,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_f3r7 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f3s1 : STD_LOGIC;
 	SIGNAL o_f3sub : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL o_f3shiftslave : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL o_f3shift : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL o_f3shift : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL o_f3mutex : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL o_wAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_rAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -210,10 +209,9 @@ BEGIN
 	-- ## FASE 1
 
 	Sum <= REGAddr + "0000000000000001"; -- Somma al Contatore
-	minV <= MINPixel;
 	maxaddress <= M;
 	f <= '1' WHEN REGAddr >= "0000000000000001" ELSE '0'; -- segnale f: indica che termina lettura di num righe e num colonne
-	f1 <= '1' WHEN REGAddr > M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
+	f1 <= '1' WHEN REGAddr >= M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
 	delta <= MAXPixel - MINPixel;
 --	Pixel<=i_data;
 --	o_m <= '1' WHEN OP2 = "0000000000000000" ELSE '0'; 
@@ -238,7 +236,7 @@ BEGIN
 
 	--FSM
 
-	PROCESS (current_state_s1, i_start, done2, OP2)
+	PROCESS (current_state_s1, i_start, done2, OP2,F1)
 	BEGIN
 		next_state_s1 <= current_state_s1;
 		CASE current_state_s1 IS
@@ -306,7 +304,7 @@ BEGIN
     IF o_op1='1' THEN
 --			IF o_op1='1' THEN
 				OP1 <= std_logic_vector( resize(unsigned(i_data), OP1'length));
-			elsif o_op2='1' then 
+     elsif o_op2='1' then 
 --			IF o_op2 = '1' THEN
 				OP2 <= std_logic_vector( resize(unsigned(i_data), OP2'length));
 			
@@ -356,11 +354,12 @@ BEGIN
 			IF (flagMAX='1') THEN
 				MAXPixel <= Pixel;
 			END IF;
+			MinV<=MINPixel;
 	end if;
 	END PROCESS;
 
 	-- Operazioni
-	PROCESS (current_state_s1, cur_state_S2, cur_state_S3, i_clk)
+	PROCESS (current_state_s1, cur_state_S2, cur_state_S3, i_clk,O_F3R6)
 	BEGIN
 
 		o_f1s2 <= '0';
@@ -1221,7 +1220,7 @@ BEGIN
 				WHEN "11111110" =>
 					o_LUT <= "0111";
 				WHEN "11111111" =>
-					o_LUT <= "1111";
+					o_LUT <= "1000";
 				WHEN OTHERS => NULL;
 			END CASE;
 		END IF;
@@ -1243,7 +1242,7 @@ BEGIN
 
 	--    --# FASE 3
 
-	PROCESS (cur_state_S3, start3) -- AUTOMA A STATI DELLA SECONDA FASE
+	PROCESS (cur_state_S3, start3,o_f3r7,o_f3r4) -- AUTOMA A STATI DELLA SECONDA FASE
 	BEGIN
 		next_state_S3 <= cur_state_S3;
 		CASE cur_state_S3 IS
@@ -1360,10 +1359,9 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	PROCESS (i_clk, O_f3r5) -- SHIFT # STATO S4
+	PROCESS (i_clk, O_f3r5,SHIFT_LEVEL) -- SHIFT # STATO S4
 	BEGIN
-	     o_f3shiftslave <= "00000000" & o_f3r5;
-		 o_f3shift <= std_logic_vector(shift_left(unsigned(o_f3shiftslave), TO_INTEGER(unsigned(shift_level))));
+		o_f3shift <= STD_LOGIC_VECTOR(shift_left(unsigned(o_f3r5), TO_INTEGER(unsigned(shift_level))));
 	END PROCESS;
 
 	PROCESS (i_clk, O_f3r3, o_f3r2) -- SOTTRAZIONE # STATO S2
@@ -1371,15 +1369,15 @@ BEGIN
 		o_f3sub <= o_f3r3 - o_f3r2;
 	END PROCESS;
 
-	PROCESS (i_clk, o_f3shift) -- MUTEX
+	PROCESS (i_clk, o_f3shift,o_f3r5,o_f3s1) -- MUTEX
 	BEGIN
-		IF (o_f3shift < 255) THEN
+		IF (o_f3shift > o_f3r5 OR o_f3shift = o_f3r5) THEN
 			o_f3s1 <= '1';
 		ELSE
 			o_f3s1 <= '0';
 		END IF;
 		IF (o_f3s1 = '1') THEN
-			o_f3mutex <= o_f3shift(7 downto 0);
+			o_f3mutex <= o_f3shift;
 		ELSE
 			o_f3mutex <= "11111111";
 		END IF;
@@ -1387,4 +1385,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 5.0
+---Versione 10.0
