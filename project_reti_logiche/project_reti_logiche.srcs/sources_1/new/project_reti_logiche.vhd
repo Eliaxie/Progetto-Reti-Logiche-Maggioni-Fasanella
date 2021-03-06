@@ -163,7 +163,8 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_f3r7 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f3s1 : STD_LOGIC;
 	SIGNAL o_f3sub : STD_LOGIC_VECTOR(7 DOWNTO 0);
-	SIGNAL o_f3shift : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL o_f3shiftslave : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL o_f3shift : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f3mutex : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL o_wAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_rAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -1361,7 +1362,8 @@ BEGIN
 
 	PROCESS (i_clk, O_f3r5) -- SHIFT # STATO S4
 	BEGIN
-		o_f3shift <= STD_LOGIC_VECTOR(shift_left(unsigned(o_f3r5), TO_INTEGER(unsigned(shift_level))));
+	     o_f3shiftslave <= "00000000" & o_f3r5;
+		 o_f3shift <= std_logic_vector(shift_left(unsigned(o_f3shiftslave), TO_INTEGER(unsigned(shift_level))));
 	END PROCESS;
 
 	PROCESS (i_clk, O_f3r3, o_f3r2) -- SOTTRAZIONE # STATO S2
@@ -1371,13 +1373,13 @@ BEGIN
 
 	PROCESS (i_clk, o_f3shift) -- MUTEX
 	BEGIN
-		IF (o_f3shift > o_f3r5 OR o_f3shift = o_f3r5) THEN
+		IF (o_f3shift < 255) THEN
 			o_f3s1 <= '1';
 		ELSE
 			o_f3s1 <= '0';
 		END IF;
 		IF (o_f3s1 = '1') THEN
-			o_f3mutex <= o_f3shift;
+			o_f3mutex <= o_f3shift(7 downto 0);
 		ELSE
 			o_f3mutex <= "11111111";
 		END IF;
