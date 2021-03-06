@@ -1,0 +1,5 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+Failure: Simulation Ended! TEST PASSATO
+Time: 1667600 ps  Iteration: 0  Process: /project_tb/test  File: C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sim_1/new/testbench.vhd
+$finish called at time : 1667600 ps : File "C:/Repos/Progetto_reti_GIT/Progetto-Reti-Logiche-Maggioni-Fasanella/project_reti_logiche/project_reti_logiche.srcs/sim_1/new/testbench.vhd" Line 115
