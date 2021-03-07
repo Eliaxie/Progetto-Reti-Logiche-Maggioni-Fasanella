@@ -227,7 +227,7 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	FSM1: PROCESS (current_state_s1, i_start, done2, OP2,F1)
+	FSM1: PROCESS (current_state_s1, i_start, done2,OP1, OP2,F1)
 	BEGIN
 		next_state_s1 <= current_state_s1;
 		CASE current_state_s1 IS
@@ -1182,7 +1182,7 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	SHIFT: PROCESS (i_clk, O_f3r5,SHIFT_LEVEL) -- SHIFT # STATO S4
+	SHIFT: PROCESS (i_clk, O_f3r5,SHIFT_LEVEL,o_f3shiftslave) -- SHIFT # STATO S4
 	BEGIN
 	    o_f3shiftslave <=  "00000000" & o_f3r5;
 		o_f3shift <= STD_LOGIC_VECTOR(shift_left(unsigned(o_f3shiftslave), TO_INTEGER(unsigned(shift_level))));
