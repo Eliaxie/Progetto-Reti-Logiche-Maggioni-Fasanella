@@ -209,6 +209,7 @@ BEGIN
 
  -- SIGNALS AND OPERATIONS
 	Sum <= REGAddr + "0000000000000001"; -- Somma al Contatore
+	MinV<=MINPixel;
 	maxaddress <= M; -- Maximum address 
 	f <= '1' WHEN REGAddr >= "0000000000000001" ELSE '0'; -- segnale f: indica che termina lettura di num righe e num colonne
 	f1 <= '1' WHEN REGAddr > M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
@@ -322,7 +323,6 @@ BEGIN
 		ELSIF (rising_edge (i_clk)) THEN
 			IF (o_f1s4 = '1') THEN
 				REGAddr <= Sum;
-				
 				o_address <= Sum;
 				Pixel <= i_data;
 			END IF;
@@ -349,7 +349,7 @@ BEGIN
 			IF (flagMAX='1') THEN
 				MAXPixel <= Pixel;
 			END IF;
-			MinV<=MINPixel;
+--			MinV<=MINPixel;
 	end if;
 	END PROCESS;
 
@@ -1089,9 +1089,9 @@ BEGIN
 
     o_SUB <= "1000" - o_LUT;	
 	
-	SUB: PROCESS (i_clk, i_rst)
+	SUB: PROCESS (i_clk, i_rst,endof)
 	BEGIN
-		IF (i_rst = '1') THEN
+		IF (i_rst = '1' or endof='1') THEN
 			o_f2r2 <= "0000";
 		ELSIF i_clk' event AND i_clk = '1' THEN
 			IF (f2r2_load = '1') THEN
@@ -1209,4 +1209,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 15.0
+---Versione 20.0
