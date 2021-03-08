@@ -170,9 +170,8 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_rAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
 	-- type S1 is (S10, S11, S12, S13, ... ); -- S10 Ã¨ lo stato 0 dello  1 
-	TYPE State IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3,F1S3b, F1S4,F1S4a, F1S5, F1S6, F1S7, F1S8,F1S9);
-	SIGNAL current_state_s1 : State;
-	SIGNAL next_state_s1 : State;
+	TYPE S1 IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3,F1S3b, F1S4,F1S4a, F1S5, F1S6, F1S7, F1S8,F1S9);
+	SIGNAL cur_state_S1, next_state_s1 : S1;
 
 	TYPE S2 IS (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 Ã¨ lo stato 0 della fase 2 
 	SIGNAL cur_state_S2, next_state_S2 : S2;
@@ -221,17 +220,17 @@ BEGIN
 	PROCESS (i_clk, i_rst)
 	BEGIN
 		IF (i_rst = '1') THEN
-			current_state_s1 <= F1S0;
+			cur_state_S1 <= F1S0;
 		ELSIF (rising_edge (i_clk)) THEN
-			current_state_s1 <= next_state_s1;
+			cur_state_S1 <= next_state_s1;
 			
 		END IF;
 	END PROCESS;
 
-	FSM1: PROCESS (current_state_s1, i_start, done2,OP1, OP2,F1)
+	FSM1: PROCESS (cur_state_S1, i_start, done2,OP1, OP2,F1)
 	BEGIN
-		next_state_s1 <= current_state_s1;
-		CASE current_state_s1 IS
+		next_state_s1 <= cur_state_S1;
+		CASE cur_state_S1 IS
 			WHEN F1S0 =>
 				IF (i_start = '1') THEN
 					next_state_s1 <= F1S1;
@@ -354,7 +353,7 @@ BEGIN
 	END PROCESS;
 
 	-- /* PARTE COMPUTAZIONALE */
-	PROCESS (current_state_s1, cur_state_S2, cur_state_S3, i_clk,O_F3R6)
+	PROCESS (cur_state_S1, cur_state_S2, cur_state_S3, i_clk,O_F3R6)
 	BEGIN
 
 		o_f1s2 <= '0';
@@ -370,7 +369,7 @@ BEGIN
 		o_en <= '1';
 		endof<='0';
 
-		CASE current_state_s1 IS
+		CASE cur_state_S1 IS
 			
 			WHEN F1S0 =>
 				o_en <= '0';

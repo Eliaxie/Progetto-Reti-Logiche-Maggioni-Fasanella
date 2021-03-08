@@ -10,12 +10,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="61663884fs"></ZoomStartTime>
-      <ZoomEndTime time="61796185fs"></ZoomEndTime>
-      <Cursor1Time time="81536167fs"></Cursor1Time>
+      <ZoomStartTime time="2555573fs"></ZoomStartTime>
+      <ZoomEndTime time="2821174fs"></ZoomEndTime>
+      <Cursor1Time time="2677973fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="141"></NameColumnWidth>
+      <NameColumnWidth column_width="136"></NameColumnWidth>
       <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="44" />
@@ -96,14 +96,10 @@
       <obj_property name="ElementShortName">Pixel[7:0]</obj_property>
       <obj_property name="ObjectShortName">Pixel[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/project_tb/UUT/maxaddress" type="array">
-      <obj_property name="ElementShortName">maxaddress[15:0]</obj_property>
-      <obj_property name="ObjectShortName">maxaddress[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/project_tb/UUT/minV" type="array">
       <obj_property name="ElementShortName">minV[7:0]</obj_property>
       <obj_property name="ObjectShortName">minV[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/project_tb/UUT/o_f3addr" type="logic">
       <obj_property name="ElementShortName">o_f3addr</obj_property>
@@ -116,6 +112,16 @@
    <wvobject fp_name="/project_tb/UUT/o_address" type="array">
       <obj_property name="ElementShortName">o_address[15:0]</obj_property>
       <obj_property name="ObjectShortName">o_address[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/i_data" type="array">
+      <obj_property name="ElementShortName">i_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">i_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/project_tb/UUT/o_data" type="array">
+      <obj_property name="ElementShortName">o_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">o_data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/project_tb/UUT/o_we" type="logic">
@@ -143,9 +149,9 @@
       <obj_property name="ElementShortName">o_f3r7[15:0]</obj_property>
       <obj_property name="ObjectShortName">o_f3r7[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/project_tb/UUT/o_data" type="array">
-      <obj_property name="ElementShortName">o_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">o_data[7:0]</obj_property>
+   <wvobject fp_name="/project_tb/UUT/maxaddress" type="array">
+      <obj_property name="ElementShortName">maxaddress[15:0]</obj_property>
+      <obj_property name="ObjectShortName">maxaddress[15:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/project_tb/UUT/minV" type="array">
@@ -171,11 +177,6 @@
    <wvobject fp_name="/project_tb/UUT/o_f3r3" type="array">
       <obj_property name="ElementShortName">o_f3r3[7:0]</obj_property>
       <obj_property name="ObjectShortName">o_f3r3[7:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/project_tb/UUT/i_data" type="array">
-      <obj_property name="ElementShortName">i_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">i_data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/project_tb/UUT/o_f3shift" type="array">

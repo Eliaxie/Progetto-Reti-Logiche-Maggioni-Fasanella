@@ -123,38 +123,34 @@ Computer programs or algorithm descriptions may be given either in equations or 
 Tables should include captions similar to those for figures and should be numbered sequentially throughout the paper: Table \ref{ex-table} is an example. Tables must be oriented with the text and use 9-point type, and should be enclosed by a box. 
 
 \begin{table}
-\centerline{\small\begin{tabular}{|c|c|}
+\centerline{\small\begin{tabular}{|c|c|c|c|c|}
 \hline
- $P$-Value &Interpretation \\
+ \textbf{Site Type} & \textbf{Used} & \textbf{Fixed} & \textbf{Available} & \textbf{Util \%}\\
 \hline
- $0.01<p<0.99$ &Clear passed\\
+  Slice LUTs & 180 & 0 & 134600 & 0.13\\
 \hline
-$p$ or $(1-p)<10^{-10}$ &Clear failure \\
+  Slice Registers & 207 & 0 & 269200 & 0.08\\
+\hline
+	F7 Muxes & 0 & 0 & 67300 & 0.00\\
+\hline
+	F8 Muxes & 0 & 0 & 33650 & 0.00\\
 \hline
 \end{tabular}}
-\caption{A sample table. Avoid using tables for numerical data; figures usually present such material more meaningfully.Also avoid putting extensive text into tables. Column headings should follow title capitalization rules.}
+\caption{Utilization Design Information - Slice Logic}
 \label{ex-table}
 \end{table}
+
 
 \section{Test Bench}
 \label{main-text}
 
 Risultati  dei  test  fatti  e  le ragioni di tali test -motivare le scelte
 
-Good English grammar is essential. Authors not fluent in English are strongly encouraged to have their paper checked for grammar by colleagues fluent in the topic of the paper and English. American spelling should be used and, if possible, checked by computer. Contractions such as {``}weren{'}t{''}should never be used, nor should exclamation marks.
-
-Acronyms should be spelled out at their first use and given in capitals thereafter: cellular automaton (CA for singular), cellular automata (CAs for plural). Avoid introducing too many acronyms. Spell out abbreviations when they are first used. Spell out integers under 10 unless they are used with units of measure or begin a sentence (i.e., write {``}two{''} rather than {``}2{''} but use {``}2 miles{''}). 
-
-Italicize defined terms when they are introduced. Also italicize foreign language phrases on first use, if they are likely to be unfamiliar to the reader. The abbreviations {``}e.g.,{''} {``}i.e.{''} and {``}etc.{''} should not be italicized and should be used only in parenthetical material; spell out {``}for example,{''} {``}that is{''} and {``}and so forth{''} (or equivalents) in regular text. 
-
-Cross-references can be made to other sections in the paper (e.g., Section \ref{intro}) and to other numbered elements. When referencing displayed formulas use, for example, equation (\ref{exponential-equation}). Footnotes should be avoided. Points worth making should appear in the main text. 
-
-Lists of items should be preceded by a complete sentence and may be laid out as follows.
-
 \begin{itemize}
-\item Each item will be like a separate paragraph. 
+\item TB per reset asincrono
+\item TB singolo pixel	 
+\item TB 
 
-\item Another item. 
 \end{itemize}
 % Numbered lists of items are obtained with \begin{enumerate} ... \end{enumerate}
 
