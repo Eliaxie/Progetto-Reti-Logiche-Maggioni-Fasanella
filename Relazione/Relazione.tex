@@ -8,8 +8,9 @@
 % 
 \documentclass{article}
 
-\usepackage{epsf,hyperref}
+\usepackage{graphicx,hyperref}
 \usepackage{amssymb,ComplexSystems}
+\graphicspath{ {./images/} }
 
 % complex-systems.sty is the macro package for Complex Systems.
 % It is available at
@@ -56,16 +57,26 @@ Nel progetto abbiamo seguito un approccio top-down partendo dal disegno su carta
 % The text of the paper follows. All of the text should be in the same file. 
 % Use separate files for large tabular material and graphics.
 
-\section{Introduziones}
+\section{Introduzione}
 \label{intro}
 % \label is a hyperlink target for cross-referencing to this section using \ref{intro} (optional).
-Per lo sviluppo del codice è stato sviluppato 
+Il circuito descritto si occupa di leggere e rielaborare i dati da RAM producendo un'immagine con nitidezza più alta e quindi più leggibile. 
+Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
+Quando la elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0.
+Nel circuito è stato scelto di dividere in 3 la computazione con moduli in cascata.
 
-\section{Specifiche di progetto}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{introduzioneimg1.png}
+\caption{Example of a parametric plot}
+\end{figure}
+\break
+
+\section{Architettura}
 
 Authors are encouraged to send electronic media as their submission. Although we prefer that papers be submitted as Wolfram Mathematica notebooks, we can process papers from a variety of other formats, such as LaTeX. Papers prepared using other formatting systems or submitted in hard copy only may have to be retyped, causing delays in processing. This sample paper was prepared with Wolfram Mathematica and can be used as a template. It is available for download at \url{www.complex-systems.com/contribute.html}. A LaTeX version is also available.
 
-\section{Scelte progettuali}
+\section{Risultati sperimentali}
 
 Figures are an excellent mechanism for communicating many kinds of results. Great care should be taken to produce clear, well-constructed figures.When there are many related graphs or images, they should usually be combined into a single figure. 
 
@@ -105,7 +116,7 @@ Tables should include captions similar to those for figures and should be number
 \end{table}
 
 
-\section{Test Bench}
+\section{Simulazioni}
 \label{main-text}
 
 Risultati  dei  test  fatti  e  le ragioni di tali test -motivare le scelte
@@ -156,6 +167,7 @@ Theorems and other structured mathematical text should be used when it improves 
 Proofs can continue for several paragraphs. They should end with an empty square.
 \end{proof}
 
+\section{Conclusioni}
 
 \section{About the References}
 
