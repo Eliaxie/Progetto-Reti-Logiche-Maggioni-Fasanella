@@ -116,8 +116,8 @@ Tables should include captions similar to those for figures and should be number
 Risultati  dei  test  fatti  e  le ragioni di tali test -motivare le scelte
 \begin{itemize}
 \item Bisogna considerare che \(log (delta +1)\) risulta caso limite nel momento in cui il valore di Milano delta assume valore \(2^{n}-1\) (con \(0<=n<=8\)). La LUT dell'implementazione, tiene già conto dell'argomento del logaritmo, cambiando quindi il valore ogni volta che viene raggiunto dal delta una potenza di 2.  
-\item Il delta sarà nullo nel momento in cui tutti i valori dell'immagine saranno uguali. Sarà infatti MAXPixel=MINPixel, generando così uno \(shift_level=8\) (caso massimo) che porterà quindi ad avere in output solo valori nulli. Questo è anche intuitivamente immaginabile con una monocromia dell'immagine che quindi viene riportata al valore di default.
-\item Il delta sarà massimo nel momento in cui \(MAXPixel=255\) e \(MINPixel=0\). Il valore del logaritmo è quindi massimo e lo \(shift level=0\) (caso minimo) che porterà quindi ad avere in output gli stessi valori di input.
+\item Il delta sarà nullo nel momento in cui tutti i valori dell'immagine saranno uguali. Sarà infatti MAXPixel=MINPixel, generando così uno \(shiftlevel=8\) (caso massimo) che porterà quindi ad avere in output solo valori nulli. Questo è anche intuitivamente immaginabile con una monocromia dell'immagine che quindi viene riportata al valore di default.
+\item Il delta sarà massimo nel momento in cui \(MAXPixel = 255\) e \(MINPixel = 0\). Il valore del logaritmo è quindi massimo e lo \(shiftlevel=0\) (caso minimo) che porterà quindi ad avere in output gli stessi valori di input.
 \item Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un caso importante da considerare è quando il valore di \(n=8\) : il valore di \(Current Pixel-MINPixel\) verrà quindi completamente portato a sinistra lasciando tutti zeri, rispetto alla rappresentazione di 8 bit del pixel. Perciò il valore di \(Temp Pixel>255\) e si avrà quindi un output di valori massimi.
 \item TB singolo pixel	 
 \item TB 
