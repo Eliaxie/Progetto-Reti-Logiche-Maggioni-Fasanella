@@ -61,7 +61,7 @@ Nel progetto abbiamo seguito un approccio top-down partendo dal disegno su carta
 \label{intro}
 % \label is a hyperlink target for cross-referencing to this section using \ref{intro} (optional).
 Il circuito descritto si occupa di leggere e rielaborare i dati da RAM producendo un'immagine con nitidezza più alta e quindi più leggibile. 
-Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
+Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset, ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
 Quando la elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0.
 
 Nel circuito è stato scelto di dividere in 3 la computazione con moduli in cascata.
@@ -75,8 +75,38 @@ Nel circuito è stato scelto di dividere in 3 la computazione con moduli in casc
 
 \section{Architettura}
 
-Authors are encouraged to send electronic media as their submission. Although we prefer that papers be submitted as Wolfram Mathematica notebooks, we can process papers from a variety of other formats, such as LaTeX. Papers prepared using other formatting systems or submitted in hard copy only may have to be retyped, causing delays in processing. This sample paper was prepared with Wolfram Mathematica and can be used as a template. It is available for download at \url{www.complex-systems.com/contribute.html}. A LaTeX version is also available.
-
+La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da una propria FSM, attraverso segnali in cascata per l'avvio e la terminazione delle varie parti. Si avranno quindi i segnali start2,start3,done2, e done3 che avranno come scopo la comunicazione fra i vari moduli e i loro processi.
+ \begin{enumerate} 
+  \item \textbf{Modulo 1} 
+  
+  Il primo modulo si occupa dell'inizio della computazione, della lettura e ricerca di massimo, minimo, e delta. Inoltre attende la discesa del segnale start in modo da abbassare done e mettersi in attesa di una nuova immagine. La macchina a stati di riferimento (FSM1) è composta dai seguenti stati:
+  \begin{itemize}
+  \item F1S0
+  
+  Stato iniziale che attende il segnale di start. Si entra in questo stato per azzerare i registri e prepararsi a processare l'immagine.
+  
+    \item F1S1,F1S2,F1S1b,F1S2b
+  
+  Questi stati si occupano della lettura di OP1 e OP2 (numero righe e colonne) attraverso il processo MULT. In F1S2b un controllo si accerterà che OP1 non sia nullo, altrimenti si passerà allo stato di terminazione e reset dei valori per una nuova lettura.
+  \item F1S3,F1S3b
+  
+  A questo punto viene calcolato M (cioè \(OP1*OP2\)) facendo rimbalzare questi due stati attraverso il segnale o-m. Il calcolo avviene per somme successive fino a quando OP2 sarà zero. 
+  \item F1S4,F1S4a,F1S5
+  
+  Attraverso i processi ADDRHandler e MINeMAX, verrà incrementato REGAddr (registro dell'indirizzo di memoria) e controllato Pixel (registro che salva ogni current pixel). Il segnale f1 detta il passaggio fra questi stati attraverso la condizione \(REGAddr > M + 2 \). Il calcolo del delta invece, avviene ad ogni nuovo assegnamento del Massimo o del Minimo.
+  
+  \item F1S6,F1S7
+  
+  Una volta terminato il proprio compito, nello stato F1S6 verrà alzato il segnale start2 per far partire il secondo modulo e successivamente, lo stato F1S7 si metterà quindi in attesa del segnale done2 per terminare l'elaborazione e reset dei valori.
+  \item F1S8,F1S9
+  
+  A questo punto, una volta ricevuto il segnale done2, lo stato F1S8 alzerà done ed endof (segnale generale di imminente terminazione e reset dei valori), e aspetterà che si abbassi start, per poi passare a F1S9 che farà riscendere i due precedenti segnali. Si torna quindi a F1S0 in attesa di una nuova immagine.
+\end{itemize}
+  
+  
+    \item \textbf{Modulo 2}
+    \item\textbf{Modulo 3} 
+ \end{enumerate}
 \section{Risultati sperimentali}
 
 Figures are an excellent mechanism for communicating many kinds of results. Great care should be taken to produce clear, well-constructed figures.When there are many related graphs or images, they should usually be combined into a single figure. 
