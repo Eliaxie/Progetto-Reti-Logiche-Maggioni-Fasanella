@@ -63,11 +63,12 @@ Nel progetto abbiamo seguito un approccio top-down partendo dal disegno su carta
 Il circuito descritto si occupa di leggere e rielaborare i dati da RAM producendo un'immagine con nitidezza più alta e quindi più leggibile. 
 Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
 Quando la elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0.
+
 Nel circuito è stato scelto di dividere in 3 la computazione con moduli in cascata.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{introduzioneimg1.png}
+\includegraphics[width=0.7\textwidth]{introduzioneimg1.png}
 \caption{Example of a parametric plot}
 \end{figure}
 \break
