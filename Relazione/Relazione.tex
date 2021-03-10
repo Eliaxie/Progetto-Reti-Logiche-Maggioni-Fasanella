@@ -134,7 +134,7 @@ Risultati  dei  test  fatti  e  le ragioni di tali test -motivare le scelte
  input=[2,3,128,128,128,128,128,128] 
  output=[0,0,0,0,0,0]
  
- Bisogna considerare che \(log (delta +1)\) risulta caso limite nel momento in cui il valore di Milano delta assume valore \(2^{n}-1\) (con \(0<=n<=8\)). La LUT dell'implementazione, tiene già conto dell'argomento del logaritmo, cambiando quindi il valore ogni volta che viene raggiunto dal delta una potenza di 2.  
+ Bisogna considerare che \(log (delta +1)\) risulta caso limite nel momento in cui il valore di delta assume valore \(2^{n}-1\) (con \(0<=n<=8\)). La LUT dell'implementazione, tiene già conto dell'argomento del logaritmo, cambiando quindi il valore ogni volta che viene raggiunto dal delta una potenza di \(2^{n}-1\).  
  
  Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un caso importante da considerare è quando il valore di \(n=8\) : il valore di \(Current Pixel-MINPixel\) verrà quindi completamente portato a sinistra lasciando tutti zeri, rispetto alla rappresentazione di 8 bit del pixel. Questo è uno dei valori per cui \(Temp Pixel>255\) e si avrà quindi un output di valori massimi.
 
