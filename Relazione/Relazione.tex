@@ -10,7 +10,8 @@
 
 \usepackage{graphicx,hyperref}
 \usepackage{amssymb,ComplexSystems}
-\usepackage{tikz}\usetikzlibrary{automata, positioning, arrows}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
 \graphicspath{ {./images/} }
 
 % complex-systems.sty is the macro package for Complex Systems.
@@ -105,7 +106,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 \end{itemize}
   
 	\begin{tikzpicture}
-    \node[state,initial where=left] (S0) {$S0$};
+    \node[state,initial,initial where=left, initial text=$rst$] (S0) {$S0$};
     \node[state, right of=S0] (S1) {$S1$};
     \node[state, below of=S1] (S2) {$S2$};
     \node[state, below of=S2] (S1b) {$S1_b$};
