@@ -131,6 +131,46 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 				\item F2S7
 				
 				Alza il done2 per segnalare al modulo due l'avvenuta terminazione dell'elaborazione.
+				
+				
+\begin{tikzpicture}
+    \node[state,initial where=left] (S0) {$S0$};
+    \node[state, right of=S0] (S1) {$S1$};
+    \node[state, below of=S1] (S2) {$S2$};
+    \node[state, below of=S2] (S1b) {$S1_b$};
+    \node[state, below of=S1b] (S2b) {$S2_b$};
+      \node[state, right of=S1] (S3) {$S3$};
+      \node[state, below of=S3] (S3b) {$S3_b$};
+       \node[state, right of=S3] (S4) {$S4$};
+      \node[state, below of=S4] (S4a) {$S4_a$};
+      \node[state, below of=S4a] (S5) {$S5$};
+      \node[state, right of=S4] (S6) {$S6$};
+      \node[state, right of=S6] (S7) {$S7$};
+      \node[state, right of=S7] (S8) {$S8$};
+      \node[state, right of=S8] (S9) {$S9$};
+       \draw   (S0) edge[bend right,below] node{$start$} (S1)
+       (S0) edge[loop below] node{} (S1)
+            (S1) edge[ below] node{} (S2)
+            (S2) edge[ below] node{} (S1b)
+            (S1b) edge[ below] node{} (S2b)
+            (S2b) edge[ bend right,below ] node{$OP1=0$} (S8)
+            (S2b) edge[ bend right] node{} (S3)
+            (S3) edge[ bend left, above] node{} (S3b)
+            (S3) edge[ bend left, above] node{$OP2=0$} (S4)
+            (S3b) edge[ bend left] node{} (S3)
+            (S4) edge[ below] node{} (S4a)
+            (S4a) edge[ below] node{} (S5)
+            (S5) edge[ bend left] node{} (S4)
+            (S5) edge[ bend right] node{$f1$} (S6)
+            (S6) edge[ right] node{} (S7)
+              (S7) edge[ loop below] node{} (S7)
+                (S8) edge[ loop below] node{$start=1$} (S8)
+                (S9) edge[ loop below] node{} (S9)
+            (S7) edge[ bend left,above] node{$done2$} (S8)
+            (S8) edge[ bend right,below] node{} (S9)
+            (S9) edge[bend right,above] node{$start=0$} (S0);
+\end{tikzpicture}
+  
 			\end{itemize}
     \item\textbf{Modulo 3} 
 		
