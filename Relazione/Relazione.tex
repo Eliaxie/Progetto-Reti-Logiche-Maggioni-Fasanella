@@ -103,7 +103,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
   
   A questo punto, una volta ricevuto il segnale done2, lo stato F1S8 alzerà done ed endof (segnale generale di imminente terminazione e reset dei valori), e aspetterà che si abbassi start, per poi passare a F1S9 che farà riscendere i due precedenti segnali. Si torna quindi a F1S0 in attesa di una nuova immagine.
 \end{itemize}
-  
+\begin {center}  
 	\begin{tikzpicture}
     \node[state,initial where=left] (S0) {$S0$};
     \node[state, right of=S0] (S1) {$S1$};
@@ -141,7 +141,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             (S8) edge[ bend right,below] node{} (S9)
             (S9) edge[bend right,above] node{$start=0$} (S0);
 \end{tikzpicture}
-  
+\end{center}  
   
     \item \textbf{Modulo 2}
 		
@@ -219,9 +219,9 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 
 
 \begin{tikzpicture}
-\node[state, initial] (q1) {$q_1$};
-\node[state, accepting, right of=q1] (q2) {$q_2$};
-\node[state, right of=q2] (q3) {$q_3$};
+\node[state, initial] (q1) {$F1S0$};
+\node[state, right of=q1] (q2) {$F1S1$};
+\node[state, right of=q2] (q3) {$F1S2$};
 \draw   
 	(q1) edge[loop above] node{0} (q1)
 	(q1) edge[above] node{1} (q2)
