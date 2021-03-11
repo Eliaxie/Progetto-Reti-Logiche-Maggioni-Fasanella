@@ -218,17 +218,42 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		\end {itemize}
  \end{enumerate}
 
-
+\break
 \begin{tikzpicture}
-\node[state, initial] (q1) {$F1S0$};
-\node[state, right of=q1] (q2) {$F1S1$};
-\node[state, right of=q2] (q3) {$F1S2$};
+[->,align=center,node distance=1.2cm]
+\node[state, initial, initial text=i\_start] (s0) {$S0$};
+\node[state, right of=s0] (s0b) {$S0b$};
+\node[state, right of=s0b] (s0c) {$S0c$};
+\node[state, right of=s0c] (s1) {$S1$};
+\node[state, right of=s1] (s2) {$S2$};
+\node[state, right of=s2] (s3) {$S3$};
+\node[state, right of=s3] (s4) {$S4$};
+\node[state, below of=s4, node distance=1.5cm] (s5) {$S5$};
+\node[state, left of=s5] (s6) {$S6$};
+\node[state, left of=s6] (s6b) {$S6b$};
+\node[state, left of=s6b] (s7) {$S7$};
+\node[state, left of=s7] (s7b) {$S7b$};
+\node[state, left of=s7b] (s8) {$S8$};
+\node[state, accepting, left of=s8] (s9) {$S9$};
 \draw   
-	(q1) edge[loop above] node{0} (q1)
-	(q1) edge[above] node{1} (q2)
-	(q2) edge[loop above] node{1} (q2)
-	(q2) edge[bend left, above] node{0} (q3)
-	(q3) edge[bend left, below] node{0, 1} (q2);
+	(s0) edge[loop above] node{!start3} (s0)
+	(s0) edge[above] node{} (s0b)
+	(s0b) edge[above] node{} (s0c)
+	(s0c) edge[above] node{} (s1)
+	(s1) edge[above] node{} (s2)
+	(s2) edge[above] node{} (s3)
+	(s3) edge[above] node{} (s4)
+	(s4) edge[above] node{} (s5)
+	(s5) edge[above] node{} (s6)
+	(s6) edge[above] node{} (s6b)
+	(s6b) edge[above] node{} (s7)
+	(s7) edge[above] node{} (s7b)
+	(s7b) edge[above] node{} (s8)
+	(s8) edge[above] node{} (s9)
+	(s8) edge[above] node{} (s0b);
+	%(s0b) edge[loop above] node{} (s0b);
+	%(s0b) edge[bend left, above] node{} (s0c)
+	%(s0c) edge[bend left, below] node{} (s0b);
 \end{tikzpicture}
 
 
