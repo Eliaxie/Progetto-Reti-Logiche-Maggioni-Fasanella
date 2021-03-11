@@ -10,6 +10,7 @@
 
 \usepackage{graphicx,hyperref}
 \usepackage{amssymb,ComplexSystems}
+\usepackage{tikz}\usetikzlibrary{automata, positioning, arrows}
 \graphicspath{ {./images/} }
 
 % complex-systems.sty is the macro package for Complex Systems.
@@ -139,15 +140,15 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		\item F3S0
 		
-		Stato di attesa della macchina, passa a F3S0b quando start3 è portato a 1
+		Stato di attesa della macchina, passa a \emph{F3S0b} quando start3 è portato a 1
 		
 		\item F3S0b, F3S0c
 		
-		In questi due stati viene il prelevamento da memoria del valore corrente del pixel ed assegnato al registro F3R3, da qui in avanti \(CurrPixel\). La gestione della memoria viene effettuata tramite i flag \emph{o\_f3addr\_read \emph{e} o\_f3addr\_write} in un processo separato, viene poi assegnato qui il valore di ritorno \emph{i\_data}
+		In questi due stati viene prelevato da memoria il valore corrente del pixel ed assegnato al registro \emph{F3R3} che simboleggia il \emph{CurrPixel} value. La gestione della memoria viene effettuata tramite i flag \emph{o\_f3addr\_read \emph{e} o\_f3addr\_write} in un processo separato. Viene quindi assegnato il valore di ritorno \emph{i\_data}.
 		
 		\item F3S1
 		
-		Qui avviene il prelievo dei segnali provenienti dai moduli uno e due e il caricamento degli stessi nei registri F3R1, F3R2 e F3R4, rispettivamente \textit{Shift\_level, min pixel value \emph{e} max address}.
+		Avviene ora il prelievo dei segnali provenienti dai moduli uno e due e il caricamento degli stessi nei registri \emph{F3R1}, \emph{F3R2} e \emph{F3R4}, rispettivamente \textit{Shift\_level, min pixel value \emph{e} max address}.
 		
 		\item F3S2, F3S3
 		
@@ -167,7 +168,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		\item F3S7b, F3S8
 		
-		Il valore di \emph{F3R7} viene incrementato di uno, questo registro tiene memoria del valore corrente di memoria. Viene usato nel processo di gestione della RAM sia per la lettura che per la scrittura dei valori e viene inoltre usato per la condizione d'uscita del ciclo di stati \emph{F1S0b \-\> F3S8} insieme a \emph{max address}
+		Il valore di \emph{F3R7} viene incrementato di uno, questo registro serve alla macchina per sapere il valore corrente di memoria. Viene usato nel processo di gestione della RAM sia per la lettura che per la scrittura dei valori e viene inoltre usato per la condizione d'uscita del ciclo di stati \emph{F1S0b} \textrightarrow  \emph{F3S8} insieme a \emph{max address}.		
 		
 		\item F3S9
 		
@@ -175,6 +176,9 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		\end {itemize}
  \end{enumerate}
+
+\begin{tikzpicture}\node[state, initial] (q1) {$q_1$};\node[state, accepting, right of=q1] (q2) {$q_2$};\node[state, right of=q2] (q3) {$q_3$};\draw   (q1) edge[loop above] node{0} (q1)(q1) edge[above] node{1} (q2)(q2) edge[loop above] node{1} (q2)(q2) edge[bend left, above] node{0} (q3)(q3) edge[bend left, below] node{0, 1} (q2);\end{tikzpicture}
+
 \section{Risultati sperimentali}
 
 Figures are an excellent mechanism for communicating many kinds of results. Great care should be taken to produce clear, well-constructed figures.When there are many related graphs or images, they should usually be combined into a single figure. 
