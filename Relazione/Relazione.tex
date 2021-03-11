@@ -104,36 +104,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
   A questo punto, una volta ricevuto il segnale done2, lo stato F1S8 alzerà done ed endof (segnale generale di imminente terminazione e reset dei valori), e aspetterà che si abbassi start, per poi passare a F1S9 che farà riscendere i due precedenti segnali. Si torna quindi a F1S0 in attesa di una nuova immagine.
 \end{itemize}
   
-  
-    \item \textbf{Modulo 2}
-		
-		Il modulo due svolge il calcolo dello shift level noto il data value e lo rende disponibile per l'utilizzo al modulo tre. Una volta completato il calcolo, alza il segnale start3 per fare partire la FSM3 ed attende il done3 prima di terminare dando il done2 al modulo uno. Di seguito la descrizione della FSM2 che ha quasi solo una funzione di timing dei registri:
-			\begin{itemize}
-				\item F2S0 
-				
-				Attende l'inizio dell'esecuzione del programma che avviene tramite l'innalzamento del segnale start2
-				
-				\item F2S1
-				
-				Carica il valore di delta nel registro S2R1
-				
-				\item F2S2,F2S3,F2S4
-				
-				Attende la propagazione del segnale nel datapath e carica il valore in uscita dalla LUT in S2R2
-				
-				\item F2S5
-				
-				Avvia il modulo tre alzando il segnale start3
-				
-				\item F2S6
-				
-				Attende in questo stato finché done3 non viene alzato dal modulo tre
-				\item F2S7
-				
-				Alza il done2 per segnalare al modulo due l'avvenuta terminazione dell'elaborazione.
-				
-				
-\begin{tikzpicture}
+	\begin{tikzpicture}
     \node[state,initial where=left] (S0) {$S0$};
     \node[state, right of=S0] (S1) {$S1$};
     \node[state, below of=S1] (S2) {$S2$};
@@ -171,6 +142,35 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             (S9) edge[bend right,above] node{$start=0$} (S0);
 \end{tikzpicture}
   
+  
+    \item \textbf{Modulo 2}
+		
+		Il modulo due svolge il calcolo dello shift level noto il data value e lo rende disponibile per l'utilizzo al modulo tre. Una volta completato il calcolo, alza il segnale start3 per fare partire la FSM3 ed attende il done3 prima di terminare dando il done2 al modulo uno. Di seguito la descrizione della FSM2 che ha quasi solo una funzione di timing dei registri:
+			\begin{itemize}
+				\item F2S0 
+				
+				Attende l'inizio dell'esecuzione del programma che avviene tramite l'innalzamento del segnale start2
+				
+				\item F2S1
+				
+				Carica il valore di delta nel registro S2R1
+				
+				\item F2S2,F2S3,F2S4
+				
+				Attende la propagazione del segnale nel datapath e carica il valore in uscita dalla LUT in S2R2
+				
+				\item F2S5
+				
+				Avvia il modulo tre alzando il segnale start3
+				
+				\item F2S6
+				
+				Attende in questo stato finché done3 non viene alzato dal modulo tre
+				\item F2S7
+				
+				Alza il done2 per segnalare al modulo due l'avvenuta terminazione dell'elaborazione.
+				
+				
 			\end{itemize}
     \item\textbf{Modulo 3} 
 		
