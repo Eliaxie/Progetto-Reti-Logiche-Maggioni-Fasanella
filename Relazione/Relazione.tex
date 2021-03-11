@@ -125,10 +125,10 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             (S1) edge[ below] node{} (S2)
             (S2) edge[ below] node{} (S1b)
             (S1b) edge[ below] node{} (S2b)
-            (S2b) edge[ bend right,below ] node{$OP1=0$} (S8)
+            (S2b) edge[ bend right,below ] node{$OP1==0$} (S8)
             (S2b) edge[ bend right] node{} (S3)
             (S3) edge[ bend left, above] node{} (S3b)
-            (S3) edge[ bend left, above] node{$OP2=0$} (S4)
+            (S3) edge[ bend left, above] node{$OP2==0$} (S4)
             (S3b) edge[ bend left] node{} (S3)
             (S4) edge[ below] node{} (S4a)
             (S4a) edge[ below] node{} (S5)
@@ -136,11 +136,11 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             (S5) edge[ bend right] node{$f1$} (S6)
             (S6) edge[ right] node{} (S7)
               (S7) edge[ loop below] node{} (S7)
-                (S8) edge[ loop below] node{$start=1$} (S8)
+                (S8) edge[ loop below] node{$start$} (S8)
                 (S9) edge[ loop below] node{} (S9)
             (S7) edge[ bend left,above] node{$done2$} (S8)
             (S8) edge[ bend right,below] node{} (S9)
-            (S9) edge[bend right,above] node{$start=0$} (S0);
+            (S9) edge[bend right,above] node{$!start$} (S0);
 \end{tikzpicture}
   
   
