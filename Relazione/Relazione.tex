@@ -223,22 +223,22 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 \begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
 \node[state, initial, initial text=i\_start] (s0) {$S0$};
-\node[state, right of=s0] (s0b) {$S0b$};
+\node[state, right of=s0, node distance=2cm] (s0b) {$S0b$};
 \node[state, right of=s0b] (s0c) {$S0c$};
 \node[state, right of=s0c] (s1) {$S1$};
 \node[state, right of=s1] (s2) {$S2$};
 \node[state, right of=s2] (s3) {$S3$};
 \node[state, right of=s3] (s4) {$S4$};
-\node[state, below of=s4, node distance=1.5cm] (s5) {$S5$};
+\node[state, below of=s4, node distance=2cm] (s5) {$S5$};
 \node[state, left of=s5] (s6) {$S6$};
 \node[state, left of=s6] (s6b) {$S6b$};
 \node[state, left of=s6b] (s7) {$S7$};
 \node[state, left of=s7] (s7b) {$S7b$};
 \node[state, left of=s7b] (s8) {$S8$};
-\node[state, accepting, left of=s8] (s9) {$S9$};
+\node[state, accepting, left of=s8, node distance=3cm] (s9) {$S9$};
 \draw   
 	(s0) edge[loop above] node{!start3} (s0)
-	(s0) edge[above] node{} (s0b)
+	(s0) edge[above] node{start3} (s0b)
 	(s0b) edge[above] node{} (s0c)
 	(s0c) edge[above] node{} (s1)
 	(s1) edge[above] node{} (s2)
@@ -250,8 +250,8 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	(s6b) edge[above] node{} (s7)
 	(s7) edge[above] node{} (s7b)
 	(s7b) edge[above] node{} (s8)
-	(s8) edge[above] node{} (s9)
-	(s8) edge[above] node{} (s0b);
+	(s8) edge[above] node{end of image} (s9)
+	(s8) edge[above] node{\(curAddr < maxAddr\) } (s0b);
 	%(s0b) edge[loop above] node{} (s0b);
 	%(s0b) edge[bend left, above] node{} (s0c)
 	%(s0c) edge[bend left, below] node{} (s0b);
