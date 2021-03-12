@@ -235,7 +235,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 \node[state, left of=s6b] (s7) {$S7$};
 \node[state, left of=s7] (s7b) {$S7b$};
 \node[state, left of=s7b] (s8) {$S8$};
-\node[state, accepting, left of=s8, node distance=3cm] (s9) {$S9$};
+\node[state, left of=s8, node distance=3cm] (s9) {$S9$};
 \draw   
 	(s0) edge[loop above] node{!start3} (s0)
 	(s0) edge[above] node{start3} (s0b)
@@ -251,7 +251,8 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	(s7) edge[above] node{} (s7b)
 	(s7b) edge[above] node{} (s8)
 	(s8) edge[above] node{end of image} (s9)
-	(s8) edge[above] node{\(curAddr < maxAddr\) } (s0b);
+	(s8) edge[above] node{\(curAddr < maxAddr\) } (s0b)
+	(s9) edge[above] node{} (s0);
 	%(s0b) edge[loop above] node{} (s0b);
 	%(s0b) edge[bend left, above] node{} (s0c)
 	%(s0c) edge[bend left, below] node{} (s0b);
