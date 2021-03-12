@@ -12,6 +12,7 @@
 \usepackage{amssymb,ComplexSystems}
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning, arrows}
+\usepackage{underscore}
 \graphicspath{ {./images/} }
 
 % complex-systems.sty is the macro package for Complex Systems.
@@ -63,44 +64,90 @@ Nel progetto abbiamo seguito un approccio top-down partendo dal disegno su carta
 \label{intro}
 % \label is a hyperlink target for cross-referencing to this section using \ref{intro} (optional).
 Il circuito descritto si occupa di leggere e rielaborare i dati da RAM producendo un'immagine con nitidezza più alta e quindi più leggibile. 
+\newline
 Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset, ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
-Quando la elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0.
-
-Nel circuito è stato scelto di dividere in 3 la computazione con moduli in cascata.
-
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{introduzioneimg1.png}
-\caption{Example of a parametric plot}
+\includegraphics[width=0.9\textwidth]{Example.png}
+\caption{Esempio di Equalizzazione (con algoritmo completo)}
 \end{figure}
+Quando la elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0. L'algoritmo usato nel progetto è solo una semplificazione di quello che realmente sarebbe possibile con questa tecnica. 
+\newline
+Questo per sottolineare il potenziale dell' equalizzazione dell'istogramma e di come riesca a migliorare in modo veramente apprezzabile la qualità di una immagine digitale.
+\newline
 \break
+Nel circuito è stato scelto di dividere in 3 la computazione con moduli in cascata.
+\subsection{Specifica}
+ \begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{segnali.png}
+\caption{Interfaccia del Componente)}
+\end{figure}
+I segnali da considerare sono i seguenti:
+\newline
 
+\begin{itemize}
+\item i_clk è il segnale di CLOCK in ingresso generato dal TestBench;
+\item i_rst è il segnale di RESET che inizializza la macchina pronta per ricevere il primo;
+\item i_start è il segnale di START generato da TestBench;
+\item i_data è il segnale (vettore) che arriva dalla memoria;
+\item o_address è il segnale (vettore) di uscita che manda l’indirizzo alla memoria;
+\item o_done è il segnale di uscita che comunica la fine dell’elaborazione e il dato di uscita scritto in memoria;
+\item o_en è il segnale di ENABLE;
+\item o_we è il segnale di WRITE ENABLE;
+\item o_data è il segnale (vettore) di uscita dal componente verso la memoria;
+\end{itemize}
+Mentre i valori da calcolare durante l'elaborazione saranno:
+\newline
+\begin{itemize}
+\item DELTA_VALUE = MAX_PIXEL_VALUE – MIN_PIXEL_VALUE
+\item SHIFT_LEVEL = (8 – FLOOR(LOG2(DELTA_VALUE +1))))
+\item TEMP_PIXEL = (CURRENT_PIXEL_VALUE - MIN_PIXEL_VALUE) \(<<\) SHIFT_LEVEL
+\item NEW_PIXEL_VALUE = MIN( 255 , TEMP_PIXEL)
+\end{itemize}
+
+Ogni byte corrisponde ad un pixel dell’immagine, che sarà quindi formata in modo sequenziale riga per riga. Bisognerà quindi leggere i valori e rielaborarli, per poi scriverli in memoria (a partire dall’indirizzo 2 e in byte contigui).
+\subsection{Esempio} 
+Di seguito vengono riportati degli esempi per comprendere meglio come è strutturato.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.32\textwidth]{BeforeEq.png}
+\caption{Esempio di Pixel da Equalizzare}
+\end{figure}
+L'equalizzazione incrementa il contrasto globale delle immagini, specialmente quando i dati usabili dell'immagine sono rappresentati da valori di intensità molto vicini. Le intensità vengono perciò distribuite sull'istogramma, permettendo alle aree a basso contrasto locale di ottenere un alto contrasto.\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.33\textwidth]{AfterEq.png}
+\caption{Esempio di Pixel Equalizzati}
+\end{figure}
+
+
+\break
 \section{Architettura}
-
 La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da una propria FSM, attraverso segnali in cascata per l'avvio e la terminazione delle varie parti. Si avranno quindi i segnali start2,start3,done2, e done3 che avranno come scopo la comunicazione fra i vari moduli e i loro processi.
  \begin{enumerate} 
   \item \textbf{Modulo 1} 
   
   Il primo modulo si occupa dell'inizio della computazione, della lettura e ricerca di massimo, minimo, e delta. Inoltre attende la discesa del segnale start in modo da abbassare done e mettersi in attesa di una nuova immagine. La macchina a stati di riferimento (FSM1) è composta dai seguenti stati:
   \begin{itemize}
-  \item F1S0
+  \item F1S0 \((Ready)\)
   
-  Stato iniziale che attende il segnale di start. Si entra in questo stato per azzerare i registri e prepararsi a processare l'immagine.
+ Stato iniziale che attende il segnale di start. Si entra in questo stato per azzerare i registri e prepararsi a processare l'immagine.
   
-    \item F1S1,F1S2,F1S1b,F1S2b
+    \item F1S1,F1S2,F1S1b,F1S2b \((Operands)\)
   
-  Questi stati si occupano della lettura di OP1 e OP2 (numero righe e colonne) attraverso il processo MULT. In F1S2b un controllo si accerterà che OP1 non sia nullo, altrimenti si passerà allo stato di terminazione e reset dei valori per una nuova lettura.
-  \item F1S3,F1S3b
+ Questi stati si occupano della lettura di OP1 e OP2 (numero righe e colonne) attraverso il processo MULT. In F1S2b un controllo si accerterà che OP1 non sia nullo, altrimenti si passerà allo stato di terminazione e reset dei valori per una nuova lettura.
+  \item F1S3,F1S3b \((Multiply)\)
   
-  A questo punto viene calcolato M (cioè \(OP1*OP2\)) facendo rimbalzare questi due stati attraverso il segnale o-m. Il calcolo avviene per somme successive fino a quando OP2 sarà zero. 
-  \item F1S4,F1S4a,F1S5
+ A questo punto viene calcolato M (cioè \(OP1*OP2\)) facendo rimbalzare questi due stati attraverso il segnale o-m. Il calcolo avviene per somme successive fino a quando OP2 sarà zero. 
+  \item F1S4,F1S4a,F1S5 \((Pixels)\)
   
   Attraverso i processi ADDRHandler e MINeMAX, verrà incrementato REGAddr (registro dell'indirizzo di memoria) e controllato Pixel (registro che salva ogni current pixel). Il segnale f1 detta il passaggio fra questi stati attraverso la condizione \(REGAddr > M + 2 \). Il calcolo del delta invece, avviene ad ogni nuovo assegnamento del Massimo o del Minimo.
   
-  \item F1S6,F1S7
+  \item F1S6,F1S7 \((Finalize)\)
   
   Una volta terminato il proprio compito, nello stato F1S6 verrà alzato il segnale start2 per far partire il secondo modulo e successivamente, lo stato F1S7 si metterà quindi in attesa del segnale done2 per terminare l'elaborazione e reset dei valori.
-  \item F1S8,F1S9
+  \item F1S8,F1S9 \((Reset)\)
   
   A questo punto, una volta ricevuto il segnale done2, lo stato F1S8 alzerà done ed endof (segnale generale di imminente terminazione e reset dei valori), e aspetterà che si abbassi start, per poi passare a F1S9 che farà riscendere i due precedenti segnali. Si torna quindi a F1S0 in attesa di una nuova immagine.
 \end{itemize}
@@ -112,12 +159,12 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
     \node[state, below of=S1] (S2) {$S2$};
     \node[state, below of=S2] (S1b) {$S1_b$};
     \node[state, below of=S1b] (S2b) {$S2_b$};
-      \node[state, right of=S1] (S3) {$S3$};
-      \node[state, below of=S3] (S3b) {$S3_b$};
-       \node[state, right of=S3] (S4) {$S4$};
-      \node[state, below of=S4] (S4a) {$S4_a$};
-      \node[state, below of=S4a] (S5) {$S5$};
-      \node[state, right of=S4] (S6) {$S6$};
+      \node[state, right of=S1] (S3b) {$S3_b$};
+      \node[state, below of=S3b] (S3) {$S3$};
+       \node[state, right of=S3b] (S5) {$S5$};
+      \node[state, below of=S5] (S4a) {$S4_a$};
+       \node[state, below of=S4a] (S4) {$S4$};
+      \node[state, right of=S5] (S6) {$S6$};
       \node[state, right of=S6] (S7) {$S7$};
       \node[state, right of=S7] (S8) {$S8$};
       \node[state, right of=S8] (S9) {$S9$};
@@ -126,15 +173,15 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             (S1) edge[ below] node{} (S2)
             (S2) edge[ below] node{} (S1b)
             (S1b) edge[ below] node{} (S2b)
-            (S2b) edge[ bend right,below ] node{$OP1==0$} (S8)
+            (S2b) edge[ bend right ,right] node{\tiny $OP1==0$} (S8)
             (S2b) edge[ bend right] node{} (S3)
             (S3) edge[ bend left, above] node{} (S3b)
-            (S3) edge[ bend left, above] node{$OP2==0$} (S4)
+            (S3) edge[ bend right,below] node{\tiny OP2==0} (S4)
             (S3b) edge[ bend left] node{} (S3)
             (S4) edge[ below] node{} (S4a)
             (S4a) edge[ below] node{} (S5)
             (S5) edge[ bend left] node{} (S4)
-            (S5) edge[ bend right] node{$f1$} (S6)
+            (S5) edge[ bend left,above] node{$f1$} (S6)
             (S6) edge[ right] node{} (S7)
               (S7) edge[ loop below] node{} (S7)
                 (S8) edge[ loop below] node{$start$} (S8)
@@ -305,16 +352,18 @@ Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un cas
  
   input=[2,3,200,199,170,177,180,171] 
  output=[255,2552,0,112,160,16]
+ \newline
  Delta=30 Shift=4
- 
+  \newline
  input=[2,3,201,199,170,177,180,171] 
  output=[248,232,0,56,80,8]
+  \newline
  Delta=31 Shift=3
- 
+  \newline
   Bisogna considerare che \(log (delta +1)\) risulta caso limite nel momento in cui il valore di delta assume valore \(2^{n}-1\) (con \(0<=n<=8\)). La LUT dell'implementazione, tiene già conto dell'argomento del logaritmo, cambiando quindi il valore ogni volta che viene raggiunto dal delta una potenza di \(2^{n}-1\).  
 \end{itemize}
 % Numbered lists of items are obtained with \begin{enumerate} ... \end{enumerate}
-If a list of items is given in the text, such as: (\textit{a}) first item; (\textit{b})~second item; and so forth, they should be indicated with parenthesized letters in italic typeface.
+--
 \section{Risultati di sintesi}
 %Consistent mathematical notation is essential to clear exposition. Try to use familiar notation; for example, avoid having \(x\)stand for an integer index.
 % In LaTeX, such in-line equations are delimited by \(...\).
@@ -354,123 +403,19 @@ e^{2\pi i}=1.
 Spaces should be inserted in equations where necessary to improve readability. Equations should be referred to as {``}equation (\ref{exponential-equation}).{''} Short equations may be inserted directly in the text, as in \(\beta =2\). Equations that involve extensive subscripts, superscripts or built-up objects should be displayed. Special symbols in equations must be strictly limited to those that can be produced with Wolfram Mathematica using common fonts.
 If a formatting system other than Wolfram Mathematica or LaTeX is used, make sure that all symbols are very clearly identified, and that all subscripts and superscripts are evident. \textit{Complex Systems} allows many kinds of notation. It is suggested that symbols or words related to actual or theoretical computers be indicated in \texttt{typewriter font}. 
 Great care should be taken in mixing plain English, mathematics and algorithm descriptions. Say, for example, {``}\(x\) is the position{''} rather than {``}\(x=\) position.{''} Consistency must be maintained between different occurrences of a symbol. If \(x\) is a mathematical symbol, make sure it appears as \(x\) everywhere, not sometimes as x or as \texttt{x}. As a rough guide, mathematical symbols should appear as \(x\) and computer symbols as \texttt{x}. 
-\begin{theorem}
-Theorems and other structured mathematical text should be used when it improves the presentation. They should not be a substitute for clear English exposition. 
-\end{theorem}
-\begin{proof}
-Proofs can continue for several paragraphs. They should end with an empty square.
-\end{proof}
 \section{Conclusioni}
-\section{About the References}
-References should give pointers to background material and related work. They should record credit due to other authors. 
-References are numbered sequentially throughout the text. 
-% This is achieved automatically using \cite in LaTeX.
-Each item should be given a separate number (except when citations are made to different portions of the same document: these should be indicated as {``}\cite[pp. 3--56]{text-a}{''} or {``}\cite[Chapter 14]{text-b}{''}). 
-\textit{Full titles of papers should be given}. They should be enclosed in quotation marks, with all important words capitalized. Titles of printed items should be followed by a comma inside the quotation marks. Include the paper{'}s digital object identifier (DOI) name (number) if it is available(\url{www.doi.org/hb.html}). Titles accessible only via the internet are treated differently based on their type. See the examples described in the References section of this sample paper.
-To cater to a wide variety of disciplines, it is important that \textit{all names of journals be spelled out in full} and italicized. (Use \textit{Physical ReviewLetters}, not\textit{ Phys. Rev. Lett.}, and \textit{Journal of Computer and System Science}, not \textit{J. Comput. Sys. Sci.}) 
-For printed items, give the journal{'}s volume number in boldface (do not write the word {``}volume{''} explicitly). The issue number should be placed in parentheses immediately following the volume number, but not in bold: for example, \textbf{4}(1). Include months only when necessary, using their three-letter abbreviation. Give starting and ending page numbers.
-Author names should be given with initials first, with spaces after each period. For sources that list more than 10 authors, the names of the first seven authors should be given, followed by {``}et al.{''} For sources with fewer than 10 authors, all names are listed.
-Titles of books (i.e., published material with ISBN numbers) should be italicized. Names and cities of publishers and dates of publication should always be given. Conference proceedings that are distributed through ordinary publishers should be cited like books. 
-Titles of proceedings and reports that are distributed in other ways or via the internet should be given in full in the standard roman typeface.URLs or other information on how to obtain them should be given following the title. Pricing information should not be included.
+--TEMPI 
+Entrambi abbiamo creato le basi per capire le dinamiche di approccio ad un progetto: come svilupparlo, ma soprattutto come collaborare. Ringraziamo infine i professori per averci guidato in questa stimolante esperienza.
 \section*{Acknowledgments}
 Acknowledgments should thank individuals and organizations for their contributions to the work. All funding information should be placed in the acknowledgments.If acknowledgments imply some endorsement of the paper (e.g., {``}We thank X for checking\(\ldots\){''}), make sure the parties involved approve the statements made.
 \begin{thebibliography}{99}
 % The number of 9s indicate how many digits to allow for to align the indented list.
 \bibitem{a-review}
 % ``a-review'' is a sample tag: use a unique tag for each paper.
-F. Authorlast and S. Authorlast, ``Article Title,'' \textit{Full
-Name of Journal}, \textbf{volume}(issue number), year pp. \#--\#.
+Wikipedia \textit{}, \textbf{volume}(issue number), year pp. \#--\#.
 doi:name.\\
 R. Albert and A.-L. Barab{\' a}si, ``Statistical Mechanics of Complex
 Networks,'' \textit{Reviews of Modern Physics}, \textbf{74}(1), 
 2002 pp. 47--97.  doi:10.1103/RevModPhys.74.47.
-% Use \textit{...} for italics, \textbf{...} for boldface.
-% Do not explicitly use the word ``volume''
-% The full year (e.g., 1991) should be used for the date.
-% Use -- to get an appropriate dash between page numbers.
-\bibitem{text-a}
-I. J. Authorlast, \textit{Book Title}, Publisher Location: Publisher Name, year. \\
-T. C. Schelling, \textit{Micromotives and Macrobehavior}, New York: Norton, 1978. 
-\bibitem{text-b}
-A. Authorlast, ``Paper Title,'' in \textit{A Collection} (F. Editor and
-S. Editor, eds.), Publisher Location: Publisher Name, year pp.
-\#--\#. doi:name.\\
-S. Hou, J. Sterling, S. Chen, and G. Doolen, ``A Lattice Boltzmann
-Subgrid Model for High Reynolds Number Flows,'' in \textit{Pattern
-Formation and Lattice Gas Automata} (A. T. Lawniczak and R. Kapral,
-eds.), Toronto: Fields Institute Communications, \textbf{6}, 1996
-pp. 151--166.
-\bibitem{edbook}
-A. Editor, ed., \textit{Book Title}, nth ed., Publisher Location: Publisher Name, year. \\
-A. Law and D. Kelton, eds., \textit{Simulation Modeling and
-Analysis}, 3rd ed., Boston: McGraw-Hill, 2000.
-\bibitem{proc}
-A. Authorlast, ``Paper Title,'' in \textit{Conference Proceedings
-Title} (\textit{Conference Acronym and year}), Conference Location
-(A. Authorlast, ed.), Publisher Location: Publisher Name, year pp.
-\#--\#.\\
-P. Fritzson, L. Viklund, J. Herber and D. Fritzson, ``Industrial
-Application of Object-Oriented Mathematical Modeling and Computer
-Algebra in Mechanical Analysis,'' in \textit{Proceedings of the
-Seventh  International Conference on Technology of Object-Oriented
-Languages and Systems (TOOLS EUROPE'92)}, Dortmund, Germany 
-(G.  Heeg, B. Magnosson, and B. Meyer, eds.), Hertfordshire, UK: Prentice
-Hall International (UK) Ltd., 1992 pp. 167--181.
-\bibitem{report}
-A. Authorlast, \textit{Technical Report Title}, Classification/Number,
-Department, University or Organization, Location, year. URL if
-available.\\
-C. Lemieux, M. Cieslak, and K. Luttmer, \textit{RandQMC User's
-Guide: A Package for Randomized Quasi-Monte Carlo Methods in C},
-Technical report 2002-712-15, Department of Computer Science,
-University of Calgary, 2002. hdl.handle.net/1880/46569.
-\bibitem{preprint}
-A. Authorlast, \textit{Preprint Book Title}, Publisher Location:
-Publisher Name, forthcoming. \\
-J.-P. Aubin, L. Chen, and O. Dordan, \textit{Tychastic Measure of
-Viability Risk: A Viabilist Portfolio Performance and Insurance
-Approach}, Heidelberg: Springer, forthcoming. 
-vimades.com/AUBIN/EradicationVPPI-Presentation.pdf.
-\bibitem{manual}
-Company Name, \textit{Computer Program Reference Manual} (available from Name, address). \\
-Xerox, \textit{InterLISP Reference Manual} (available from Xerox
-Palo Alto Research Center, Palo Alto, CA).
-\bibitem{future}
-A. Authorlast, ``Future Paper,'' \textit{Full Name of Journal}, forthcoming.\\ 
-J. Riedel and H. Zenil, ``Cross-Boundary Behavioural Reprogrammability Reveals Evidence of Pervasive Universality,'' \textit{ International Journal of Unconventional Computing}, forthcoming. arxiv.org/abs/1510.01671.
-\bibitem{talk}
-A. Authorlast, ``Title,'' presentation given at \textit{Conference
-Name (Conference Acronym and year)}, Location. URL of abstract if
-available.\\
-A. Banos, ``Exploring Network Effects in Schelling's Segregation
-Model,'' presentation given at \textit{S4-Modus Workshop: Multi-scale
-Interactions between Urban Forms and Processes}, Besan{\c c}on,
-France, 2009.
-\bibitem{program}
-Software Name, Release Version Number, Location: Organization, year.\\
-U. Wilensky. ``NetLogo.'' Center for Connected Learning and
-Computer-Based Modeling, Northwestern University, Evanston, IL.
-(Oct 25, 2012) ccl.northwestern.edu/netlogo/index.shtml.
-\bibitem{website}
-A. Authorlast. ``Website (or page) Title.'' (Month Day, Year) URL.\\
-OnlineAtlas.us. ``United States Interstate Highway Map.'' (May 7,
-2012) www.onlineatlas.us/interstate-highways.htm.
-\bibitem{blog}
-A. Authorlast. ``Blog Title,'' Blog Series Name (blog). (Month Day, Year) URL.\\
-B. Yorgey, ``Recounting the Rationals, Part II,'' \textit{The Math
-Less Traveled} (blog). (Apr 2, 2010) www.mathlesstraveled.com/?p=97.
-\bibitem{forum}
-A. Authorlast. ``Forum Post'' from Forum Name. (Month Day, Year) URL.\\
-T. Rowland. ``Enumerating Strings'' from The NKS Forum---A
-Wolfram Web Resource. (Apr 02, 2010)\\
-forum.wolframscience.com/showthread.php?s=$\&$threadid=929.
-\bibitem{demonstration}
-A. Authorlast. ``Demonstration Title'' from the Wolfram Demonstrations
-Project---A Wolfram Web Resource. URL.\\
-E. Pegg Jr. ``Coin Flips'' from the Wolfram Demonstrations Project---A
-Wolfram Web Resource. www.demonstrations.wolfram.com/CoinFlips.
-\bibitem{cloud}
-A. Authorlast. ``Wolfram Cloud Article Title.'' (Month Day, Year) URL.\\
-A. A. de Laix. ``Encryption with Enigma.'' (Jul 1, 2014) www.wolframcloud.com/objects/1f52ae4b-0686-4bde-966e-5e60d8225ae4.
 \end{thebibliography}
 \end{document}
