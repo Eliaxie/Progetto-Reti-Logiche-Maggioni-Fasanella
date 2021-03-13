@@ -11,6 +11,7 @@
 \usepackage{graphicx,hyperref}
 \usepackage{amssymb,ComplexSystems}
 \usepackage{tikz}
+\usepackage{scalefnt}
 \usetikzlibrary{automata, positioning, arrows}
 \usepackage{underscore}
 \graphicspath{ {./images/} }
@@ -54,7 +55,7 @@
 % End title section
 
 \begin{abstract}
-Nel progetto abbiamo seguito un approccio top-down partendo dal disegno su carta delle FSM e dei DataPath, traduzione in codice VHDL, testing generico e testing mirato agli edge-case.
+Questa relazione descrive il codice VHDL sintetizzato per l'equalizzazione di un'immagine in bianco e nero su piattaforma FPGA. L'implementazione si basa sulla espansione della gamma cromatica utilizzata al fine di occupare tutta quella rappresentabile. Lo sviluppo ha incluso la definizione di test bench per testare la correttezza e l'affidabilità del risultato prodotto. 
 \end{abstract}
 
 % The text of the paper follows. All of the text should be in the same file. 
@@ -64,7 +65,7 @@ Nel progetto abbiamo seguito un approccio top-down partendo dal disegno su carta
 \label{intro}
 % \label is a hyperlink target for cross-referencing to this section using \ref{intro} (optional).
 Il circuito descritto si occupa di leggere e rielaborare i dati da RAM producendo un'immagine con nitidezza più alta e quindi più leggibile. 
-\newline
+
 Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset, ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
 \begin{figure}[h]
 \centering
@@ -153,7 +154,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 \end{itemize}
 \begin {center}  
 	\begin{tikzpicture}
-	[->,align=center,node distance=1cm]
+	[->,align=center,node distance=1cm,]
     \node[state,initial,initial where=left, initial text=$rst$] (S0) {$S0$};
     \node[state, right of=S0] (S1) {$S1$};
     \node[state, below of=S1] (S2) {$S2$};
@@ -289,7 +290,6 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		\end {itemize}
  \end{enumerate}
-
 %\break
 \begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
@@ -329,25 +329,35 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	%(s0c) edge[bend left, below] node{} (s0b);
 \end{tikzpicture}
 
-%FSM GENERALE:
+\break
 
+{\scalefont{0.6} \begin{center}
+
+%FSM GENERALE:
 	\begin{tikzpicture}
-	[->,align=center,node distance=1.5cm, size = 2cm]
-    \node[state,initial,initial where=left, initial text=$rst$] (F1S0) {$IDLE$};
-    \node[state, below of=F1S0] (F1S1) {$GET\_OPs$};
-    \node[state, below of=F1S1] (F1S2) {$$};
-    \node[state, below of=F1S2, minimum size=1cm] (F1S1b) {$S1_b$};
-    \node[state, below of=F1S1b, minimum size=1cm] (F1S2b) {$S2_b$};
-      \node[state, below of=F1S2b, minimum size=1cm] (F1S3) {$S3$};
-      \node[state, below of=F1S3, minimum size=1cm] (F1S3b) {$S3_b$};
-       \node[state, below of=F1S3b, minimum size=1cm] (F1S4) {$S4$};
-      \node[state, below of=F1S4, minimum size=1cm] (F1S4a) {$S4_a$};
-      \node[state, below of=F1S4a, minimum size=1cm] (F1S5) {$S5$};
-      \node[state, below of=F1S5, minimum size=1cm] (F1S6) {$S6$};
-      \node[state, below of=F1S6, minimum size=1cm] (F1S7) {$S7$};
-      \node[state, below of=F1S7, minimum size=1cm] (F1S8) {$S8$};
-      \node[state, below of=F1S8, minimum size=1cm] (F1S9) {$S9$};
-       \draw   (F1S0) edge[bend right,below] node{$start$} (F1S1);
+	[->,align=center,node distance=2cm, text width=10mm, ]
+		\node[state] (F3S1) {$F3S1$};
+		\node[state, above of = F3S1] (F3S0) {$F3S0$};
+		\node[state, below of=F3S1] (F3S2) {$F3S2$};
+		\node[state, below of=F3S2] (F3S3) {$F3S3$};
+		\node[state, below of=F3S3] (F3S4) {$F3S4$};
+		\node[state, below of=F3S4] (F3S5) {$F3S5$};
+		\node[state, below of=F3S5] (F3S6) {$F3S6$};
+		\node[state, below of=F3S6] (F3S7) {$F3S7$};
+		\node[state, below of=F3S7] (F3S8) {$F3S8$};
+	  \node[state, left of = F3S1, node distance=4cm] (F2S0) {$F2S0$};
+		\node[state, below of=F2S0] (F2S1) {$F2S0$};
+		\node[state, below of=F2S1] (F2S2) {$F2S1$};
+		\node[state, below of=F2S2] (F2S3) {$F2S2$};
+		\node[state, below of=F2S3] (F2S4) {$F2S3$};
+		\node[state, below of=F2S4] (F2S5) {$F2S4$};
+    \node[state, left of=F2S1,initial,initial where=left, initial text=$rst$, node distance=4cm] (F1S0) {$Ready$};
+    \node[state, below of=F1S0] (F1S1) {$Get\_OPs$};
+    \node[state, below of=F1S1] (F1S2) {$Multiply$};
+    \node[state, below of=F1S2, text width=1cm] (F1S3) {$Delta$};
+    \node[state, below of=F1S3, minimum size=1cm] (F1S4) {$Finalize$};
+    \node[state, below of=F1S4, minimum size=1cm] (F1S5) {$Reset$};
+       \draw   (F1S0) edge[below] node{$start$} (F1S1);
        %(S0) edge[loop below] node{} (S1)
             %(S1) edge[ below] node{} (S2)
             %(S2) edge[ below] node{} (S1b)
@@ -368,20 +378,12 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             %(S7) edge[ bend left,above] node{$done2$} (S8)
             %(S8) edge[ bend right,below] node{} (S9)
             %(S9) edge[bend right,above] node{$!start$} (S0);
-\end{tikzpicture}
-
+\end{tikzpicture} \end{center}  }
+\break
 \section{Risultati sperimentali}
-
-Figures are an excellent mechanism for communicating many kinds of results. Great care should be taken to produce clear, well-constructed figures.When there are many related graphs or images, they should usually be combined into a single figure. 
-
-Figures should be displayed near where they are first mentioned in the text and are numbered sequentially: Figure \ref{ex-fig} is an example. All figures and tables should be mentioned in the text.
-
-It is best to send your figures in a {``}scalable{''} form such as Wolfram Mathematica Graphics Objects, Encapsulated PostScript (EPS) or PortableDocument Format (PDF). Figures can also be processed in {``}bitmap{''} formats such as BMP, PICT or TIFF, but scalable formats generally reproduce better.
-Figures should reproduce well (i.e., without noticeable aliasing) on common printers. The source file for a particular figure must include all elements of the figure and should not require modification. Lettering should be consistent throughout a figure and must be no smaller than 6 points when the figure is at final size. Lines should be thick enough that they do not break up under reduction (single-pixel lines rarely suffice). Filled black areas must not drop out. Whenever possible, the figures should be oriented in the same sense as text (portrait mode). 
-Computer programs or algorithm descriptions may be given either in equations or in figures. Literal expressions that occur as computer input or output should be given in typewriter font. 
-Tables should include captions similar to those for figures and should be numbered sequentially throughout the paper: Table \ref{ex-table} is an example. Tables must be oriented with the text and use 9-point type, and should be enclosed by a box. 
 \section{Simulazioni}
 \label{main-text}
+
 Risultati  dei  test  fatti  e  le ragioni di tali test -motivare le scelte
 \begin{itemize}
 \item TB Delta=255:
@@ -429,21 +431,7 @@ Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un cas
 % Numbered lists of items are obtained with \begin{enumerate} ... \end{enumerate}
 --
 \section{Risultati di sintesi}
-%Consistent mathematical notation is essential to clear exposition. Try to use familiar notation; for example, avoid having \(x\)stand for an integer index.
-% In LaTeX, such in-line equations are delimited by \(...\).
-%
-% For a full list of TeX symbols, see the LaTeX or TeX manuals.
-% Boldface is obtained with \textbf{...}
-% Roman (ordinary) font, often used for English words within equations,
-% is obtained with \textrm{...} (note that spaces between words must be
-% indicated explicitly).
-Displayed equations that are referenced in the text should be numbered sequentially: 
-% This is done automatically if the correct tags are used in LaTeX. 
-\begin{equation}
-e^{2\pi i}=1.
-\label{exponential-equation}
-\end{equation}
-
+ciao
 \begin{table}
 \centerline{\small\begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -461,17 +449,10 @@ e^{2\pi i}=1.
 \caption{Utilization Design Information - Slice Logic}
 \label{ex-table}
 \end{table}
-
-% Any text can be used in a \label to mark an equation. Usually it will 
-% be a tag that relates to the content of the equation. 
-Spaces should be inserted in equations where necessary to improve readability. Equations should be referred to as {``}equation (\ref{exponential-equation}).{''} Short equations may be inserted directly in the text, as in \(\beta =2\). Equations that involve extensive subscripts, superscripts or built-up objects should be displayed. Special symbols in equations must be strictly limited to those that can be produced with Wolfram Mathematica using common fonts.
-If a formatting system other than Wolfram Mathematica or LaTeX is used, make sure that all symbols are very clearly identified, and that all subscripts and superscripts are evident. \textit{Complex Systems} allows many kinds of notation. It is suggested that symbols or words related to actual or theoretical computers be indicated in \texttt{typewriter font}. 
-Great care should be taken in mixing plain English, mathematics and algorithm descriptions. Say, for example, {``}\(x\) is the position{''} rather than {``}\(x=\) position.{''} Consistency must be maintained between different occurrences of a symbol. If \(x\) is a mathematical symbol, make sure it appears as \(x\) everywhere, not sometimes as x or as \texttt{x}. As a rough guide, mathematical symbols should appear as \(x\) and computer symbols as \texttt{x}. 
+ciao
 \section{Conclusioni}
 --TEMPI 
 Entrambi abbiamo creato le basi per capire le dinamiche di approccio ad un progetto: come svilupparlo, ma soprattutto come collaborare. Ringraziamo infine i professori per averci guidato in questa stimolante esperienza.
-\section*{Acknowledgments}
-Acknowledgments should thank individuals and organizations for their contributions to the work. All funding information should be placed in the acknowledgments.If acknowledgments imply some endorsement of the paper (e.g., {``}We thank X for checking\(\ldots\){''}), make sure the parties involved approve the statements made.
 \begin{thebibliography}{99}
 % The number of 9s indicate how many digits to allow for to align the indented list.
 \bibitem{a-review}
