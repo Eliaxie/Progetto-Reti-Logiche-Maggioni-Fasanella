@@ -380,17 +380,19 @@ wait for 100 ns;
 	assert RAM4(12) = std_logic_vector(to_unsigned( 2 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  4  found " & integer'image(to_integer(unsigned(RAM(10))))  severity failure; 
 	assert RAM4(13) = std_logic_vector(to_unsigned( 0 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  2  found " & integer'image(to_integer(unsigned(RAM(11))))  severity failure;
     --5
+    assert RAM6(2) = std_logic_vector(to_unsigned( 110 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  110  found " & integer'image(to_integer(unsigned(RAM2(2))))  severity failure;
 	assert RAM5(3) = std_logic_vector(to_unsigned( 115 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  115  found " & integer'image(to_integer(unsigned(RAM2(3))))  severity failure; 
 	assert RAM5(4) = std_logic_vector(to_unsigned( 124 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  124  found " & integer'image(to_integer(unsigned(RAM2(4))))  severity failure; 
 	assert RAM5(5) = std_logic_vector(to_unsigned( 110 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  110  found " & integer'image(to_integer(unsigned(RAM2(5))))  severity failure;
 	assert RAM5(6) = std_logic_vector(to_unsigned( 111 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  111  found " & integer'image(to_integer(unsigned(RAM(6))))  severity failure; 
 	assert RAM5(7) = std_logic_vector(to_unsigned( 120 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  120  found " & integer'image(to_integer(unsigned(RAM(7))))  severity failure;
     --6
-	assert RAM6(3) = std_logic_vector(to_unsigned( 115 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  115  found " & integer'image(to_integer(unsigned(RAM2(7))))  severity failure; 
-	assert RAM6(4) = std_logic_vector(to_unsigned( 125 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  125  found " & integer'image(to_integer(unsigned(RAM2(8))))  severity failure; 
-	assert RAM6(5) = std_logic_vector(to_unsigned( 110 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  110  found " & integer'image(to_integer(unsigned(RAM2(9))))  severity failure;
-	assert RAM6(6) = std_logic_vector(to_unsigned( 111 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  111  found " & integer'image(to_integer(unsigned(RAM(10))))  severity failure; 
-	assert RAM6(7) = std_logic_vector(to_unsigned( 120 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  120  found " & integer'image(to_integer(unsigned(RAM(11))))  severity failure;
+    assert RAM6(2) = std_logic_vector(to_unsigned( 110 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  110  found " & integer'image(to_integer(unsigned(RAM2(2))))  severity failure;
+	assert RAM6(3) = std_logic_vector(to_unsigned( 115 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  115  found " & integer'image(to_integer(unsigned(RAM2(3))))  severity failure; 
+	assert RAM6(4) = std_logic_vector(to_unsigned( 125 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  125  found " & integer'image(to_integer(unsigned(RAM2(4))))  severity failure; 
+	assert RAM6(5) = std_logic_vector(to_unsigned( 110 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  110  found " & integer'image(to_integer(unsigned(RAM2(5))))  severity failure;
+	assert RAM6(6) = std_logic_vector(to_unsigned( 111 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  111  found " & integer'image(to_integer(unsigned(RAM(6))))  severity failure; 
+	assert RAM6(7) = std_logic_vector(to_unsigned( 120 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  120  found " & integer'image(to_integer(unsigned(RAM(7))))  severity failure;
     --7
 	assert RAM7(8) = std_logic_vector(to_unsigned( 255 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  255  found " & integer'image(to_integer(unsigned(RAM2(6))))  severity failure; 
 	assert RAM7(9) = std_logic_vector(to_unsigned( 255 , 8)) report " TEST FALLITO (WORKING ZONE). Expected  255  found " & integer'image(to_integer(unsigned(RAM2(7))))  severity failure; 

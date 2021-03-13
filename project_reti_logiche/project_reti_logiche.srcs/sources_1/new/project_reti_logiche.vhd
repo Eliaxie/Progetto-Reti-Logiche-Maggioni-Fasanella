@@ -2,9 +2,8 @@
 -- Engineer: Maggioni, Fasanella
 -- 
 -- Create Date: 09-03-2021
--- Design Name: 
 -- Module Name: project_reti_logiche - Behavioral
--- Project Name: 
+-- Project Name: Progetto Reti Logiche
 -- Target Devices: 
 -- Tool Versions: 
 -- Description: 
@@ -19,15 +18,9 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.std_logic_unsigned.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 USE IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+
 ENTITY project_reti_logiche IS
 	PORT (
 		i_clk : IN STD_LOGIC;
@@ -101,8 +94,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 		);
 
 	END COMPONENT;
-	-- signal f1r1_load : STD_LOGIC; f1 prefisso sta per fase 1
-	-- ...
+
 	--##SEGNALI FASE 1
 	SIGNAL REGAddr : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL MAXPixel : STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -110,14 +102,11 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL Pixel : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL flagMIN : STD_LOGIC;
 	SIGNAL flagMAX : STD_LOGIC;
-	SIGNAL f : STD_LOGIC;
 	SIGNAL f1 : STD_LOGIC;
 	SIGNAL Sum : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	--	 signal M: std_logic_vector(15 downto 0);
 	SIGNAL OP1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL OP2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL M : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	--	SIGNAL ONE : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL minV : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL maxaddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f1s3 : STD_LOGIC;
@@ -129,8 +118,9 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_f1s5 : STD_LOGIC;
 	SIGNAL o_f3addr_read : STD_LOGIC;
 	SIGNAL o_f3addr_write : STD_LOGIC;
-	SIGNAL o_m : STD_LOGIC; --alto segnale moltiplicazione
+	SIGNAL o_m : STD_LOGIC; --segnale moltiplicazione
 	SIGNAL endof : STD_LOGIC; --end of image processing
+	
 	--##SEGNALI FASE 2
 	SIGNAL f2r1_load : STD_LOGIC;
 	SIGNAL f2r2_load : STD_LOGIC;
@@ -179,41 +169,19 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL cur_state_S3, next_state_S3 : S3;
 
 BEGIN
-	-- port map
-	--    DATAPATH1: stadio1DataPath port map(
-	--        i_data => i_data,
-	--        i_start => i_start,
-	--        i_clk => i_clk,
-	--        i_rst => i_rst,
-	--        delta => delta,
-	--        start2 => start2,
-	--        done2 => done2,
-	--        maxaddress => maxaddress,
-	--        minV => minV,
-	--        o_en => o_en
-	--     );  
-	--    DATAPATH2: stadio2DataPath port map(
-	--        i_clk => i_clk,
-	--        i_rst => i_rst,
-	--        delta => delta,
-	--        shift_level => shift_level,
-	--        start2 => start2,
-	--        start3 => start3,
-	--        done2 => done2,
-	--        done3 => done3
-	--    );
-
-	-- ## FASE 1
 
 	-- SIGNALS AND OPERATIONS
 	Sum <= REGAddr + "0000000000000001"; -- Somma al Contatore
-	MinV <= MINPixel;
+	MinV <= MINPixel; 
 	maxaddress <= M; -- Maximum address 
-	f <= '1' WHEN REGAddr >= "0000000000000001" ELSE '0'; -- segnale f: indica che termina lettura di num righe e num colonne
 	f1 <= '1' WHEN REGAddr > M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
 	delta <= MAXPixel - MINPixel; --delta value
 	flagMIN <= '1' WHEN pixel < MINPixel ELSE '0'; -- =1 se il valore letto Ã¨ minimo
 	flagMAX <= '1' WHEN pixel > MAXPixel ELSE '0'; -- =1 se il valore letto Ã¨ massimo
+	o_SUB <= "1000" - o_LUT;  -- SUB=8-(log(delta+1))
+	
+	
+	-- ## FASE 1
 	
 	PROCESS (i_clk, i_rst)
 	BEGIN
@@ -348,163 +316,7 @@ BEGIN
 			--			MinV<=MINPixel;
 		END IF;
 	END PROCESS;
-
-	-- /* PARTE COMPUTAZIONALE */
-	PROCESS (cur_state_S1, cur_state_S2, cur_state_S3, i_clk, O_F3R6)
-	BEGIN
-
-		o_f1s2 <= '0';
-		o_done <= '0';
-		o_f1s3 <= '0';
-		o_f1s4 <= '0';
-		o_f1s5 <= '0';
-		o_f1s2 <= '0';
-		start2 <= '0';
-		o_op1 <= '0';
-		o_op2 <= '0';
-		o_m <= '0';
-		o_en <= '1';
-		endof <= '0';
-
-		CASE cur_state_S1 IS
-
-			WHEN F1S0 =>
-				o_en <= '0';
-
-			WHEN F1S1 =>
-				o_f1s4 <= '1';
-				o_op1 <= '1';
-				o_op2 <= '0';
-
-			WHEN F1S2 =>
-				o_op1 <= '1';
-				o_op2 <= '0';
-				o_f1s2 <= '1';
-				o_f1s3 <= '0';
-				o_f1s4 <= '0';
-
-			WHEN F1S1b =>
-				o_f1s4 <= '1';
-				o_op1 <= '0';
-				o_op2 <= '1';
-			WHEN F1S2b =>
-				o_op1 <= '0';
-				o_op2 <= '1';
-				o_f1s2 <= '1';
-				o_f1s3 <= '0';
-				o_f1s4 <= '0';
-
-			WHEN F1S3 =>
-				o_f1s4 <= '0';
-				o_f1s2 <= '0';
-				o_f1s3 <= '1';
-				o_m <= '0';
-
-			WHEN F1S3b =>
-				o_m <= '1';
-				o_f1s4 <= '0';
-				o_f1s2 <= '0';
-				o_f1s3 <= '1';
-
-			WHEN F1S4 =>
-				o_m <= '0';
-				o_f1s4 <= '1';
-				o_f1s3 <= '0';
-				o_f1s5 <= '0';
-
-			WHEN F1S4a =>
-				o_f1s4 <= '0';
-				o_f1s3 <= '0';
-				o_f1s5 <= '0';
-			WHEN F1S5 =>
-				o_f1s4 <= '0';
-				o_f1s3 <= '0';
-				o_f1s5 <= '1';
-
-			WHEN F1S6 =>
-				o_f1s5 <= '0';
-				start2 <= '1';
-			WHEN F1S7 =>
-				start2 <= '0';
-
-			WHEN F1S8 =>
-				o_done <= '1';
-				endof <= '1';
-			WHEN F1S9 =>
-		END CASE;
-		f2r1_load <= '0';
-		f2r2_load <= '0';
-		start3 <= '0';
-		CASE cur_state_S2 IS
-			WHEN F2S0 =>
-				done2 <= '0';
-			WHEN F2S1 =>
-				done2 <= '0';
-				f2r1_load <= '1';
-			WHEN F2S2 =>
-				done2 <= '0';
-			WHEN F2S3 =>
-				done2 <= '0';
-			WHEN F2S4 =>
-				done2 <= '0';
-				f2r2_load <= '1';
-			WHEN F2S5 =>
-				done2 <= '0';
-				start3 <= '1';
-			WHEN F2S6 =>
-				done2 <= '0';
-
-			WHEN F2S7 =>
-				done2 <= '1';
-		END CASE;
-		f3r1_load <= '0';
-		f3r2_load <= '0';
-		f3r3_load <= '0';
-		f3r4_load <= '0';
-		f3r5_load <= '0';
-		f3r6_load <= '0';
-		f3r7_load <= '0';
-		done3 <= '0';
-		o_we <= '0';
-		o_data <= "00000000";
-		o_f3addr_write <= '0';
-		o_f3addr_read <= '0';
-		CASE cur_state_S3 IS
-			WHEN F3S0 =>
-				o_f3addr_read <= '0';
-			WHEN F3S0b =>
-				o_f3addr_read <= '1';
-			WHEN F3S0c =>
-				o_f3addr_read <= '0';
-			WHEN F3S1 =>
-				f3r1_load <= '1';
-				f3r2_load <= '1';
-				f3r3_load <= '1';
-				f3r4_load <= '1';
-			WHEN F3S2 =>
-			WHEN F3S3 =>
-				f3r5_load <= '1';
-			WHEN F3S4 =>
-			WHEN F3S5 =>
-			WHEN F3S6 =>
-				f3r6_load <= '1';
-				o_f3addr_write <= '0';
-			WHEN F3S6b =>
-				o_f3addr_write <= '1';
-
-			WHEN F3S7 =>
-				o_f3addr_write <= '0';
-				o_we <= '1';
-				o_data <= o_f3r6;
-			WHEN F3S7b =>
-				f3r7_load <= '1';
-				o_we <= '0';
-			WHEN F3S8 =>
-			WHEN F3S9 =>
-				done3 <= '1';
-		END CASE;
-	END PROCESS;
-
+	
 	--##FASE 2
 	PROCESS (i_clk, i_rst)
 	BEGIN
@@ -544,6 +356,7 @@ BEGIN
 		END CASE;
 	END PROCESS;
 
+    --Look Up Table per il logaritmo
 	LUT : PROCESS (i_clk, o_f2r1)
 	BEGIN
 		IF (i_clk' event AND i_clk = '1') THEN
@@ -1065,8 +878,6 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	o_SUB <= "1000" - o_LUT;
-
     Fase2Delta : PROCESS (i_clk, i_rst)
 	BEGIN
 		IF (i_rst = '1') THEN
@@ -1090,7 +901,7 @@ BEGIN
 	END PROCESS;
 	shift_level <= "0000" & o_f2r2;
 
-	--    --# FASE 3
+    --# FASE 3
 
 	FSM3 : PROCESS (cur_state_S3, start3, o_f3r7, o_f3r4)
 	BEGIN
@@ -1194,6 +1005,168 @@ BEGIN
 		ELSE
 			o_f3mutex <= o_f3shift(7 DOWNTO 0);
 		END IF;
+	END PROCESS;
+	
+	
+	
+	-- /* PARTE COMPUTAZIONALE */
+	PROCESS (cur_state_S1, cur_state_S2, cur_state_S3, i_clk, O_F3R6)
+	BEGIN
+
+		o_f1s2 <= '0';
+		o_done <= '0';
+		o_f1s3 <= '0';
+		o_f1s4 <= '0';
+		o_f1s5 <= '0';
+		o_f1s2 <= '0';
+		start2 <= '0';
+		o_op1 <= '0';
+		o_op2 <= '0';
+		o_m <= '0';
+		o_en <= '1';
+		endof <= '0';
+        f2r1_load <= '0';
+		f2r2_load <= '0';
+		start3 <= '0';
+		f3r1_load <= '0';
+		f3r2_load <= '0';
+		f3r3_load <= '0';
+		f3r4_load <= '0';
+		f3r5_load <= '0';
+		f3r6_load <= '0';
+		f3r7_load <= '0';
+		done3 <= '0';
+		o_we <= '0';
+		o_data <= "00000000";
+		o_f3addr_write <= '0';
+		o_f3addr_read <= '0';
+		
+		
+		
+		CASE cur_state_S1 IS
+
+			WHEN F1S0 =>
+				o_en <= '0';
+
+			WHEN F1S1 =>
+				o_f1s4 <= '1';
+				o_op1 <= '1';
+				o_op2 <= '0';
+
+			WHEN F1S2 =>
+				o_op1 <= '1';
+				o_op2 <= '0';
+				o_f1s2 <= '1';
+				o_f1s3 <= '0';
+				o_f1s4 <= '0';
+
+			WHEN F1S1b =>
+				o_f1s4 <= '1';
+				o_op1 <= '0';
+				o_op2 <= '1';
+			WHEN F1S2b =>
+				o_op1 <= '0';
+				o_op2 <= '1';
+				o_f1s2 <= '1';
+				o_f1s3 <= '0';
+				o_f1s4 <= '0';
+
+			WHEN F1S3 =>
+				o_f1s4 <= '0';
+				o_f1s2 <= '0';
+				o_f1s3 <= '1';
+				o_m <= '0';
+
+			WHEN F1S3b =>
+				o_m <= '1';
+				o_f1s4 <= '0';
+				o_f1s2 <= '0';
+				o_f1s3 <= '1';
+
+			WHEN F1S4 =>
+				o_m <= '0';
+				o_f1s4 <= '1';
+				o_f1s3 <= '0';
+				o_f1s5 <= '0';
+
+			WHEN F1S4a =>
+				o_f1s4 <= '0';
+				o_f1s3 <= '0';
+				o_f1s5 <= '0';
+			WHEN F1S5 =>
+				o_f1s4 <= '0';
+				o_f1s3 <= '0';
+				o_f1s5 <= '1';
+
+			WHEN F1S6 =>
+				o_f1s5 <= '0';
+				start2 <= '1';
+			WHEN F1S7 =>
+				start2 <= '0';
+
+			WHEN F1S8 =>
+				o_done <= '1';
+				endof <= '1';
+			WHEN F1S9 =>
+		END CASE;
+		
+		CASE cur_state_S2 IS
+			WHEN F2S0 =>
+				done2 <= '0';
+			WHEN F2S1 =>
+				done2 <= '0';
+				f2r1_load <= '1';
+			WHEN F2S2 =>
+				done2 <= '0';
+			WHEN F2S3 =>
+				done2 <= '0';
+			WHEN F2S4 =>
+				done2 <= '0';
+				f2r2_load <= '1';
+			WHEN F2S5 =>
+				done2 <= '0';
+				start3 <= '1';
+			WHEN F2S6 =>
+				done2 <= '0';
+
+			WHEN F2S7 =>
+				done2 <= '1';
+		END CASE;
+		
+		CASE cur_state_S3 IS
+			WHEN F3S0 =>
+				o_f3addr_read <= '0';
+			WHEN F3S0b =>
+				o_f3addr_read <= '1';
+			WHEN F3S0c =>
+				o_f3addr_read <= '0';
+			WHEN F3S1 =>
+				f3r1_load <= '1';
+				f3r2_load <= '1';
+				f3r3_load <= '1';
+				f3r4_load <= '1';
+			WHEN F3S2 =>
+			WHEN F3S3 =>
+				f3r5_load <= '1';
+			WHEN F3S4 =>
+			WHEN F3S5 =>
+			WHEN F3S6 =>
+				f3r6_load <= '1';
+				o_f3addr_write <= '0';
+			WHEN F3S6b =>
+				o_f3addr_write <= '1';
+
+			WHEN F3S7 =>
+				o_f3addr_write <= '0';
+				o_we <= '1';
+				o_data <= o_f3r6;
+			WHEN F3S7b =>
+				f3r7_load <= '1';
+				o_we <= '0';
+			WHEN F3S8 =>
+			WHEN F3S9 =>
+				done3 <= '1';
+		END CASE;
 	END PROCESS;
 
 END Behavioral;
