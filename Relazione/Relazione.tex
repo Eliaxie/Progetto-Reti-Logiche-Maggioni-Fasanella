@@ -174,6 +174,30 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 				
 				
 			\end{itemize}
+			\begin{tikzpicture}
+[->,align=center,node distance=1.2cm]
+\node[state, initial, initial text=i\_start] (s0) {$S0$};
+\node[state, right of=s0, node distance=1.7cm] (s1) {$S1$};
+\node[state, right of=s1] (s2) {$S2$};
+\node[state, right of=s2] (s3) {$S3$};
+\node[state, right of=s3] (s4) {$S4$};
+\node[state, right of=s4] (s5) {$S5$};
+\node[state, right of=s5] (s6) {$S6$};
+\node[state, right of=s5] (s6) {$S6$};
+\node[state, right of=s6,node distance=1.7cm] (s7) {$S7$};
+\draw   
+	(s0) edge[loop above] node{!start2} (s0)
+	(s0) edge[above] node{start2} (s1)
+	(s1) edge[above, dotted, green] node{} (s2)
+	(s2) edge[above] node{} (s3)
+	(s3) edge[above] node{} (s4)
+	(s4) edge[above] node{} (s5)
+	(s5) edge[above] node{} (s6)
+	(s6) edge[above] node{done3} (s7)
+	(s6) edge[loop above] node{!done3} (s6)
+	(s7) edge[bend left, above] node{} (s0);
+\end{tikzpicture}
+
     \item\textbf{Modulo 3} 
 		
 		Il modulo tre è dove avviene la parte più delicata dell'elaborazione, in particolare a questa parte è delegata la lettura da memoria del valore del pixel corrente, il calcolo sequenziale per ogni pixel del nuovo valore e la riscrittura in memoria.
@@ -219,7 +243,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		\end {itemize}
  \end{enumerate}
 
-\break
+%\break
 \begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
 \node[state, initial, initial text=i\_start] (s0) {$S0$};
@@ -258,6 +282,46 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	%(s0c) edge[bend left, below] node{} (s0b);
 \end{tikzpicture}
 
+%FSM GENERALE:
+
+	\begin{tikzpicture}
+	[->,align=center,node distance=1.5cm, size = 2cm]
+    \node[state,initial,initial where=left, initial text=$rst$] (F1S0) {$IDLE$};
+    \node[state, below of=F1S0] (F1S1) {$GET\_OPs$};
+    \node[state, below of=F1S1] (F1S2) {$$};
+    \node[state, below of=F1S2, minimum size=1cm] (F1S1b) {$S1_b$};
+    \node[state, below of=F1S1b, minimum size=1cm] (F1S2b) {$S2_b$};
+      \node[state, below of=F1S2b, minimum size=1cm] (F1S3) {$S3$};
+      \node[state, below of=F1S3, minimum size=1cm] (F1S3b) {$S3_b$};
+       \node[state, below of=F1S3b, minimum size=1cm] (F1S4) {$S4$};
+      \node[state, below of=F1S4, minimum size=1cm] (F1S4a) {$S4_a$};
+      \node[state, below of=F1S4a, minimum size=1cm] (F1S5) {$S5$};
+      \node[state, below of=F1S5, minimum size=1cm] (F1S6) {$S6$};
+      \node[state, below of=F1S6, minimum size=1cm] (F1S7) {$S7$};
+      \node[state, below of=F1S7, minimum size=1cm] (F1S8) {$S8$};
+      \node[state, below of=F1S8, minimum size=1cm] (F1S9) {$S9$};
+       \draw   (F1S0) edge[bend right,below] node{$start$} (F1S1);
+       %(S0) edge[loop below] node{} (S1)
+            %(S1) edge[ below] node{} (S2)
+            %(S2) edge[ below] node{} (S1b)
+            %(S1b) edge[ below] node{} (S2b)
+            %(S2b) edge[ bend right,below ] node{$OP1==0$} (S8)
+            %(S2b) edge[ bend right] node{} (S3)
+            %(S3) edge[ bend left, above] node{} (S3b)
+            %(S3) edge[ bend left, above] node{$OP2==0$} (S4)
+            %(S3b) edge[ bend left] node{} (S3)
+            %(S4) edge[ below] node{} (S4a)
+            %(S4a) edge[ below] node{} (S5)
+            %(S5) edge[ bend left] node{} (S4)
+            %(S5) edge[ bend right] node{$f1$} (S6)
+            %(S6) edge[ right] node{} (S7)
+              %(S7) edge[ loop below] node{} (S7)
+                %(S8) edge[ loop below] node{$start$} (S8)
+                %(S9) edge[ loop below] node{} (S9)
+            %(S7) edge[ bend left,above] node{$done2$} (S8)
+            %(S8) edge[ bend right,below] node{} (S9)
+            %(S9) edge[bend right,above] node{$!start$} (S0);
+\end{tikzpicture}
 
 \section{Risultati sperimentali}
 
