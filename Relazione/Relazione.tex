@@ -197,26 +197,26 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		Il modulo due svolge il calcolo dello shift level noto il data value e lo rende disponibile per l'utilizzo al modulo tre. Una volta completato il calcolo, alza il segnale start3 per fare partire la FSM3 ed attende il done3 prima di terminare dando il done2 al modulo uno. Di seguito la descrizione della FSM2 che ha quasi solo una funzione di timing dei registri:
 			\begin{itemize}
-				\item F2S0 
+				\item F2S0 \emph{(Ready)}
 				
 				Attende l'inizio dell'esecuzione del programma che avviene tramite l'innalzamento del segnale start2
 				
-				\item F2S1
+				\item F2S1 \emph{(Get\_Delta)}
 				
 				Carica il valore di delta nel registro S2R1
 				
-				\item F2S2,F2S3,F2S4
+				\item F2S2,F2S3,F2S4 \emph{(LUT)}
 				
 				Attende la propagazione del segnale nel datapath e carica il valore in uscita dalla LUT in S2R2
 				
-				\item F2S5
+				\item F2S5 \emph{(Start3)}
 				
 				Avvia il modulo tre alzando il segnale start3
 				
-				\item F2S6
+				\item F2S6 \emph{(WaitDone3)}
 				
 				Attende in questo stato finché done3 non viene alzato dal modulo tre
-				\item F2S7
+				\item F2S7 \emph{(Finalize)}
 				
 				Alza il done2 per segnalare al modulo due l'avvenuta terminazione dell'elaborazione.
 				
@@ -252,39 +252,39 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		\begin{itemize}
 		
-		\item F3S0
+		\item F3S0 \emph{(Ready)}
 		
 		Stato di attesa della macchina, passa a \emph{F3S0b} quando start3 è portato a 1
 		
-		\item F3S0b, F3S0c
+		\item F3S0b, F3S0c \emph{(MemLoad)}
 		
 		In questi due stati viene prelevato da memoria il valore corrente del pixel ed assegnato al registro \emph{F3R3} che simboleggia il \emph{CurrPixel} value. La gestione della memoria viene effettuata tramite i flag \emph{o\_f3addr\_read \emph{e} o\_f3addr\_write} in un processo separato. Viene quindi assegnato il valore di ritorno \emph{i\_data}.
 		
-		\item F3S1
+		\item F3S1 \emph{(Get\_Calculated\_Values)}
 		
-		Avviene ora il prelievo dei segnali provenienti dai moduli uno e due e il caricamento degli stessi nei registri \emph{F3R1}, \emph{F3R2} e \emph{F3R4}, rispettivamente \textit{Shift\_level, min pixel value \emph{e} max address}.
+		Avviene ora il prelievo dei segnali provenienti dai moduli uno e due e il caricamento degli stessi nei registri \emph{F3R1}, \emph{F3R2} e \emph{F3R4}, rispettivamente \textit{shift\_level, min pixel value \emph{e} max address}.
 		
-		\item F3S2, F3S3
+		\item F3S2, F3S3 \emph{(Zeroing)}
 		
 		In questi stati avviene il calcolo di \(CurrPixel - minV\) e viene propagato tramite il segnale \emph{o\_f3sub} che poi viene caricato in \emph{F3R5}
 		
-		\item F3S4
+		\item F3S4 \emph{(Shift)}
 		
 		Da \emph{shift\_level} e \emph{F3R5} viene calcolato il valore di \emph{o\_f3shift}, vettore di 16 bit per evitare il possibile overflow
 		
-		\item F3S5, F3S6
+		\item F3S5, F3S6 \emph{(Overflow\_Check)}
 		
 		Un mutex viene inserito per portare \emph{shift\_level} da 16 bit a 8, nel caso in cui sia minore di 255 gli 8 bit più significativi vengono scartati, altrimenti viene assegnato il valore massimo rappresentabile di 255.
 		
-		\item F3S6b, F3S7
+		\item F3S6b, F3S7 \emph{(MemWrite)}
 		
 		Tramite il flag \emph{o\_f3addr\_write} viene assegnato in \emph{o\_data} il valore finale del registro \emph{F3R6} in uscita al mutex.
 		
-		\item F3S7b, F3S8
+		\item F3S7b, F3S8 \emph{(Current\_Pixel\_Increment)}
 		
 		Il valore di \emph{F3R7} viene incrementato di uno, questo registro serve alla macchina per sapere il valore corrente di memoria. Viene usato nel processo di gestione della RAM sia per la lettura che per la scrittura dei valori e viene inoltre usato per la condizione d'uscita del ciclo di stati \emph{F1S0b} \textrightarrow  \emph{F3S8} insieme a \emph{max address}.		
 		
-		\item F3S9
+		\item F3S9 \emph{(Finalize)}
 		
 		Stato finale della macchina, viene portato a 1 il segnale \emph{done3}
 		
@@ -337,14 +337,14 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	\begin{tikzpicture}
 	[->,align=center,node distance=2cm, text width=10mm, ]
 		\node[state] (F3S1) {$F3S1$};
-		\node[state, above of = F3S1] (F3S0) {$F3S0$};
-		\node[state, below of=F3S1] (F3S2) {$F3S2$};
-		\node[state, below of=F3S2] (F3S3) {$F3S3$};
-		\node[state, below of=F3S3] (F3S4) {$F3S4$};
-		\node[state, below of=F3S4] (F3S5) {$F3S5$};
-		\node[state, below of=F3S5] (F3S6) {$F3S6$};
-		\node[state, below of=F3S6] (F3S7) {$F3S7$};
-		\node[state, below of=F3S7] (F3S8) {$F3S8$};
+		\node[state, above of = F3S1] (F3S0) {$Ready$};
+		\node[state, below of=F3S1] (F3S2) {$MemLoad$};
+		\node[state, below of=F3S2] (F3S3) {$Get\_Val$};
+		\node[state, below of=F3S3] (F3S4) {$Zeroing$};
+		\node[state, below of=F3S4] (F3S5) {$Shift$};
+		\node[state, below of=F3S5] (F3S6) {$Overflow$};
+		\node[state, below of=F3S6] (F3S7) {$MemWrite$};
+		\node[state, below of=F3S7] (F3S8) {$Pixel\_Inc$};
 	  \node[state, left of = F3S1, node distance=4cm] (F2S0) {$F2S0$};
 		\node[state, below of=F2S0] (F2S1) {$F2S0$};
 		\node[state, below of=F2S1] (F2S2) {$F2S1$};
