@@ -462,6 +462,7 @@ BEGIN
 			END IF;
 		END IF;
 	END PROCESS;
+	
 	MINeMAX : PROCESS (i_clk, o_f1s5, flagMAX, flagMIN, i_rst, f1, endof)
 	BEGIN
 		IF (i_rst = '1' OR endof = '1') THEN
@@ -1167,4 +1168,4 @@ BEGIN
 
 END Behavioral;
 
----Versione 20.0
+---Versione final.1
