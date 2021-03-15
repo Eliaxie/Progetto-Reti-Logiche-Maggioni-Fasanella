@@ -42,15 +42,15 @@ ENTITY project_reti_logiche IS
 	);
 END project_reti_logiche;
 -- il nome del modulo deve essere project_reti_logiche
--- ?i_clk Ã¨ il segnale di CLOCK in ingresso generato dal TestBench;
--- ?i_rst Ã¨ il segnale di RESET che inizializza la macchina pronta per ricevere il primosegnale di START;
--- ?i_start Ã¨ il segnale di START generato dal Test Bench;
--- ?i_data Ã¨ il segnale (vettore) che arriva dalla memoria in seguito ad una richiesta dilettura;
--- ?o_address Ã¨ il segnale (vettore) di uscita che manda l'indirizzo alla memoria;
--- ?o_done Ã¨ il segnale di uscita che comunica la fine dell'elaborazione e il dato di uscitascritto in memoria;
--- ?o_en Ã¨ il segnale di ENABLE da dover mandare alla memoria per poter comunicare(sia in lettura che in scrittura);
--- ?o_we Ã¨ il segnale di WRITE ENABLE da dover mandare alla memoria (=1) per poterscriverci. Per leggere da memoria esso deve essere 0;
--- ?o_data Ã¨ il segnale (vettore) di uscita dal componente verso la memoria. 
+-- ?i_clk è il segnale di CLOCK in ingresso generato dal TestBench;
+-- ?i_rst è il segnale di RESET che inizializza la macchina pronta per ricevere il primosegnale di START;
+-- ?i_start è il segnale di START generato dal Test Bench;
+-- ?i_data è il segnale (vettore) che arriva dalla memoria in seguito ad una richiesta dilettura;
+-- ?o_address è il segnale (vettore) di uscita che manda l'indirizzo alla memoria;
+-- ?o_done è il segnale di uscita che comunica la fine dell'elaborazione e il dato di uscitascritto in memoria;
+-- ?o_en è il segnale di ENABLE da dover mandare alla memoria per poter comunicare(sia in lettura che in scrittura);
+-- ?o_we è il segnale di WRITE ENABLE da dover mandare alla memoria (=1) per poterscriverci. Per leggere da memoria esso deve essere 0;
+-- ?o_data è il segnale (vettore) di uscita dal componente verso la memoria. 
 
 -- Progetto di Elia Maggioni e Marco Fasanella
 ARCHITECTURE Behavioral OF project_reti_logiche IS
@@ -101,8 +101,6 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 		);
 
 	END COMPONENT;
-	-- signal f1r1_load : STD_LOGIC; f1 prefisso sta per fase 1
-	-- ...
 	--##SEGNALI FASE 1
 	SIGNAL REGAddr : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL MAXPixel : STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -113,11 +111,9 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL f : STD_LOGIC;
 	SIGNAL f1 : STD_LOGIC;
 	SIGNAL Sum : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	--	 signal M: std_logic_vector(15 downto 0);
 	SIGNAL OP1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL OP2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL M : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	--	SIGNAL ONE : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL minV : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL maxaddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_f1s3 : STD_LOGIC;
@@ -131,6 +127,7 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_f3addr_write : STD_LOGIC;
 	SIGNAL o_m : STD_LOGIC; --alto segnale moltiplicazione
 	SIGNAL endof : STD_LOGIC; --end of image processing
+
 	--##SEGNALI FASE 2
 	SIGNAL f2r1_load : STD_LOGIC;
 	SIGNAL f2r2_load : STD_LOGIC;
@@ -168,43 +165,17 @@ ARCHITECTURE Behavioral OF project_reti_logiche IS
 	SIGNAL o_wAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL o_rAddress : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
-	-- type S1 is (S10, S11, S12, S13, ... ); -- S10 Ã¨ lo stato 0 dello  1 
+	-- type S1 is (S10, S11, S12, S13, ... ); -- S10 è lo stato 0 dello  1 
 	TYPE S1 IS (F1S0, F1S1, F1S2, F1S1b, F1S2b, F1S3, F1S3b, F1S4, F1S4a, F1S5, F1S6, F1S7, F1S8, F1S9);
 	SIGNAL cur_state_S1, next_state_s1 : S1;
 
-	TYPE S2 IS (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 Ã¨ lo stato 0 della fase 2 
+	TYPE S2 IS (F2S0, F2S1, F2S2, F2S3, F2S4, F2S5, F2S6, F2S7); -- F2S0 è lo stato 0 della fase 2 
 	SIGNAL cur_state_S2, next_state_S2 : S2;
 
-	TYPE S3 IS (F3S0, F3S0b, F3S0c, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 Ã¨ lo stato 0 della fase 2 
+	TYPE S3 IS (F3S0, F3S0b, F3S0c, F3S1, F3S2, F3S3, F3S4, F3S5, F3S6, F3S6b, F3S7, F3S7b, F3S8, F3S9); -- F2S0 è lo stato 0 della fase 2 
 	SIGNAL cur_state_S3, next_state_S3 : S3;
 
 BEGIN
-	-- port map
-	--    DATAPATH1: stadio1DataPath port map(
-	--        i_data => i_data,
-	--        i_start => i_start,
-	--        i_clk => i_clk,
-	--        i_rst => i_rst,
-	--        delta => delta,
-	--        start2 => start2,
-	--        done2 => done2,
-	--        maxaddress => maxaddress,
-	--        minV => minV,
-	--        o_en => o_en
-	--     );  
-	--    DATAPATH2: stadio2DataPath port map(
-	--        i_clk => i_clk,
-	--        i_rst => i_rst,
-	--        delta => delta,
-	--        shift_level => shift_level,
-	--        start2 => start2,
-	--        start3 => start3,
-	--        done2 => done2,
-	--        done3 => done3
-	--    );
-
-	-- ## FASE 1
-
 	-- SIGNALS AND OPERATIONS
 	Sum <= REGAddr + "0000000000000001"; -- Somma al Contatore
 	MinV <= MINPixel;
@@ -212,145 +183,14 @@ BEGIN
 	f <= '1' WHEN REGAddr >= "0000000000000001" ELSE '0'; -- segnale f: indica che termina lettura di num righe e num colonne
 	f1 <= '1' WHEN REGAddr > M + "0000000000000010" ELSE '0'; -- segnale f1: indica se sono stati passati tutti gli indirizzi
 	delta <= MAXPixel - MINPixel; --delta value
-	flagMIN <= '1' WHEN pixel < MINPixel ELSE '0'; -- =1 se il valore letto Ã¨ minimo
-	flagMAX <= '1' WHEN pixel > MAXPixel ELSE '0'; -- =1 se il valore letto Ã¨ massimo
-	
-	PROCESS (i_clk, i_rst)
-	BEGIN
-		IF (i_rst = '1') THEN
-			cur_state_S1 <= F1S0;
-		ELSIF (rising_edge (i_clk)) THEN
-			cur_state_S1 <= next_state_s1;
+	flagMIN <= '1' WHEN pixel < MINPixel ELSE '0'; -- =1 se il valore letto è minimo
+	flagMAX <= '1' WHEN pixel > MAXPixel ELSE '0'; -- =1 se il valore letto è massimo
+	o_SUB <= "1000" - o_LUT;
+	shift_level <= "0000" & o_f2r2;
 
-		END IF;
-	END PROCESS;
+	-- /* GENERAL PROCESSES */
 
-	FSM1 : PROCESS (cur_state_S1, i_start, done2, OP1, OP2, F1)
-	BEGIN
-		next_state_s1 <= cur_state_S1;
-		CASE cur_state_S1 IS
-			WHEN F1S0 =>
-				IF (i_start = '1') THEN
-					next_state_s1 <= F1S1;
-				ELSE
-					next_state_s1 <= F1S0;
-				END IF;
-			WHEN F1S1 =>
-				next_state_s1 <= F1S2;
-			WHEN F1S2 =>
-				next_state_s1 <= F1S1b;
-
-			WHEN F1S1b => next_state_s1 <= F1S2b;
-			WHEN F1S2b =>
-				IF (OP1 > 0)
-					THEN
-					next_state_s1 <= F1S3;
-				ELSE next_state_s1 <= F1S8;
-				END IF;
-			WHEN F1S3 =>
-				IF (OP2 > 0) THEN
-					next_state_s1 <= F1S3b;
-				ELSE
-					next_state_s1 <= F1S4;
-				END IF;
-
-			WHEN F1S3b =>
-				next_state_s1 <= F1S3;
-
-			WHEN F1S4 =>
-				next_state_s1 <= F1S4a;
-			WHEN F1S4a =>
-				next_state_s1 <= F1S5;
-
-			WHEN F1S5 =>
-				IF (f1 = '1') THEN
-					next_state_s1 <= F1S6;
-				ELSE
-					next_state_s1 <= F1S4;
-				END IF;
-			WHEN F1S6 =>
-				next_state_s1 <= F1S7;
-			WHEN F1S7 =>
-				IF (done2 = '1') THEN
-					next_state_s1 <= F1S8;
-				ELSE
-					next_state_s1 <= F1S7;
-				END IF;
-			WHEN F1S8 =>
-
-				IF (i_start = '0') THEN
-					next_state_s1 <= F1S9;
-				ELSE
-					next_state_s1 <= F1S8;
-				END IF;
-
-			WHEN F1S9 =>
-				IF (i_start = '0') THEN
-					next_state_s1 <= F1S0;
-				ELSE
-					next_state_s1 <= F1S9;
-				END IF;
-		END CASE;
-	END PROCESS;
-
-	MULT : PROCESS (o_m, i_clk, i_rst, o_op1, o_op2, o_f1s2, endof)
-	BEGIN
-		IF (i_rst = '1' OR endof = '1') THEN
-			M <= "0000000000000000";
-
-		ELSIF (rising_edge (i_clk)) THEN
-			IF o_op1 = '1' THEN
-				OP1 <= STD_LOGIC_VECTOR(resize(unsigned(i_data), OP1'length));
-			ELSIF o_op2 = '1' THEN
-				OP2 <= STD_LOGIC_VECTOR(resize(unsigned(i_data), OP2'length));
-			ELSIF (o_m = '1') THEN
-				M <= M + OP1;
-				OP2 <= OP2 - 1;
-			END IF;
-		END IF;
-	END PROCESS;
-
-	ADDRHandler : PROCESS (i_clk, i_rst, o_f3addr_read, endof)
-	BEGIN
-		IF (i_rst = '1' OR endof = '1') THEN
-			REGAddr <= "0000000000000000";
-			o_address <= "0000000000000000";
-
-		ELSIF (rising_edge (i_clk)) THEN
-			IF (o_f1s4 = '1') THEN
-				REGAddr <= Sum;
-				o_address <= Sum;
-				Pixel <= i_data;
-			END IF;
-			IF (o_f3addr_read = '1') THEN
-				o_address <= o_f3r7 + 2;
-			END IF;
-			IF (o_f3addr_write = '1') THEN
-				o_address <= o_f3r4 + o_f3r7;
-			END IF;
-		END IF;
-	END PROCESS;
-
-	MINeMAX : PROCESS (i_clk, o_f1s5, flagMAX, flagMIN, i_rst, f1, endof)
-	BEGIN
-		IF (i_rst = '1' OR endof = '1') THEN
-			MaxPixel <= "00000000";
-			MinPixel <= "11111111";
-		ELSIF rising_edge(i_clk) AND o_f1s5 = '1' AND f1 = '0' THEN
-
-			IF (flagMIN = '1') THEN
-				MINPixel <= Pixel;
-			END IF;
-
-			IF (flagMAX = '1') THEN
-				MAXPixel <= Pixel;
-			END IF;
-			--			MinV<=MINPixel;
-		END IF;
-	END PROCESS;
-
-	-- /* PARTE COMPUTAZIONALE */
-	PROCESS (cur_state_S1, cur_state_S2, cur_state_S3, i_clk, O_F3R6)
+	SIGNAL_HANDLER : PROCESS (cur_state_S1, cur_state_S2, cur_state_S3, i_clk, O_F3R6)
 	BEGIN
 
 		o_f1s2 <= '0';
@@ -505,16 +345,141 @@ BEGIN
 		END CASE;
 	END PROCESS;
 
-	--##FASE 2
-	PROCESS (i_clk, i_rst)
+	ADDR_HANDLER : PROCESS (i_clk, i_rst, o_f3addr_read, endof)
 	BEGIN
-		IF (i_rst = '1') THEN
-			cur_state_S2 <= F2S0;
-		ELSIF i_clk'event AND i_clk = '1' THEN
-			cur_state_S2 <= next_state_S2;
+		IF (i_rst = '1' OR endof = '1') THEN
+			REGAddr <= "0000000000000000";
+			o_address <= "0000000000000000";
+
+		ELSIF (rising_edge (i_clk)) THEN
+			IF (o_f1s4 = '1') THEN
+				REGAddr <= Sum;
+				o_address <= Sum;
+				Pixel <= i_data;
+			END IF;
+			IF (o_f3addr_read = '1') THEN
+				o_address <= o_f3r7 + 2;
+			END IF;
+			IF (o_f3addr_write = '1') THEN
+				o_address <= o_f3r4 + o_f3r7;
+			END IF;
 		END IF;
 	END PROCESS;
 
+	-- /* FASE 1 PROCESSES */
+
+	FSM1 : PROCESS (cur_state_S1, i_start, done2, OP1, OP2, F1)
+	BEGIN
+		next_state_s1 <= cur_state_S1;
+		CASE cur_state_S1 IS
+			WHEN F1S0 =>
+				IF (i_start = '1') THEN
+					next_state_s1 <= F1S1;
+				ELSE
+					next_state_s1 <= F1S0;
+				END IF;
+			WHEN F1S1 =>
+				next_state_s1 <= F1S2;
+			WHEN F1S2 =>
+				next_state_s1 <= F1S1b;
+
+			WHEN F1S1b => next_state_s1 <= F1S2b;
+			WHEN F1S2b =>
+				IF (OP1 > 0)
+					THEN
+					next_state_s1 <= F1S3;
+				ELSE next_state_s1 <= F1S8;
+				END IF;
+			WHEN F1S3 =>
+				IF (OP2 > 0) THEN
+					next_state_s1 <= F1S3b;
+				ELSE
+					next_state_s1 <= F1S4;
+				END IF;
+
+			WHEN F1S3b =>
+				next_state_s1 <= F1S3;
+
+			WHEN F1S4 =>
+				next_state_s1 <= F1S4a;
+			WHEN F1S4a =>
+				next_state_s1 <= F1S5;
+
+			WHEN F1S5 =>
+				IF (f1 = '1') THEN
+					next_state_s1 <= F1S6;
+				ELSE
+					next_state_s1 <= F1S4;
+				END IF;
+			WHEN F1S6 =>
+				next_state_s1 <= F1S7;
+			WHEN F1S7 =>
+				IF (done2 = '1') THEN
+					next_state_s1 <= F1S8;
+				ELSE
+					next_state_s1 <= F1S7;
+				END IF;
+			WHEN F1S8 =>
+
+				IF (i_start = '0') THEN
+					next_state_s1 <= F1S9;
+				ELSE
+					next_state_s1 <= F1S8;
+				END IF;
+
+			WHEN F1S9 =>
+				IF (i_start = '0') THEN
+					next_state_s1 <= F1S0;
+				ELSE
+					next_state_s1 <= F1S9;
+				END IF;
+		END CASE;
+	END PROCESS;
+
+	PROCESS (i_clk, i_rst)
+	BEGIN
+		IF (i_rst = '1') THEN
+			cur_state_S1 <= F1S0;
+		ELSIF (rising_edge (i_clk)) THEN
+			cur_state_S1 <= next_state_s1;
+
+		END IF;
+	END PROCESS;
+
+	MULT : PROCESS (o_m, i_clk, i_rst, o_op1, o_op2, o_f1s2, endof)
+	BEGIN
+		IF (i_rst = '1' OR endof = '1') THEN
+			M <= "0000000000000000";
+
+		ELSIF (rising_edge (i_clk)) THEN
+			IF o_op1 = '1' THEN
+				OP1 <= STD_LOGIC_VECTOR(resize(unsigned(i_data), OP1'length));
+			ELSIF o_op2 = '1' THEN
+				OP2 <= STD_LOGIC_VECTOR(resize(unsigned(i_data), OP2'length));
+			ELSIF (o_m = '1') THEN
+				M <= M + OP1;
+				OP2 <= OP2 - 1;
+			END IF;
+		END IF;
+	END PROCESS;
+	MINeMAX : PROCESS (i_clk, o_f1s5, flagMAX, flagMIN, i_rst, f1, endof)
+	BEGIN
+		IF (i_rst = '1' OR endof = '1') THEN
+			MaxPixel <= "00000000";
+			MinPixel <= "11111111";
+		ELSIF rising_edge(i_clk) AND o_f1s5 = '1' AND f1 = '0' THEN
+
+			IF (flagMIN = '1') THEN
+				MINPixel <= Pixel;
+			END IF;
+
+			IF (flagMAX = '1') THEN
+				MAXPixel <= Pixel;
+			END IF;
+		END IF;
+	END PROCESS;
+
+	-- /* FASE 2 PROCESSES */
 	FSM2 : PROCESS (cur_state_S2, done3, start2)
 	BEGIN
 		next_state_S2 <= cur_state_S2;
@@ -542,6 +507,15 @@ BEGIN
 			WHEN F2S7 =>
 				next_state_s2 <= F2S0;
 		END CASE;
+	END PROCESS;
+
+	PROCESS (i_clk, i_rst)
+	BEGIN
+		IF (i_rst = '1') THEN
+			cur_state_S2 <= F2S0;
+		ELSIF i_clk'event AND i_clk = '1' THEN
+			cur_state_S2 <= next_state_S2;
+		END IF;
 	END PROCESS;
 
 	LUT : PROCESS (i_clk, o_f2r1)
@@ -1065,9 +1039,7 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	o_SUB <= "1000" - o_LUT;
-
-    Fase2Delta : PROCESS (i_clk, i_rst)
+	Fase2Delta : PROCESS (i_clk, i_rst)
 	BEGIN
 		IF (i_rst = '1') THEN
 			o_f2r1 <= "00000000";
@@ -1077,7 +1049,7 @@ BEGIN
 			END IF;
 		END IF;
 	END PROCESS;
-	
+
 	SUB : PROCESS (i_clk, i_rst, endof)
 	BEGIN
 		IF (i_rst = '1' OR endof = '1') THEN
@@ -1088,10 +1060,8 @@ BEGIN
 			END IF;
 		END IF;
 	END PROCESS;
-	shift_level <= "0000" & o_f2r2;
 
-	--    --# FASE 3
-
+	-- /* FASE 3 PROCESSES */
 	FSM3 : PROCESS (cur_state_S3, start3, o_f3r7, o_f3r4)
 	BEGIN
 		next_state_S3 <= cur_state_S3;
@@ -1133,7 +1103,6 @@ BEGIN
 		END CASE;
 	END PROCESS;
 
-	-- /* PARTE COMPUTAZIONALE */
 	PROCESS (i_clk, i_rst, endof)
 	BEGIN
 		IF (i_rst = '1' OR endof = '1') THEN
