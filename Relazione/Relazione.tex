@@ -395,7 +395,16 @@ Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un cas
  output=[255,255,255,2,2,0]
  
  Potrebbe capitare la lettura non completa dell'input. Caso molto comune nei due estremi RAM(3) e RAM(\(COL*RIG+2\)), a volte non compresi nella ricerca del minimo e del massimo.
+ \item TB con lunghezza 0:
+
+ input=[2,0,110,115,124,110,111,120] 
+ output invariato
  
+  input=[0,3,110,115,124,110,111,120]  
+ output invariato
+ 
+ Se l'immagine ha lunghezza o larghezza nulla, allora non verrà elaborata e il contenuto della RAM rimarrà invariato. 
+ \item TB con Shift massimo:
  \item TB con caso limite per LUT: 
  
   input=[2,3,200,199,170,177,180,171] 
