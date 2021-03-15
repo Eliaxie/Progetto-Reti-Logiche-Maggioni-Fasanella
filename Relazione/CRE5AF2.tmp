@@ -12,8 +12,6 @@
 \usepackage{amssymb,ComplexSystems}
 \usepackage{tikz}
 \usepackage{scalefnt}
-\usepackage{imakeidx}
-\makeindex
 \usetikzlibrary{automata, positioning, arrows}
 \usepackage{underscore}
 \graphicspath{ {./images/} }
@@ -62,7 +60,7 @@ Questa relazione descrive il codice VHDL sintetizzato per l'equalizzazione di un
 
 % The text of the paper follows. All of the text should be in the same file. 
 % Use separate files for large tabular material and graphics.
-%\printindex
+
 \section{Introduzione}
 \label{intro}
 % \label is a hyperlink target for cross-referencing to this section using \ref{intro} (optional).
@@ -331,6 +329,38 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	%(s0c) edge[bend left, below] node{} (s0b);
 \end{tikzpicture}
 
+\break
+%
+%{\scalefont{0.6} \begin{center}
+%
+%FSM GENERALE:
+	%\begin{tikzpicture}
+	%[->,align=center,node distance=2.2cm, text width=13mm, ]
+		%\node[state] (F3S1) {$MemLoad$};
+		%\node[state, above of = F3S1] (F3S0) {$Ready$};
+		%\node[state, below of=F3S1] (F3S2) {$Get\_Val$};
+		%\node[state, below of=F3S2] (F3S3) {$Zeroing$};
+		%\node[state, below of=F3S3] (F3S4) {$Shift$};
+		%\node[state, below of=F3S4] (F3S5) {$Overflow$};
+		%\node[state, below of=F3S5] (F3S6) {$MemWrite$};
+		%\node[state, below of=F3S6] (F3S7) {$Pixel\_Inc$};
+	  %\node[state, left of = F3S1, node distance=4cm] (F2S0) {$Ready$};
+		%\node[state, below of=F2S0] (F2S1) {$Get\_Delta$};
+		%\node[state, below of=F2S1] (F2S2) {$LUT$};
+		%\node[state, below of=F2S2] (F2S3) {$Start3$};
+		%\node[state, below of=F2S3] (F2S4) {$WaitDone3$};
+		%\node[state, below of=F2S4] (F2S5) {$Finalize$};
+    %\node[state, left of=F2S1,initial,initial where=left, initial text=$rst$, node distance=4cm] (F1S0) {$Ready$};
+    %\node[state, below of=F1S0] (F1S1) {$Get\_OPs$};
+    %\node[state, below of=F1S1] (F1S2) {$Multiply$};
+    %\node[state, below of=F1S2, text width=1cm] (F1S3) {$Delta$};
+    %\node[state, below of=F1S3, minimum size=1cm] (F1S4) {$Finalize$};
+    %\node[state, below of=F1S4, minimum size=1cm] (F1S5) {$Reset$};
+      %\draw   (F1S0) edge[below] node{start} (F1S1)
+			%\draw   (F2S1) edge[below] node{} (F2S2);
+       %
+%\end{tikzpicture} \end{center}  }
+%\break
 \section{Risultati sperimentali}
 \section{Simulazioni}
 \label{main-text}
