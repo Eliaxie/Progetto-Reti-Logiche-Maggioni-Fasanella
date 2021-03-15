@@ -57,7 +57,7 @@
 % End title section
 
 \begin{abstract}
-Questa relazione descrive il codice VHDL sintetizzato per l'equalizzazione di un'immagine in bianco e nero su piattaforma FPGA. L'implementazione si basa sulla espansione della gamma cromatica utilizzata al fine di occupare tutta quella rappresentabile. Lo sviluppo ha incluso la definizione di test bench per testare la correttezza e l'affidabilità del risultato prodotto. 
+Questa relazione descrive il codice VHDL sintetizzato per l'equalizzazione di un'immagine in bianco e nero su piattaforma FPGA. L'implementazione si basa sulla espansione della gamma cromatica utilizzata al fine di sfruttare tutta quella rappresentabile. Lo sviluppo ha incluso la definizione di test bench per testare la correttezza e l'affidabilità del risultato prodotto. 
 \end{abstract}
 
 % The text of the paper follows. All of the text should be in the same file. 
@@ -68,17 +68,17 @@ Questa relazione descrive il codice VHDL sintetizzato per l'equalizzazione di un
 % \label is a hyperlink target for cross-referencing to this section using \ref{intro} (optional).
 Il circuito descritto si occupa di leggere e rielaborare i dati da RAM producendo un'immagine con nitidezza più alta e quindi più leggibile. 
 
-Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset, ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine che meglio ricopre la gamma di colore rappresentabile.
-\begin{figure}[h]
+Quando il segnale start è fornito al circuito, viene attivata la prima macchina a stati ed in base al bias tra la saturazione dei pixel e l'offset, ovvero il valore minimo di saturazione, viene restituita nei valori di memoria immediatamente successivi un'immagine con pixel che meglio ricoprono i valori rappresentabili.
+\begin{figure}[hbt!]
 \centering
-\includegraphics[width=0.9\textwidth]{Example.png}
+\includegraphics[width=0.86\textwidth]{Example.png}
 \caption{Esempio di Equalizzazione (con algoritmo completo)}
 \end{figure}
-Quando la elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0. L'algoritmo usato nel progetto è solo una semplificazione di quello che realmente sarebbe possibile con questa tecnica. 
-\newline
-Questo per sottolineare il potenziale dell' equalizzazione dell'istogramma e di come riesca a migliorare in modo veramente apprezzabile la qualità di una immagine digitale.
-\newline
-\break
+
+Quando l'elaborazione è terminata, viene restituito un segnale di done ed il circuito è pronto per una nuova immagine a partire dall'indirizzo 0. L'algoritmo usato nel progetto è solo una semplificazione di quello che realmente sarebbe possibile con questa tecnica. 
+
+Questo per sottolineare il potenziale dell'equalizzazione dell'istogramma e di come riesca a migliorare in modo veramente apprezzabile la qualità di una immagine digitale.
+
 Nel circuito è stato scelto di dividere in 3 la computazione con moduli in cascata.
 \subsection{Specifica}
  \begin{figure}[h]
@@ -111,13 +111,14 @@ Mentre i valori da calcolare durante l'elaborazione saranno:
 
 Ogni byte corrisponde ad un pixel dell’immagine, che sarà quindi formata in modo sequenziale riga per riga. Bisognerà quindi leggere i valori e rielaborarli, per poi scriverli in memoria (a partire dall’indirizzo 2 e in byte contigui).
 \subsection{Esempio} 
-Di seguito vengono riportati degli esempi per comprendere meglio come è strutturato.
-\begin{figure}[h]
+Di seguito è riportato un esempio per esplicare meglio il funzionamento dell'algoritmo su valori di memoria realistici.
+\begin{figure}[hbt!]
 \centering
 \includegraphics[width=0.32\textwidth]{BeforeEq.png}
 \caption{Esempio di Pixel da Equalizzare}
 \end{figure}
-L'equalizzazione incrementa il contrasto globale delle immagini, specialmente quando i dati usabili dell'immagine sono rappresentati da valori di intensità molto vicini. Le intensità vengono perciò distribuite sull'istogramma, permettendo alle aree a basso contrasto locale di ottenere un alto contrasto.\newline
+
+L'equalizzazione incrementa il contrasto globale delle immagini, specialmente quando i pixel di cui è composta sono rappresentati da valori di intensità molto vicini. Le intensità vengono perciò distribuite sull'istogramma, permettendo alle aree a basso contrasto locale di ottenere un alto contrasto.\newline
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.33\textwidth]{AfterEq.png}
@@ -127,35 +128,13 @@ L'equalizzazione incrementa il contrasto globale delle immagini, specialmente qu
 
 \break
 \section{Architettura}
-La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da una propria FSM, attraverso segnali in cascata per l'avvio e la terminazione delle varie parti. Si avranno quindi i segnali start2,start3,done2, e done3 che avranno come scopo la comunicazione fra i vari moduli e i loro processi.
+La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da una propria FSM, attraverso segnali in cascata per l'avvio e la terminazione delle varie parti. Si avranno quindi i segnali \emph{start2, start3, done2,} e \emph{done3} che avranno come scopo la comunicazione fra i vari moduli e i loro processi.
  \begin{enumerate} 
   \item \textbf{Modulo 1} 
   
   Il primo modulo si occupa dell'inizio della computazione, della lettura e ricerca di massimo, minimo, e delta. Inoltre attende la discesa del segnale start in modo da abbassare done e mettersi in attesa di una nuova immagine. La macchina a stati di riferimento (FSM1) è composta dai seguenti stati:
-  \begin{itemize}
-  \item F1S0 \((Ready)\)
-  
- Stato iniziale che attende il segnale di start. Si entra in questo stato per azzerare i registri e prepararsi a processare l'immagine.
-  
-    \item F1S1,F1S2,F1S1b,F1S2b \((Operands)\)
-  
- Questi stati si occupano della lettura di OP1 e OP2 (numero righe e colonne) attraverso il processo MULT. In F1S2b un controllo si accerterà che OP1 non sia nullo, altrimenti si passerà allo stato di terminazione e reset dei valori per una nuova lettura.
-  \item F1S3,F1S3b \((Multiply)\)
-  
- A questo punto viene calcolato M (cioè \(OP1*OP2\)) facendo rimbalzare questi due stati attraverso il segnale o-m. Il calcolo avviene per somme successive fino a quando OP2 sarà zero. 
-  \item F1S4,F1S4a,F1S5 \((Pixels)\)
-  
-  Attraverso i processi ADDRHandler e MINeMAX, verrà incrementato REGAddr (registro dell'indirizzo di memoria) e controllato Pixel (registro che salva ogni current pixel). Il segnale f1 detta il passaggio fra questi stati attraverso la condizione \(REGAddr > M + 2 \). Il calcolo del delta invece, avviene ad ogni nuovo assegnamento del Massimo o del Minimo.
-  
-  \item F1S6,F1S7 \((Finalize)\)
-  
-  Una volta terminato il proprio compito, nello stato F1S6 verrà alzato il segnale start2 per far partire il secondo modulo e successivamente, lo stato F1S7 si metterà quindi in attesa del segnale done2 per terminare l'elaborazione e reset dei valori.
-  \item F1S8,F1S9 \((Reset)\)
-  
-  A questo punto, una volta ricevuto il segnale done2, lo stato F1S8 alzerà done ed endof (segnale generale di imminente terminazione e reset dei valori), e aspetterà che si abbassi start, per poi passare a F1S9 che farà riscendere i due precedenti segnali. Si torna quindi a F1S0 in attesa di una nuova immagine.
-\end{itemize}
-\begin {center}  
-	\begin{tikzpicture}
+	\begin {center}
+\begin{tikzpicture}
 	[->,align=center,node distance=1cm,]
     \node[state,initial,initial where=left, initial text=i\_rst] (S0) {$S0$};
     \node[state, right of=S0] (S1) {$S1$};
@@ -193,38 +172,35 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
             (S8) edge[ bend right,below] node{} (S9)
             (S9) edge[bend right,above] node{$!start$} (S0);
 \end{tikzpicture}
-\end{center}  
+\end{center}
+  \begin{itemize}
+  \item F1S0 \((Ready)\)
+  
+ Stato iniziale che attende il segnale di start. Si entra in questo stato per azzerare i registri e prepararsi a processare l'immagine.
+  
+    \item F1S1,F1S2,F1S1b,F1S2b \((Operands)\)
+  
+ Questi stati si occupano della lettura di \emph{OP1} e \emph{OP2} (numero righe e colonne) attraverso il processo \emph{MULT}. In \emph{F1S2b} un controllo si accerterà che \emph{OP1} non sia nullo, altrimenti si passerà allo stato di terminazione e reset dei valori per una nuova lettura.
+  \item F1S3,F1S3b \((Multiply)\)
+  
+ A questo punto viene calcolato \emph{M} (cioè \(OP1*OP2\)) iterando in questi due stati attraverso il segnale \emph{o\_m}. Il calcolo avviene per somme successive fino a quando \emph{OP2} sarà zero. 
+  \item F1S4,F1S4a,F1S5 \((Pixels)\)
+  
+  Attraverso i processi \emph{ADDRHandler \emph{e} MINeMAX}, verrà incrementato \emph{REGAddr} (registro dell'indirizzo di memoria) e controllato Pixel (registro che salva ogni current pixel). Il segnale f1 detta il passaggio fra questi stati attraverso la condizione \(REGAddr > M + 2 \). Il calcolo del delta invece, avviene ad ogni nuovo assegnamento del Massimo o del Minimo.
+  
+  \item F1S6,F1S7 \((Finalize)\)
+  
+  Una volta terminato il proprio compito, nello stato \emph{F1S6} verrà alzato il segnale start2 per far partire il secondo modulo e successivamente, lo stato \emph{F1S7} si metterà in attesa del segnale \emph{done2} per terminare l'elaborazione e reset dei valori.
+  \item F1S8,F1S9 \((Reset)\)
+  
+  A questo punto, una volta ricevuto il segnale \emph{done2}, lo stato \emph{F1S8} alzerà done ed \emph{endof} (segnale generale di imminente terminazione e reset dei valori), e aspetterà che si abbassi start, per poi passare a \emph{F1S9} che farà riscendere i due precedenti segnali. Si torna quindi a \emph{F1S0} in attesa di una nuova immagine.
+\end{itemize}
   
     \item \textbf{Modulo 2}
 		
-		Il modulo due svolge il calcolo dello shift level noto il data value e lo rende disponibile per l'utilizzo al modulo tre. Una volta completato il calcolo, alza il segnale start3 per fare partire la FSM3 ed attende il done3 prima di terminare dando il done2 al modulo uno. Di seguito la descrizione della FSM2 che ha quasi solo una funzione di timing dei registri:
-			\begin{itemize}
-				\item F2S0 \emph{(Ready)}
-				
-				Attende l'inizio dell'esecuzione del programma che avviene tramite l'innalzamento del segnale start2
-				
-				\item F2S1 \emph{(Get\_Delta)}
-				
-				Carica il valore di delta nel registro S2R1
-				
-				\item F2S2,F2S3,F2S4 \emph{(LUT)}
-				
-				Attende la propagazione del segnale nel datapath e carica il valore in uscita dalla LUT in S2R2
-				
-				\item F2S5 \emph{(Start3)}
-				
-				Avvia il modulo tre alzando il segnale start3
-				
-				\item F2S6 \emph{(WaitDone3)}
-				
-				Attende in questo stato finché done3 non viene alzato dal modulo tre
-				\item F2S7 \emph{(Finalize)}
-				
-				Alza il done2 per segnalare al modulo due l'avvenuta terminazione dell'elaborazione.
-				
-				
-			\end{itemize}
-			\begin{tikzpicture}
+		Il modulo due svolge il calcolo dello shift level noto il data value e lo rende disponibile per l'utilizzo al modulo tre. Una volta completato il calcolo, alza il segnale \emph{start3} per fare partire la FSM3, dopodichè si mette in attesa di \emph{done3} per poi terminare alzando per un ciclo di clock il segnale \emph{done2}. Di seguito la descrizione della FSM2:
+		
+		\begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
 \node[state, initial, initial text=i\_rst] (s0) {$S0$};
 \node[state, right of=s0, node distance=1.7cm] (s1) {$S1$};
@@ -247,53 +223,37 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	(s6) edge[loop above] node{!done3} (s6)
 	(s7) edge[bend left, above] node{} (s0);
 \end{tikzpicture}
-
+			\begin{itemize}
+				\item F2S0 \emph{(Ready)}
+				
+				Attende l'inizio dell'esecuzione del programma che avviene tramite l'innalzamento del segnale start2.
+				
+				\item F2S1 \emph{(Get\_Delta)}
+				
+				Carica il valore di delta nel registro \emph{S2R1}.
+				
+				\item F2S2,F2S3,F2S4 \emph{(LUT)}
+				
+				Attende la propagazione del segnale nel datapath e carica il valore in uscita dalla \emph{LUT} in \emph{S2R2}.
+				
+				\item F2S5 \emph{(Start3)}
+				
+				Avvia il modulo tre alzando il segnale \emph{start3}.
+				
+				\item F2S6 \emph{(WaitDone3)}
+				
+				Attende in questo stato finché \emph{done3} non viene alzato dal modulo tre
+				\item F2S7 \emph{(Finalize)}
+				
+				Alza il done2 per segnalare al modulo due l'avvenuta terminazione dell'elaborazione.	
+				
+			\end{itemize}
+\break
     \item\textbf{Modulo 3} 
 		
 		Il modulo tre è dove avviene la parte più delicata dell'elaborazione, in particolare a questa parte è delegata la lettura da memoria del valore del pixel corrente, il calcolo sequenziale per ogni pixel del nuovo valore e la riscrittura in memoria.
 		
-		\begin{itemize}
-		
-		\item F3S0 \emph{(Ready)}
-		
-		Stato di attesa della macchina, passa a \emph{F3S0b} quando start3 è portato a 1
-		
-		\item F3S0b, F3S0c \emph{(Memory\_Load)}
-		
-		In questi due stati viene prelevato da memoria il valore corrente del pixel ed assegnato al registro \emph{F3R3} che simboleggia il \emph{CurrPixel} value. La gestione della memoria viene effettuata tramite i flag \emph{o\_f3addr\_read \emph{e} o\_f3addr\_write} in un processo separato. Viene quindi assegnato il valore di ritorno \emph{i\_data}.
-		
-		\item F3S1 \emph{(Get\_Calculated\_Values)}
-		
-		Avviene ora il prelievo dei segnali provenienti dai moduli uno e due e il caricamento degli stessi nei registri \emph{F3R1}, \emph{F3R2} e \emph{F3R4}, rispettivamente \textit{shift\_level, min pixel value \emph{e} max address}.
-		
-		\item F3S2, F3S3 \emph{(Zeroing)}
-		
-		In questi stati avviene il calcolo di \(CurrPixel - minV\) e viene propagato tramite il segnale \emph{o\_f3sub} che poi viene caricato in \emph{F3R5}
-		
-		\item F3S4 \emph{(Shift)}
-		
-		Da \emph{shift\_level} e \emph{F3R5} viene calcolato il valore di \emph{o\_f3shift}, vettore di 16 bit per evitare il possibile overflow
-		
-		\item F3S5, F3S6 \emph{(Overflow\_Check)}
-		
-		Un mutex viene inserito per portare \emph{shift\_level} da 16 bit a 8, nel caso in cui sia minore di 255 gli 8 bit più significativi vengono scartati, altrimenti viene assegnato il valore massimo rappresentabile di 255.
-		
-		\item F3S6b, F3S7 \emph{(Memory\_Write)}
-		
-		Tramite il flag \emph{o\_f3addr\_write} viene assegnato in \emph{o\_data} il valore finale del registro \emph{F3R6} in uscita al mutex.
-		
-		\item F3S7b, F3S8 \emph{(Current\_Pixel\_Increment)}
-		
-		Il valore di \emph{F3R7} viene incrementato di uno, questo registro serve alla macchina per sapere il valore corrente di memoria. Viene usato nel processo di gestione della RAM sia per la lettura che per la scrittura dei valori e viene inoltre usato per la condizione d'uscita del ciclo di stati \emph{F1S0b} \textrightarrow  \emph{F3S8} insieme a \emph{max address}.		
-		
-		\item F3S9 \emph{(Finalize)}
-		
-		Stato finale della macchina, viene portato a 1 il segnale \emph{done3}
-		
-		\end {itemize}
- \end{enumerate}
-%\break
-\begin{tikzpicture}
+		\begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
 \node[state, initial, initial text=i\_rst] (s0) {$S0$};
 \node[state, right of=s0, node distance=2cm] (s0b) {$S0b$};
@@ -331,6 +291,47 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 	%(s0c) edge[bend left, below] node{} (s0b);
 \end{tikzpicture}
 
+		\begin{itemize}
+		
+		\item F3S0 \emph{(Ready)}
+		
+		Stato di attesa della macchina, passa a \emph{F3S0b} quando start3 è portato a 1
+		
+		\item F3S0b, F3S0c \emph{(Memory\_Load)}
+		
+		In questi due stati viene prelevato da memoria il valore corrente del pixel ed assegnato al registro \emph{F3R3} che simboleggia il \emph{CurrPixel} value. La gestione della memoria viene effettuata tramite i flag \emph{o\_f3addr\_read \emph{e} o\_f3addr\_write} in un processo separato. Viene quindi assegnato il valore di ritorno \emph{i\_data}.
+		
+		\item F3S1 \emph{(Get\_Calculated\_Values)}
+		
+		Avviene ora il prelievo dei segnali provenienti dai moduli uno e due e il caricamento degli stessi nei registri \emph{F3R1}, \emph{F3R2} e \emph{F3R4}, rispettivamente \textit{shift\_level, min pixel value \emph{e} max address}.
+		
+		\item F3S2, F3S3 \emph{(Zeroing)}
+		
+		In questi stati avviene il calcolo di \(CurrPixel - minV\) e viene propagato tramite il segnale \emph{o\_f3sub} che poi viene caricato in \emph{F3R5}.
+		
+		\item F3S4 \emph{(Shift)}
+		
+		Da \emph{shift\_level} e \emph{F3R5} viene calcolato il valore di \emph{o\_f3shift}, vettore di 16 bit per evitare il possibile overflow.
+		
+		\item F3S5, F3S6 \emph{(Overflow\_Check)}
+		
+		Un mutex viene inserito per portare \emph{shift\_level} da 16 bit a 8, nel caso in cui sia minore di 255 gli 8 bit più significativi vengono scartati, altrimenti viene assegnato il valore massimo rappresentabile di 255.
+		
+		\item F3S6b, F3S7 \emph{(Memory\_Write)}
+		
+		Tramite il flag \emph{o\_f3addr\_write} viene assegnato in \emph{o\_data} il valore finale del registro \emph{F3R6} in uscita al mutex.
+		
+		\item F3S7b, F3S8 \emph{(Current\_Pixel\_Increment)}
+		
+		Il valore di \emph{F3R7} viene incrementato di uno, questo registro serve alla macchina per sapere il valore corrente di memoria. Viene usato nel processo di gestione della RAM sia per la lettura che per la scrittura dei valori e viene inoltre usato per la condizione d'uscita del ciclo di stati \emph{F1S0b} \textrightarrow  \emph{F3S8} insieme a \emph{max address}.		
+		
+		\item F3S9 \emph{(Finalize)}
+		
+		Stato finale della macchina, viene portato a 1 il segnale \emph{done3}
+		
+		\end {itemize}
+ \end{enumerate}
+
 \section{Risultati sperimentali}
 Di seguito i risultati della sintesi, ottenuti attraverso la Simulazione in ambiente Vivado. 
 Sotto viene evidenziato il modo in cui lavorano i vari segnali a cascata per passare tra i vari moduli.
@@ -340,7 +341,8 @@ Sotto viene evidenziato il modo in cui lavorano i vari segnali a cascata per pas
 \caption{Waveform della simulazione}
 \end{figure}
 
-A seguire sono evidenziati i report temporali e di utilizzo delle risorse.
+A seguire sono evidenziati i report di timing della sintesi e di utilizzo delle risorse della FPGA:
+
 \begin{figure}[hbt!]
 \centering
 \includegraphics[width=0.7\textwidth]{Time.png}
@@ -363,7 +365,7 @@ A seguire sono evidenziati i report temporali e di utilizzo delle risorse.
 \caption{Utilization Design Information - Slice Logic}
 \label{ex-table}
 \end{table}
-
+\break
 \section{Simulazioni}
 \label{main-text}
 Al fine di testare la correttezza del codice, abbiamo creato le seguenti simulazioni che sono state inserite in un solo test bench per testare anche l'elaborazione di più immagini in sequenza, sia con che senza un reset al termine di ogni immagine.
@@ -382,13 +384,14 @@ Al fine di testare la correttezza del codice, abbiamo creato le seguenti simulaz
   input=[2,3,255,255,255,255,255,255] 
  output=[0,0,0,0,0,0]
  
- Il delta sarà nullo nel momento in cui tutti i valori dell'immagine saranno uguali. Sarà infatti MAXPixel=MINPixel, generando così uno \(shiftlevel=8\) (caso massimo) che porterà quindi ad avere in output solo valori nulli. Questo è anche intuitivamente immaginabile con una monocromia dell'immagine che quindi viene riportata al valore di default.
+ Il delta sarà nullo nel momento in cui tutti i valori dell'immagine saranno uguali. Sarà infatti MAXPixel=MINPixel, generando così uno \(shiftlevel=8\) (caso massimo) che porterà quindi ad avere in output solo valori nulli. Questo è anche intuitivamente immaginabile con una monocromia dell'immagine che non può quindi essere equalizzata in alcun modo.
  \item TB con Shift massimo:
  
  input=[2,3,128,128,128,128,128,128] 
  output=[0,0,0,0,0,0]
 
-Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un caso importante da considerare è quando il valore di \(n=8\) : il valore di \(Current Pixel-MINPixel\) verrà quindi completamente portato a sinistra lasciando tutti zeri, rispetto alla rappresentazione di 8 bit del pixel. Questo è uno dei valori per cui \(Temp Pixel>255\) e si avrà quindi un output di valori massimi.
+Lo Shift sinistro di 8 posizioni è un caso ottenibile solo in circostanze banali ovvero quando \(CurrentPixel = MinPixel\) e viene dunque shiftato un vettore di valori nulli che quindi rimane invariato. In output avremo quindi il valore \(CurrentPixel - MinPixel = 0\).
+
 \item TB con Massimo e Minimo agli estremi di lettura : 
  
  input=[2,3,255,132,254,2,2,1] 
@@ -421,7 +424,7 @@ Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un cas
 	\item In fase di testing abbiamo raggiunto tramite test successivi una copertura delle istruzioni \(>99\%\) ed una copertura delle decisioni \(>99\%\), escludendo da entrambe la LUT che è stata invece testata nei casi precedenti e successivi a tutti i cambiamenti del valore in uscita. E' stato testato inoltre l'invariante di rappresentazione pubblico della non modifica di celle di memoria non interessate dall'elaborazione ovvero maggiori di \(2*(COL * RIG) + 2 \)
 \end{itemize}
 \section{Conclusioni}
-Il progetto è stato sviluppato in un team di due persone, fin da subito il nostro approccio è stato quello di applicare i metodi insegnataci nel corso di Ingegneria del Software per la compartimentazione del lavoro di scrittura del codice e la definizione di interfacce comuni, per questo il progetto è stato diviso in 3 componenti stadio1DataPath, stadio2DataPath e stadio3DataPath le quali rendevano disponibili dei segnali ad uso interno che poi venivano usati negli stadi successivi, senza necessariamente sapere come essi venissero generati. Oltre a questo abbiamo sviluppato un sistema di start dei tre moduli in propagazione a cascata e dei done in senso contrario. Nello scrivere la relazione abbiamo usato sistema LaTeX.
+Il progetto è stato sviluppato in un team di due persone, fin da subito il nostro approccio è stato quello di applicare i metodi insegnataci nel corso di Ingegneria del Software per la compartimentazione del lavoro di scrittura del codice e la definizione di interfacce comuni, per questo il progetto è stato diviso in 3 componenti \emph{stadio1DataPath, stadio2DataPath \emph{e} stadio3DataPath} le quali rendevano disponibili dei segnali ad uso interno che poi venivano usati negli stadi successivi, senza necessariamente sapere come essi venissero generati. Oltre a questo abbiamo sviluppato un sistema di start dei tre moduli in propagazione a cascata e dei done in senso contrario. Nello scrivere la relazione abbiamo usato sistema LaTeX.
 
 Ringraziamo infine i professori per averci guidato in questa stimolante esperienza.
 
