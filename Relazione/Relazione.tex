@@ -12,8 +12,7 @@
 \usepackage{amssymb,ComplexSystems}
 \usepackage{tikz}
 \usepackage{scalefnt}
-\usepackage{imakeidx}
-\makeindex
+
 \usetikzlibrary{automata, positioning, arrows}
 \usepackage{underscore}
 \graphicspath{ {./images/} }
@@ -22,6 +21,7 @@
 % It is available at
 % http://www.complex-systems.com/samples/complex-systems.sty
 % epsf.sty is the preferred graphics import method
+\makeindex
 
 \begin{document}
 
@@ -157,7 +157,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 \begin {center}  
 	\begin{tikzpicture}
 	[->,align=center,node distance=1cm,]
-    \node[state,initial,initial where=left, initial text=$rst$] (S0) {$S0$};
+    \node[state,initial,initial where=left, initial text=i\_rst] (S0) {$S0$};
     \node[state, right of=S0] (S1) {$S1$};
     \node[state, below of=S1] (S2) {$S2$};
     \node[state, below of=S2] (S1b) {$S1_b$};
@@ -226,7 +226,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 			\end{itemize}
 			\begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
-\node[state, initial, initial text=i\_start] (s0) {$S0$};
+\node[state, initial, initial text=i\_rst] (s0) {$S0$};
 \node[state, right of=s0, node distance=1.7cm] (s1) {$S1$};
 \node[state, right of=s1] (s2) {$S2$};
 \node[state, right of=s2] (s3) {$S3$};
@@ -258,7 +258,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		Stato di attesa della macchina, passa a \emph{F3S0b} quando start3 è portato a 1
 		
-		\item F3S0b, F3S0c \emph{(MemLoad)}
+		\item F3S0b, F3S0c \emph{(Memory\_Load)}
 		
 		In questi due stati viene prelevato da memoria il valore corrente del pixel ed assegnato al registro \emph{F3R3} che simboleggia il \emph{CurrPixel} value. La gestione della memoria viene effettuata tramite i flag \emph{o\_f3addr\_read \emph{e} o\_f3addr\_write} in un processo separato. Viene quindi assegnato il valore di ritorno \emph{i\_data}.
 		
@@ -278,7 +278,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 		
 		Un mutex viene inserito per portare \emph{shift\_level} da 16 bit a 8, nel caso in cui sia minore di 255 gli 8 bit più significativi vengono scartati, altrimenti viene assegnato il valore massimo rappresentabile di 255.
 		
-		\item F3S6b, F3S7 \emph{(MemWrite)}
+		\item F3S6b, F3S7 \emph{(Memory\_Write)}
 		
 		Tramite il flag \emph{o\_f3addr\_write} viene assegnato in \emph{o\_data} il valore finale del registro \emph{F3R6} in uscita al mutex.
 		
@@ -295,7 +295,7 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 %\break
 \begin{tikzpicture}
 [->,align=center,node distance=1.2cm]
-\node[state, initial, initial text=i\_start] (s0) {$S0$};
+\node[state, initial, initial text=i\_rst] (s0) {$S0$};
 \node[state, right of=s0, node distance=2cm] (s0b) {$S0b$};
 \node[state, right of=s0b] (s0c) {$S0c$};
 \node[state, right of=s0c] (s1) {$S1$};
@@ -332,10 +332,41 @@ La scelta architetturale ricade sull'utilizzo di 3 moduli, descritti ognuno da u
 \end{tikzpicture}
 
 \section{Risultati sperimentali}
+Di seguito i risultati della sintesi, ottenuti attraverso la Simulazione in ambiente Vivado. 
+Sotto viene evidenziato il modo in cui lavorano i vari segnali a cascata per passare tra i vari moduli.
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=0.75\textwidth]{Wave.png}
+\caption{Waveform della simulazione}
+\end{figure}
+
+A seguire sono evidenziati i report temporali e di utilizzo delle risorse.
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=0.7\textwidth]{Time.png}
+\caption{Tempi della simulazione}
+\end{figure}
+\begin{table} [hbt!]
+\centerline{\small\begin{tabular}{|c|c|c|c|c|}
+\hline
+ \textbf{Site Type} & \textbf{Used} & \textbf{Fixed} & \textbf{Available} & \textbf{Util \%}\\
+\hline
+  Slice LUTs & 180 & 0 & 134600 & 0.13\\
+\hline
+  Slice Registers & 207 & 0 & 269200 & 0.08\\
+\hline
+  F7 Muxes & 0 & 0 & 67300 & 0.00\\
+\hline
+  F8 Muxes & 0 & 0 & 33650 & 0.00\\
+\hline
+\end{tabular}}
+\caption{Utilization Design Information - Slice Logic}
+\label{ex-table}
+\end{table}
+
 \section{Simulazioni}
 \label{main-text}
-
-Risultati  dei  test  fatti  e  le ragioni di tali test -motivare le scelte
+Al fine di testare la correttezza del codice, abbiamo creato le seguenti simulazioni che sono state inserite in un solo test bench per testare anche l'elaborazione di più immagini in sequenza, sia con che senza un reset al termine di ogni immagine.
 \begin{itemize}
 \item TB Delta=255:
 
@@ -378,25 +409,11 @@ Lo Shift sinistro di n posizioni equivale a moltiplicare \(Value*2^{n}\). Un cas
  Delta=31 Shift=3
   \newline
   Bisogna considerare che \(log (delta +1)\) risulta caso limite nel momento in cui il valore di delta assume valore \(2^{n}-1\) (con \(0<=n<=8\)). La LUT dell'implementazione, tiene già conto dell'argomento del logaritmo, cambiando quindi il valore ogni volta che viene raggiunto dal delta una potenza di \(2^{n}-1\).  
+	\item In fase di testing abbiamo raggiunto tramite test successivi una copertura delle istruzioni \(>99\%\) ed una copertura delle decisioni \(>99\%\), escludendo da entrambe la LUT che è stata invece testata nei casi precedenti e successivi a tutti i cambiamenti del valore in uscita.
 \end{itemize}
-\section{Risultati di sintesi}
-Ecco i vari risultati della sintesi, ottenuti attraverso la Simulazione in ambiente Vivado. 
-Sotto viene evidenziato il modo in cui lavorano i vari segnali a cascata per passare tra i vari moduli.
-\newline
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.75\textwidth]{Wave.png}
-\caption{Waveform della simulazione}
-\end{figure}
-\break
-Ed ecco invece i tempi riscontrati della simulazione con il nostro TB.
-\newline
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{Time.png}
-\caption{Tempi della simulazione}
-\end{figure}
-\break
 \section{Conclusioni}
-Entrambi abbiamo creato le basi per capire le dinamiche di approccio ad un progetto: come svilupparlo, ma soprattutto come collaborare. Ringraziamo infine i professori per averci guidato in questa stimolante esperienza.
+Il progetto è stato sviluppato in un team di due persone, fin da subito il nostro approccio è stato quello di applicare i metodi insegnataci nel corso di Ingegneria del Software per la compartimentazione del lavoro di scrittura del codice e la definizione di interfacce comuni, per questo il progetto è stato diviso in 3 componenti stadio1DataPath, stadio2DataPath e stadio3DataPath le quali rendevano disponibili dei segnali ad uso interno che poi venivano usati negli stadi successivi, senza necessariamente sapere come essi venissero generati. Oltre a questo abbiamo sviluppato un sistema di start dei tre moduli in propagazione a cascata e dei done in senso contrario. Nello scrivere la relazione abbiamo usato sistema LaTeX.
+
+Ringraziamo infine i professori per averci guidato in questa stimolante esperienza.
+
 \end{document}
