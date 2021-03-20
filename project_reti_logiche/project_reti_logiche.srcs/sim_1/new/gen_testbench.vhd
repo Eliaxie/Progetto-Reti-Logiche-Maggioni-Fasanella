@@ -62,7 +62,7 @@ begin
   end process p_CLK_GEN;
 
   MEM : process (tb_clk)
-    file read_file     : text open read_mode is "C:\Repos\Progetto-Reti-Logiche-Maggioni-Fasanella\project_reti_logiche\TB\ram_content 1 passato.txt"; --<<<<<<<<<<<<<<<<--------------------------------- QUI DA CAMBIARE
+    file read_file     : text open read_mode is "C:\Repos\Progetto-Reti-Logiche-Maggioni-Fasanella\project_reti_logiche\TB\ram_content 5 passato.txt"; --<<<<<<<<<<<<<<<<--------------------------------- QUI DA CAMBIARE
     variable read_line : line;
     variable R         : ram_type;
     variable handler   : integer;

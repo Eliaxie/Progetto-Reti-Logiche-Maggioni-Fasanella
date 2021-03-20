@@ -514,14 +514,14 @@ BEGIN
 	BEGIN
 		IF (i_rst = '1') THEN
 			cur_state_S2 <= F2S0;
-		ELSIF rising_edge (i_clk) THEN
+		ELSIF i_clk'event AND i_clk = '1' THEN
 			cur_state_S2 <= next_state_S2;
 		END IF;
 	END PROCESS;
 
 	LUT : PROCESS (i_clk, o_f2r1)
 	BEGIN
-		IF (rising_edge (i_clk)) THEN
+		IF (i_clk' event AND i_clk = '1') THEN
 			CASE o_f2r1 IS
 				WHEN "00000000" =>
 					o_LUT <= "0000";
@@ -1044,7 +1044,7 @@ BEGIN
 	BEGIN
 		IF (i_rst = '1') THEN
 			o_f2r1 <= "00000000";
-		ELSIF rising_edge (i_clk) THEN
+		ELSIF i_clk' event AND i_clk = '1' THEN
 			IF (f2r1_load = '1') THEN
 				o_f2r1 <= delta;
 			END IF;
@@ -1055,7 +1055,7 @@ BEGIN
 	BEGIN
 		IF (i_rst = '1' OR endof = '1') THEN
 			o_f2r2 <= "0000";
-		ELSIF rising_edge (i_clk) THEN
+		ELSIF i_clk' event AND i_clk = '1' THEN
 			IF (f2r2_load = '1') THEN
 				o_f2r2 <= o_SUB;
 			END IF;
@@ -1115,7 +1115,7 @@ BEGIN
 			o_f3r6 <= "00000000";
 			o_f3r7 <= "0000000000000000";
 			cur_state_S3 <= F3S0;
-		ELSIF rising_edge (i_clk) THEN
+		ELSIF i_clk' event AND i_clk = '1' THEN
 			cur_state_S3 <= next_state_S3;
 			IF (f3r1_load = '1') THEN
 				o_f3r1 <= shift_level;
